@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
@@ -99,8 +100,8 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
           </div>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link to="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
-          <Link to="/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
+          <Link href="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
+          <Link href="/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.villa}</a>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.accommodations}</a>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.gallery}</a>

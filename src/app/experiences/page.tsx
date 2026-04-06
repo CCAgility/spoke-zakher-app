@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Utensils, Leaf, Plane, Wine } from 'lucide-react';
 
-export function Experiences() {
+export default function Experiences() {
   return (
     <div className="bg-white pt-32 pb-24 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">

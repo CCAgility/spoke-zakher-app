@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React from 'react';
 import { motion } from 'motion/react';
 import { Wind, Droplets, Sun, Leaf } from 'lucide-react';
@@ -25,11 +26,11 @@ const translations = {
     reserve: "Reservar",
     location: "Cartagena de Indias",
     heroTitle: "San Pedro",
-    heroSubtitle: "Un santuario colonial de siete habitaciones donde la elegancia histÃ³rica se encuentra con la tranquilidad tropical.",
+    heroSubtitle: "Un santuario colonial de siete habitaciones donde la elegancia histÃƒÂ³rica se encuentra con la tranquilidad tropical.",
     oasisTitle: "Un Oasis Tropical",
     architectureTitle: "Arquitectura Colonial",
-    architectureDesc: "Atraviese nuestras antiguas puertas hacia un mundo de exuberantes patios, grandes arcos y serenas fuentes de agua. Cada rincÃ³n de Casa Estrella estÃ¡ diseÃ±ado para acercarlo a la naturaleza mientras lo envuelve en lujo.",
-    discover: "Descubrir el DiseÃ±o",
+    architectureDesc: "Atraviese nuestras antiguas puertas hacia un mundo de exuberantes patios, grandes arcos y serenas fuentes de agua. Cada rincÃƒÂ³n de Casa Estrella estÃƒÂ¡ diseÃƒÂ±ado para acercarlo a la naturaleza mientras lo envuelve en lujo.",
+    discover: "Descubrir el DiseÃƒÂ±o",
     features: [
       { title: "Piscinas Privadas" },
       { title: "Terraza en la Azotea" },

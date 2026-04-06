@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
-export function Contact() {
+export default function Contact() {
   return (
     <div className="bg-gray-50 pt-32 pb-24 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">

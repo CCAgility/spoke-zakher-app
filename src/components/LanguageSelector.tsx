@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React from 'react';
 import { cn } from '../lib/utils';
 import { Globe } from 'lucide-react';
@@ -5,9 +6,9 @@ import { Globe } from 'lucide-react';
 export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
   const languages = [
     { code: 'en', label: 'English' },
-    { code: 'es', label: 'EspaÃ±ol' },
-    { code: 'pt', label: 'PortuguÃªs' },
-    { code: 'fr', label: 'FranÃ§ais' }
+    { code: 'es', label: 'EspaÃƒÂ±ol' },
+    { code: 'pt', label: 'PortuguÃƒÂªs' },
+    { code: 'fr', label: 'FranÃƒÂ§ais' }
   ];
 
   return (

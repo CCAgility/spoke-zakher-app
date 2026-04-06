@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Waves, Shield, Wifi, Coffee } from 'lucide-react';
 
-export function Amenities() {
+export default function Amenities() {
   return (
     <div className="bg-gray-50 pt-32 pb-24 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">

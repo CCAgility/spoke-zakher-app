@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
 import { motion } from 'motion/react';
 import { BedDouble, Bath, Square, Users } from 'lucide-react';
 
-export function Villa() {
+export default function Villa() {
   return (
     <div className="bg-white pt-32 pb-24">
       <div className="max-w-7xl mx-auto px-6">

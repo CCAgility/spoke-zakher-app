@@ -1,7 +1,8 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 // CMS Singleton and SDK methods
 import directus from '@/lib/directus';

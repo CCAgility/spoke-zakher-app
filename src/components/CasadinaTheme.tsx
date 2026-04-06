@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React from 'react';
 import { motion } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin } from 'lucide-react';
@@ -26,18 +27,18 @@ const translations = {
     galleryTitle: "The Villa"
   },
   es: {
-    nav: { villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃ­a", contact: "Contacto" },
+    nav: { villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃƒÂ­a", contact: "Contacto" },
     bookNow: "Reservar",
     location: "Cartagena, Colombia",
     heroTitle: "Un Remanso de Paz",
-    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃ³n de la histÃ³rica ciudad amurallada.",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃƒÂ³n de la histÃƒÂ³rica ciudad amurallada.",
     arrival: "Llegada - Salida",
     dates: "Seleccione sus fechas",
-    guests: "HuÃ©spedes",
+    guests: "HuÃƒÂ©spedes",
     adults: "2 Adultos",
     search: "Buscar",
     welcomeTitle: "Bienvenido a Casa Estrella de San Pedro",
-    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃ­a sea nada menos que extraordinaria.",
+    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃƒÂ­a sea nada menos que extraordinaria.",
     rooms: [
       { name: "La Arquitectura" },
       { name: "El Santuario" },

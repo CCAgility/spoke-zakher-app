@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React from 'react';
 import { motion } from 'motion/react';
 import { Leaf, Sun, Wind, Droplets } from 'lucide-react';
@@ -23,9 +24,9 @@ const translations = {
     heroTitle: "Lujo Descalzo en la Ciudad Amurallada.",
     heroSubtitle: "Un santuario de arquitectura colonial y tranquilidad moderna.",
     rooftopTitle: "Oasis en la Azotea",
-    rooftopDesc: "Vistas panorÃ¡micas del centro histÃ³rico de Cartagena.",
+    rooftopDesc: "Vistas panorÃƒÂ¡micas del centro histÃƒÂ³rico de Cartagena.",
     experiencesTitle: "Experiencias Curadas",
-    experiencesDesc: "MÃ¡s allÃ¡ de nuestras 7 lujosas habitaciones, Casa Estrella ofrece servicios a medida diseÃ±ados para rejuvenecer el alma. Desde yoga en el lugar hasta cenas gourmet privadas, cada detalle se adapta a su ritmo.",
+    experiencesDesc: "MÃƒÂ¡s allÃƒÂ¡ de nuestras 7 lujosas habitaciones, Casa Estrella ofrece servicios a medida diseÃƒÂ±ados para rejuvenecer el alma. Desde yoga en el lugar hasta cenas gourmet privadas, cada detalle se adapta a su ritmo.",
     amenities: [
       { title: "Yoga y Masajes" },
       { title: "Piscinas Privadas" },

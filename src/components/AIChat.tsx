@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { Send, Bot, X, MessageSquare, Globe } from 'lucide-react';
@@ -79,13 +80,8 @@ export function AIChat({ lang = 'en' }: { lang?: string }) {
     setIsLoading(true);
 
     try {
-      // We use generateContent instead of chat for simplicity in this stateless demo,
-      // passing the history as context.
-      const historyText = messages.map(m => `${m.role === 'user' ? 'Guest' : 'Concierge'}: ${m.text}`).join('
-');
-      const prompt = `${historyText}
-Guest: ${userText}
-Concierge:`;
+      const historyText = messages.map(m => `${m.role === 'user' ? 'Guest' : 'Concierge'}: ${m.text}`).join('\n');
+      const prompt = `${historyText}\nGuest: ${userText}\nConcierge:`;
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',

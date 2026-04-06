@@ -1,3 +1,4 @@
+// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
 import React from 'react';
 import { cn } from '../lib/utils';
 import { Palette } from 'lucide-react';
