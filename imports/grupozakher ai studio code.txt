@@ -1,0 +1,2109 @@
+# Full Project Source Code\n\n\n\n## src/App.tsx\n\n```tsx\n/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MallorcaTheme } from './components/MallorcaTheme';
+import { GrupoZakher } from './components/GrupoZakher';
+import { LanguageSelector } from './components/LanguageSelector';
+import { AIChat } from './components/AIChat';
+import { Download } from 'lucide-react';
+
+export default function App() {
+  const [lang, setLang] = useState<string>('en');
+
+  return (
+    <BrowserRouter>
+      <div className="relative">
+        <LanguageSelector lang={lang} setLang={setLang} />
+        
+        <Routes>
+          <Route path="/" element={<GrupoZakher lang={lang} />} />
+          <Route path="/casa-estrella" element={<MallorcaTheme lang={lang} />} />
+        </Routes>
+        
+        <AIChat lang={lang} />
+
+        {/* Floating Download Project Button */}
+        <div className="fixed bottom-6 left-6 z-50 flex flex-col gap-3">
+          <a 
+            href="/project.zip" 
+            download="project.zip"
+            className="bg-black text-white p-3 rounded-full shadow-lg hover:bg-gray-800 transition-colors flex items-center justify-center group"
+            title="Download Project ZIP"
+          >
+            <Download size={24} />
+            <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 ease-in-out text-sm font-medium">
+              Download Project ZIP
+            </span>
+          </a>
+          <a 
+            href="/all_code.txt" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-black border border-gray-200 p-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors flex items-center justify-center group"
+            title="View All Source Code"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+            <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 ease-in-out text-sm font-medium">
+              View All Code (Text)
+            </span>
+          </a>
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+}
+\n```\n\n\n## src/components/AIChat.tsx\n\n```tsx\nimport React, { useState, useRef, useEffect } from 'react';
+import { GoogleGenAI } from '@google/genai';
+import { Send, Bot, X, MessageSquare, Globe } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { cn } from '../lib/utils';
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+const LANGUAGES = [
+  { code: 'en', name: 'English', welcome: 'Welcome to Casa Estrella de San Pedro. I am your AI Concierge. How may I assist you?', tooltip: 'Have questions? Ask our AI Concierge!' },
+  { code: 'es', name: 'EspaÃ±ol', welcome: 'Bienvenido a Casa Estrella de San Pedro. Soy su conserje de IA. Â¿CÃ³mo puedo ayudarle?', tooltip: 'Â¿Tiene preguntas? Â¡Pregunte a nuestro conserje de IA!' },
+  { code: 'pt', name: 'PortuguÃªs', welcome: 'Bem-vindo Ã  Casa Estrella de San Pedro. Sou seu concierge de IA. Como posso ajudar?', tooltip: 'Tem dÃºvidas? Pergunte ao nosso concierge de IA!' },
+  { code: 'fr', name: 'FranÃ§ais', welcome: 'Bienvenue Ã  la Casa Estrella de San Pedro. Je suis votre concierge IA. Comment puis-je vous aider ?', tooltip: 'Des questions ? Demandez Ã  notre concierge IA !' }
+];
+
+const getSystemInstruction = (langName: string) => `You are the AI Concierge for Casa Estrella de San Pedro, a luxury 7-bedroom colonial villa located inside the walled city of Cartagena de Indias, Colombia.
+Your goal is to assist potential guests, answer questions about the property, and encourage them to book.
+Be polite, luxurious, helpful, and concise.
+
+CRITICAL INSTRUCTION: You MUST communicate with the user in ${langName}. If they speak to you in another language, you may acknowledge it, but your primary configured language is ${langName}.
+
+Property Knowledge Base (FAQs):
+- Location: Inside the historic walled city of Cartagena de Indias, Colombia.
+- Capacity: 7 luxurious en-suite bedrooms, maximum 14 guests.
+- Bathrooms: 8 spa-like bathrooms.
+- Size: 10,000 sq ft of living space.
+- Amenities: Main private pool, intimate mini pool, rooftop bar with panoramic views, outdoor dining table, high-speed WiFi, complimentary toiletries.
+- Staff & Services: 24/7 security (dedicated personnel 6 PM - 7 AM), complimentary daily housekeeping and turndown service.
+- Premium Add-ons (Extra Fee): Private chef for gourmet dining, on-site massage and yoga, private airport transfers, bespoke bartender services.
+- Check-in/Check-out: Standard times apply, flexible upon request.
+- Vibe: Colonial grandeur meets modern luxury. Perfect for families, bachelors, bachelorettes, and corporate retreats.
+- Contact: Reservas@grupozakher.com, +57 3148182656 or +57 3052999971.
+
+If asked something you don't know, politely offer the contact email/phone.`;
+
+export function AIChat({ lang = 'en' }: { lang?: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const currentLang = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
+  const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([
+    { role: 'model', text: currentLang.welcome }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isOpen]);
+
+  useEffect(() => {
+    // Reset chat with new language welcome message when language changes
+    setMessages([{ role: 'model', text: currentLang.welcome }]);
+  }, [lang, currentLang.welcome]);
+
+  useEffect(() => {
+    // Show tooltip after 3 seconds to draw attention
+    const timer = setTimeout(() => {
+      if (!isOpen) {
+        setShowTooltip(true);
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShowTooltip(false);
+    }
+  }, [isOpen]);
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+
+    const userText = input.trim();
+    setInput('');
+    setMessages(prev => [...prev, { role: 'user', text: userText }]);
+    setIsLoading(true);
+
+    try {
+      // We use generateContent instead of chat for simplicity in this stateless demo,
+      // passing the history as context.
+      const historyText = messages.map(m => `${m.role === 'user' ? 'Guest' : 'Concierge'}: ${m.text}`).join('\n');
+      const prompt = `${historyText}\nGuest: ${userText}\nConcierge:`;
+      
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: prompt,
+        config: {
+          systemInstruction: getSystemInstruction(currentLang.name),
+          temperature: 0.7,
+        }
+      });
+
+      setMessages(prev => [...prev, { role: 'model', text: response.text || 'I apologize, but I am having trouble connecting right now.' }]);
+    } catch (error) {
+      console.error("AI Error:", error);
+      setMessages(prev => [...prev, { role: 'model', text: 'I apologize, but I am having trouble connecting right now. Please try again later or contact us directly.' }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const themeStyles = {
+    button: 'bg-black text-white rounded-full shadow-2xl hover:bg-gray-800 transition-colors relative',
+    window: 'border border-gray-200 bg-white rounded-2xl shadow-2xl overflow-hidden',
+    header: 'bg-black text-white font-serif tracking-widest uppercase text-sm',
+    userMsg: 'bg-black text-white rounded-2xl rounded-tr-sm',
+    modelMsg: 'bg-gray-100 text-gray-900 rounded-2xl rounded-tl-sm',
+    input: 'border border-gray-200 rounded-xl focus:ring-1 focus:ring-black focus:outline-none bg-gray-50',
+    sendBtn: 'bg-black text-white rounded-xl hover:bg-gray-800'
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className={cn("w-80 sm:w-96 h-[500px] mb-4 flex flex-col origin-bottom-right", themeStyles.window)}
+          >
+            <div className={cn("p-4 flex justify-between items-center", themeStyles.header)}>
+              <div className="flex items-center gap-2">
+                <Bot size={20} />
+                <span className="font-medium">AI Concierge</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-md border border-white/20">
+                  <Globe size={14} />
+                  <span className="text-white text-xs font-sans">{currentLang.name}</span>
+                </div>
+                <button onClick={() => setIsOpen(false)} className="hover:opacity-70">
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-opacity-50">
+              {messages.map((msg, i) => (
+                <div key={i} className={cn("flex", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
+                  <div className={cn(
+                    "max-w-[80%] p-3 text-sm leading-relaxed",
+                    msg.role === 'user' ? themeStyles.userMsg : themeStyles.modelMsg
+                  )}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className={cn("max-w-[80%] p-3 text-sm", themeStyles.modelMsg)}>
+                    <span className="animate-pulse">Thinking...</span>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form onSubmit={handleSend} className="p-3 border-t border-gray-100/20 bg-white/50 backdrop-blur-sm flex gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about the villa..."
+                className={cn("flex-1 px-4 py-2 text-sm", themeStyles.input)}
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                className={cn("p-2 flex items-center justify-center disabled:opacity-50", themeStyles.sendBtn)}
+              >
+                <Send size={18} />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="relative">
+        <AnimatePresence>
+          {showTooltip && !isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute bottom-full right-0 mb-4 w-48 bg-white text-gray-800 p-3 rounded-2xl shadow-xl border border-gray-200 text-sm font-medium z-50 origin-bottom-right"
+            >
+              <div className="relative">
+                {currentLang.tooltip}
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setShowTooltip(false); }} 
+                  className="absolute -top-1 -right-1 text-gray-400 hover:text-gray-600"
+                >
+                  <X size={14} />
+                </button>
+                {/* Triangle pointer */}
+                <div className="absolute -bottom-5 right-4 w-3 h-3 bg-white border-b border-r border-gray-200 transform rotate-45"></div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={cn("p-4 flex items-center justify-center relative z-10", themeStyles.button)}
+        >
+          {/* Subtle pulse ring to draw attention */}
+          {!isOpen && (
+            <span className="absolute inset-0 rounded-full bg-black opacity-20 animate-ping"></span>
+          )}
+          {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
+        </button>
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/BalinesiaTheme.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Wind, Droplets, Sun, Leaf } from 'lucide-react';
+
+const translations = {
+  en: {
+    nav: { villa: "The Villa", experiences: "Experiences" },
+    reserve: "Reserve",
+    location: "Cartagena de Indias",
+    heroTitle: "San Pedro",
+    heroSubtitle: "A seven-bedroom colonial sanctuary where historic elegance meets tropical tranquility.",
+    oasisTitle: "A Tropical Oasis",
+    architectureTitle: "Colonial Architecture",
+    architectureDesc: "Step through our ancient doors into a world of lush courtyards, grand archways, and serene water features. Every corner of Casa Estrella is designed to bring you closer to nature while wrapping you in luxury.",
+    discover: "Discover the Design",
+    features: [
+      { title: "Private Pools" },
+      { title: "Rooftop Terrace" },
+      { title: "Open Air Living" },
+      { title: "Lush Courtyards" }
+    ]
+  },
+  es: {
+    nav: { villa: "La Villa", experiences: "Experiencias" },
+    reserve: "Reservar",
+    location: "Cartagena de Indias",
+    heroTitle: "San Pedro",
+    heroSubtitle: "Un santuario colonial de siete habitaciones donde la elegancia histÃ³rica se encuentra con la tranquilidad tropical.",
+    oasisTitle: "Un Oasis Tropical",
+    architectureTitle: "Arquitectura Colonial",
+    architectureDesc: "Atraviese nuestras antiguas puertas hacia un mundo de exuberantes patios, grandes arcos y serenas fuentes de agua. Cada rincÃ³n de Casa Estrella estÃ¡ diseÃ±ado para acercarlo a la naturaleza mientras lo envuelve en lujo.",
+    discover: "Descubrir el DiseÃ±o",
+    features: [
+      { title: "Piscinas Privadas" },
+      { title: "Terraza en la Azotea" },
+      { title: "Vida al Aire Libre" },
+      { title: "Patios Exuberantes" }
+    ]
+  }
+};
+
+export function BalinesiaTheme({ lang = 'en' }: { lang?: string }) {
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
+  return (
+    <div className="min-h-screen bg-[#EAE6DF] text-[#2D3A30] font-serif selection:bg-[#4A5D4E] selection:text-[#EAE6DF]">
+      {/* Header */}
+      <header className="absolute top-0 w-full p-8 flex justify-between items-center z-40 text-white">
+        <div className="font-serif text-2xl tracking-widest uppercase">Casa Estrella</div>
+        <div className="flex items-center gap-8">
+          <span className="hidden md:block text-sm tracking-widest uppercase font-sans">{t.nav.villa}</span>
+          <span className="hidden md:block text-sm tracking-widest uppercase font-sans">{t.nav.experiences}</span>
+          <button className="bg-white/10 backdrop-blur-md border border-white/30 px-6 py-2 rounded-full text-sm tracking-widest uppercase font-sans hover:bg-white hover:text-[#2D3A30] transition-colors">
+            {t.reserve}
+          </button>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-swimming-pool-in-a-luxury-villa-4181-large.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-[#EAE6DF]"></div>
+        
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-32">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          >
+            <p className="text-white/80 font-sans tracking-[0.4em] uppercase text-sm mb-6">{t.location}</p>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl text-white font-light tracking-tight mb-8">
+              {t.heroTitle}
+            </h1>
+            <p className="text-white/90 font-sans font-light text-lg max-w-xl mx-auto">
+              {t.heroSubtitle}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-24 px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-light mb-6">{t.oasisTitle}</h2>
+          <div className="w-px h-16 bg-[#4A5D4E] mx-auto"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
+          <div className="order-2 md:order-1">
+            <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" alt="Villa" className="w-full h-[80vh] object-cover rounded-t-full" referrerPolicy="no-referrer" />
+          </div>
+          <div className="order-1 md:order-2 space-y-8">
+            <h3 className="text-3xl font-light">{t.architectureTitle}</h3>
+            <p className="font-sans font-light text-[#5A6B5D] leading-relaxed text-lg">
+              {t.architectureDesc}
+            </p>
+            <button className="font-sans tracking-widest uppercase text-sm border-b border-[#2D3A30] pb-1 hover:text-[#4A5D4E] hover:border-[#4A5D4E] transition-colors">
+              {t.discover}
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#4A5D4E]/20 pt-16">
+          {[
+            { icon: <Droplets size={32} strokeWidth={1} />, title: t.features[0].title },
+            { icon: <Sun size={32} strokeWidth={1} />, title: t.features[1].title },
+            { icon: <Wind size={32} strokeWidth={1} />, title: t.features[2].title },
+            { icon: <Leaf size={32} strokeWidth={1} />, title: t.features[3].title }
+          ].map((item, i) => (
+            <div key={i} className="flex flex-col items-center gap-4">
+              <div className="text-[#4A5D4E]">{item.icon}</div>
+              <h4 className="font-sans tracking-widest uppercase text-xs">{item.title}</h4>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/CasadinaTheme.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Calendar, Users, ChevronRight, MapPin } from 'lucide-react';
+
+const translations = {
+  en: {
+    nav: { villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Contact" },
+    bookNow: "Book Now",
+    location: "Cartagena, Colombia",
+    heroTitle: "A Haven of Peace",
+    heroSubtitle: "Experience the timeless elegance of our colonial villa, nestled in the heart of the historic walled city.",
+    arrival: "Arrival - Departure",
+    dates: "Select your dates",
+    guests: "Guests",
+    adults: "2 Adults",
+    search: "Search",
+    welcomeTitle: "Welcome to Casa Estrella de San Pedro",
+    welcomeText: "Discover a sanctuary where history and luxury intertwine. Casa Estrella offers seven exquisite bedrooms, private pools, and lush courtyards, providing an unparalleled retreat in Cartagena. Every detail has been carefully curated to ensure your stay is nothing short of extraordinary.",
+    rooms: [
+      { name: "The Architecture" },
+      { name: "The Sanctuary" },
+      { name: "The Oasis" },
+      { name: "The Dining" }
+    ],
+    discover: "Discover",
+    galleryTitle: "The Villa"
+  },
+  es: {
+    nav: { villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃ­a", contact: "Contacto" },
+    bookNow: "Reservar",
+    location: "Cartagena, Colombia",
+    heroTitle: "Un Remanso de Paz",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃ³n de la histÃ³rica ciudad amurallada.",
+    arrival: "Llegada - Salida",
+    dates: "Seleccione sus fechas",
+    guests: "HuÃ©spedes",
+    adults: "2 Adultos",
+    search: "Buscar",
+    welcomeTitle: "Bienvenido a Casa Estrella de San Pedro",
+    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃ­a sea nada menos que extraordinaria.",
+    rooms: [
+      { name: "La Arquitectura" },
+      { name: "El Santuario" },
+      { name: "El Oasis" },
+      { name: "El Comedor" }
+    ],
+    discover: "Descubrir",
+    galleryTitle: "La Villa"
+  }
+};
+
+export function CasadinaTheme({ lang = 'en' }: { lang?: string }) {
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
+  return (
+    <div className="min-h-screen bg-[#FAFAFA] text-[#333333] font-sans selection:bg-[#C2A878] selection:text-white">
+      {/* Custom Fonts */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400;500&display=swap');
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-raleway { font-family: 'Raleway', sans-serif; }
+      `}} />
+
+      {/* Header */}
+      <header className="fixed top-0 w-full px-8 py-6 flex justify-between items-center z-50 bg-gradient-to-b from-black/60 to-transparent text-white">
+        <div className="flex items-center gap-4">
+          <div className="font-playfair text-xl md:text-2xl tracking-widest uppercase">
+            Casa Estrella
+          </div>
+        </div>
+        <nav className="hidden md:flex gap-8 font-raleway text-sm font-medium tracking-wider uppercase">
+          <a href="#" className="hover:text-[#C2A878] transition-colors">{t.nav.villa}</a>
+          <a href="#" className="hover:text-[#C2A878] transition-colors">{t.nav.accommodations}</a>
+          <a href="#" className="hover:text-[#C2A878] transition-colors">{t.nav.gallery}</a>
+          <a href="#" className="hover:text-[#C2A878] transition-colors">{t.nav.contact}</a>
+        </nav>
+        <button className="bg-[#C2A878] text-white px-6 py-3 font-raleway text-xs font-bold tracking-widest uppercase hover:bg-[#A88D5C] transition-colors">
+          {t.bookNow}
+        </button>
+      </header>
+
+      {/* Hero Section with YouTube Background */}
+      <section className="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center text-center">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img 
+            src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg"
+            alt="Casa Estrella Aerial View"
+            className="absolute inset-0 w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <iframe
+            src="https://www.youtube.com/embed/RI6Nuyrd5tg?autoplay=1&mute=1&loop=1&playlist=RI6Nuyrd5tg&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            className="w-[300vw] h-[300vh] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ pointerEvents: 'none' }}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          ></iframe>
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        <div className="relative z-10 text-white px-4 mt-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-6 font-raleway text-sm tracking-[0.2em] uppercase">
+              <MapPin size={16} className="text-[#C2A878]" />
+              <span>{t.location}</span>
+            </div>
+            <h1 className="font-playfair text-6xl md:text-8xl lg:text-9xl font-normal mb-6 drop-shadow-lg">
+              {t.heroTitle}
+            </h1>
+            <p className="font-raleway text-lg md:text-xl font-light max-w-2xl mx-auto drop-shadow-md">
+              {t.heroSubtitle}
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Booking Widget */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="absolute bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-200 z-20 py-6 px-8"
+        >
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex-1 flex items-center gap-4 border-r border-gray-300 pr-6 w-full">
+              <Calendar className="text-[#C2A878]" size={24} />
+              <div className="flex flex-col text-left">
+                <span className="font-raleway text-xs font-bold text-gray-500 uppercase tracking-widest">{t.arrival}</span>
+                <span className="font-playfair text-lg text-gray-800">{t.dates}</span>
+              </div>
+            </div>
+            <div className="flex-1 flex items-center gap-4 border-r border-gray-300 px-6 w-full">
+              <Users className="text-[#C2A878]" size={24} />
+              <div className="flex flex-col text-left">
+                <span className="font-raleway text-xs font-bold text-gray-500 uppercase tracking-widest">{t.guests}</span>
+                <span className="font-playfair text-lg text-gray-800">{t.adults}</span>
+              </div>
+            </div>
+            <div className="pl-6 w-full md:w-auto">
+              <button className="w-full bg-[#333333] text-white px-8 py-4 font-raleway text-sm font-bold tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2">
+                {t.search} <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Introduction */}
+      <section className="py-24 px-6 max-w-4xl mx-auto text-center">
+        <h2 className="font-playfair text-4xl md:text-5xl text-[#333333] mb-8">{t.welcomeTitle}</h2>
+        <div className="w-12 h-0.5 bg-[#C2A878] mx-auto mb-8"></div>
+        <p className="font-raleway text-gray-600 leading-relaxed text-lg font-light">
+          {t.welcomeText}
+        </p>
+      </section>
+
+      {/* Accommodations Grid */}
+      <section className="py-12 px-4 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { name: t.rooms[0].name, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" },
+            { name: t.rooms[1].name, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg" },
+            { name: t.rooms[2].name, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg" },
+            { name: t.rooms[3].name, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg" }
+          ].map((room, i) => (
+            <div key={i} className="group relative h-[400px] overflow-hidden cursor-pointer">
+              <img 
+                src={room.img} 
+                alt={room.name} 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute bottom-8 left-8 right-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <h3 className="font-playfair text-2xl mb-2">{room.name}</h3>
+                <div className="w-8 h-0.5 bg-[#C2A878] mb-4 transition-all duration-500 group-hover:w-16"></div>
+                <span className="font-raleway text-xs font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 flex items-center gap-2">
+                  {t.discover} <ChevronRight size={14} />
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-[1600px] mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-playfair text-4xl md:text-5xl text-[#333333] mb-6">{t.galleryTitle}</h2>
+            <div className="w-12 h-0.5 bg-[#C2A878] mx-auto"></div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg"
+            ].map((img, i) => (
+              <div key={i} className="aspect-square overflow-hidden group">
+                <img 
+                  src={img} 
+                  alt={`Gallery image ${i + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/GrupoZakher.tsx\n\n```tsx\nimport React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const translations = {
+  en: {
+    nav: { home: "Home", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Contact" },
+    bookNow: "Reserve",
+    location: "Cartagena, Colombia",
+    heroTitle: "Grupo Zakher",
+    heroSubtitle: "Experience the timeless elegance of our colonial villa, nestled in the heart of the historic walled city.",
+    arrival: "Check-in",
+    departure: "Check-out",
+    dates: "Select dates",
+    guests: "Guests",
+    adults: "2 Adults",
+    search: "Check Availability",
+    welcomeTitle: "Welcome to Grupo Zakher",
+    welcomeText: "Discover a sanctuary where history and luxury intertwine. Grupo Zakher offers seven exquisite bedrooms, private pools, and lush courtyards, providing an unparalleled retreat in Cartagena. Every detail has been carefully curated to ensure your stay is nothing short of extraordinary.",
+    aboutTitle: "About the home",
+    amenitiesTitle: "Amenities",
+    amenitiesList: [
+      "Air conditioning", "WiFi",
+      "Private pool", "Daily housekeeping",
+      "Concierge", "Breakfast included",
+      "Fully equipped kitchen", "Smart TV"
+    ],
+    showAllAmenities: "Show all amenities",
+    rooms: [
+      { name: "The Architecture", desc: "Colonial elegance" },
+      { name: "The Sanctuary", desc: "Seven exquisite bedrooms" },
+      { name: "The Oasis", desc: "Private pools & courtyards" },
+      { name: "The Dining", desc: "Culinary excellence" }
+    ],
+    discover: "Explore",
+    galleryTitle: "The Villa"
+  },
+  es: {
+    nav: { home: "Inicio", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃ­a", contact: "Contacto" },
+    bookNow: "Reservar",
+    location: "Cartagena, Colombia",
+    heroTitle: "Grupo Zakher",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃ³n de la histÃ³rica ciudad amurallada.",
+    arrival: "Llegada",
+    departure: "Salida",
+    dates: "Seleccionar fechas",
+    guests: "HuÃ©spedes",
+    adults: "2 Adultos",
+    search: "Ver Disponibilidad",
+    welcomeTitle: "Bienvenido a Grupo Zakher",
+    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Grupo Zakher ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃ­a sea nada menos que extraordinaria.",
+    aboutTitle: "Acerca de la casa",
+    amenitiesTitle: "Comodidades",
+    amenitiesList: [
+      "Aire acondicionado", "WiFi",
+      "Piscina privada", "Limpieza diaria",
+      "Conserje", "Desayuno incluido",
+      "Cocina totalmente equipada", "Smart TV"
+    ],
+    showAllAmenities: "Mostrar todas las comodidades",
+    rooms: [
+      { name: "La Arquitectura", desc: "Elegancia colonial" },
+      { name: "El Santuario", desc: "Siete habitaciones exquisitas" },
+      { name: "El Oasis", desc: "Piscinas y patios privados" },
+      { name: "El Comedor", desc: "Excelencia culinaria" }
+    ],
+    discover: "Explorar",
+    galleryTitle: "La Villa"
+  },
+  pt: {
+    nav: { home: "InÃ­cio", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "AcomodaÃ§Ãµes", gallery: "Galeria", contact: "Contato" },
+    bookNow: "Reservar",
+    location: "Cartagena, ColÃ´mbia",
+    heroTitle: "Grupo Zakher",
+    heroSubtitle: "Experimente a elegÃ¢ncia atemporal de nossa villa colonial, aninhada no coraÃ§Ã£o da cidade histÃ³rica amuralhada.",
+    arrival: "Check-in",
+    departure: "Check-out",
+    dates: "Selecionar datas",
+    guests: "HÃ³spedes",
+    adults: "2 Adultos",
+    search: "Ver Disponibilidade",
+    welcomeTitle: "Bem-vindo ao Grupo Zakher",
+    welcomeText: "Descubra um santuÃ¡rio onde a histÃ³ria e o luxo se entrelaÃ§am. O Grupo Zakher oferece sete quartos requintados, piscinas privativas e pÃ¡tios exuberantes, proporcionando um retiro inigualÃ¡vel em Cartagena. Cada detalhe foi cuidadosamente selecionado para garantir que sua estadia seja nada menos que extraordinÃ¡ria.",
+    aboutTitle: "Sobre a casa",
+    amenitiesTitle: "Comodidades",
+    amenitiesList: [
+      "Ar condicionado", "WiFi",
+      "Piscina privativa", "Limpeza diÃ¡ria",
+      "Concierge", "CafÃ© da manhÃ£ incluÃ­do",
+      "Cozinha totalmente equipada", "Smart TV"
+    ],
+    showAllAmenities: "Mostrar todas as comodidades",
+    rooms: [
+      { name: "A Arquitetura", desc: "ElegÃ¢ncia colonial" },
+      { name: "O SantuÃ¡rio", desc: "Sete quartos requintados" },
+      { name: "O OÃ¡sis", desc: "Piscinas e pÃ¡tios privativos" },
+      { name: "O Jantar", desc: "ExcelÃªncia culinÃ¡ria" }
+    ],
+    discover: "Explorar",
+    galleryTitle: "A Villa"
+  },
+  fr: {
+    nav: { home: "Accueil", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "HÃ©bergements", gallery: "Galerie", contact: "Contact" },
+    bookNow: "RÃ©server",
+    location: "CarthagÃ¨ne, Colombie",
+    heroTitle: "Grupo Zakher",
+    heroSubtitle: "DÃ©couvrez l'Ã©lÃ©gance intemporelle de notre villa coloniale, nichÃ©e au cÅ“ur de la ville historique fortifiÃ©e.",
+    arrival: "ArrivÃ©e",
+    departure: "DÃ©part",
+    dates: "SÃ©lectionner les dates",
+    guests: "Voyageurs",
+    adults: "2 Adultes",
+    search: "Voir les disponibilitÃ©s",
+    welcomeTitle: "Bienvenue au Grupo Zakher",
+    welcomeText: "DÃ©couvrez un sanctuaire oÃ¹ l'histoire et le luxe s'entremÃªlent. Le Grupo Zakher propose sept chambres exquises, des piscines privÃ©es et des cours luxuriantes, offrant une retraite inÃ©galÃ©e Ã  CarthagÃ¨ne. Chaque dÃ©tail a Ã©tÃ© soigneusement sÃ©lectionnÃ© pour que votre sÃ©jour soit tout simplement extraordinaire.",
+    aboutTitle: "Ã€ propos de la maison",
+    amenitiesTitle: "Ã‰quipements",
+    amenitiesList: [
+      "Climatisation", "WiFi",
+      "Piscine privÃ©e", "MÃ©nage quotidien",
+      "Conciergerie", "Petit-dÃ©jeuner inclus",
+      "Cuisine entiÃ¨rement Ã©quipÃ©e", "Smart TV"
+    ],
+    showAllAmenities: "Afficher tous les Ã©quipements",
+    rooms: [
+      { name: "L'Architecture", desc: "Ã‰lÃ©gance coloniale" },
+      { name: "Le Sanctuaire", desc: "Sept chambres exquises" },
+      { name: "L'Oasis", desc: "Piscines et cours privÃ©es" },
+      { name: "Le DÃ®ner", desc: "Excellence culinaire" }
+    ],
+    discover: "Explorer",
+    galleryTitle: "La Villa"
+  }
+};
+
+export function GrupoZakher({ lang = 'en' }: { lang?: string }) {
+  const t = translations[lang as keyof typeof translations] || translations.en;
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowSticky(window.scrollY > 600);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
+      {/* Custom Fonts */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+      `}} />
+
+      {/* Header */}
+      <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
+        <div className="flex items-center gap-4">
+          <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white">
+            Grupo Zakher
+          </div>
+        </div>
+        <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
+          <Link to="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
+          <Link to="/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.villa}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.accommodations}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.gallery}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.contact}</a>
+        </nav>
+        <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
+          {t.bookNow}
+        </button>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img 
+            src="/images/Gemini_Generated_Image_tfksw9tfksw9tfks.png"
+            alt="Grupo Zakher Cartagena"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        </div>
+
+        <div className="relative z-10 text-white max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
+            <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
+              <MapPin size={14} />
+              <span>{t.location}</span>
+            </div>
+            <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6">
+              {t.heroTitle}
+            </h1>
+            <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
+              {t.heroSubtitle}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Booking Widget */}
+      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="bg-white shadow-2xl p-2 flex flex-col md:flex-row items-center"
+        >
+          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
+            <div className="flex flex-col text-left">
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.arrival} - {t.departure}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.dates}</span>
+            </div>
+          </div>
+          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
+            <div className="flex flex-col text-left">
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.guests}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.adults}</span>
+            </div>
+          </div>
+          <div className="px-4 py-4 w-full md:w-auto">
+            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors">
+              {t.search}
+            </button>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* About & Amenities */}
+      <section className="py-24 px-6 max-w-5xl mx-auto">
+        <div className="mb-16">
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
+          <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
+            {t.welcomeText}
+          </p>
+        </div>
+
+        <div className="w-full h-px bg-gray-200 mb-16"></div>
+
+        <div>
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">{t.amenitiesTitle}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
+            {t.amenitiesList.map((amenity, index) => (
+              <div key={index} className="flex items-center gap-4">
+                <Check size={20} className="text-gray-400" strokeWidth={1.5} />
+                <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
+              </div>
+            ))}
+          </div>
+          <button className="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3 font-montserrat text-sm font-medium hover:bg-[#1A1A1A] hover:text-white transition-colors">
+            {t.showAllAmenities}
+          </button>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-16 px-6 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            { name: t.rooms[0].name, desc: t.rooms[0].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" },
+            { name: t.rooms[1].name, desc: t.rooms[1].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg" },
+            { name: t.rooms[2].name, desc: t.rooms[2].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg" },
+            { name: t.rooms[3].name, desc: t.rooms[3].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg" }
+          ].map((room, i) => (
+            <div key={i} className="group relative h-[600px] overflow-hidden">
+              <img 
+                src={room.img} 
+                alt={room.name} 
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700"></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{room.desc}</span>
+                <h3 className="font-cormorant text-4xl font-light mb-8">{room.name}</h3>
+                <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
+                  {t.discover}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-32 bg-[#1A1A1A] text-white">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div>
+              <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-4 block">Immerse Yourself</span>
+              <h2 className="font-cormorant text-4xl md:text-5xl font-light">{t.galleryTitle}</h2>
+            </div>
+            <button className="mt-8 md:mt-0 font-montserrat text-xs tracking-[0.2em] uppercase flex items-center gap-2 hover:text-gray-400 transition-colors">
+              View Full Gallery <ChevronRight size={14} />
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg"
+            ].map((img, i) => (
+              <div key={i} className="aspect-[3/4] overflow-hidden">
+                <img 
+                  src={img} 
+                  alt={`Gallery image ${i + 1}`} 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="bg-[#111] text-white py-20 px-6 text-center">
+        <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
+          Grupo Zakher
+        </div>
+        <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
+          &copy; {new Date().getFullYear()} Grupo Zakher. All rights reserved.
+        </p>
+      </footer>
+
+      {/* Sticky Floating Booking Bar */}
+      <AnimatePresence>
+        {showSticky && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-full border border-white/60 p-2 flex items-center justify-between"
+          >
+            <div className="hidden md:flex items-center gap-10 px-8">
+              <div className="flex flex-col text-left">
+                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.arrival} - {t.departure}</span>
+                <span className="font-cormorant text-xl text-gray-900 leading-none">{t.dates}</span>
+              </div>
+              <div className="w-[1px] h-8 bg-gray-300"></div>
+              <div className="flex flex-col text-left">
+                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.guests}</span>
+                <span className="font-cormorant text-xl text-gray-900 leading-none">{t.adults}</span>
+              </div>
+            </div>
+            <div className="flex-1 md:hidden px-6 text-left">
+              <span className="font-cormorant text-xl text-gray-900 leading-none">Grupo Zakher</span>
+            </div>
+            <button className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap">
+              {t.search}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/LanguageSelector.tsx\n\n```tsx\nimport React from 'react';
+import { cn } from '../lib/utils';
+import { Globe } from 'lucide-react';
+
+export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
+  const languages = [
+    { code: 'en', label: 'English' },
+    { code: 'es', label: 'EspaÃ±ol' },
+    { code: 'pt', label: 'PortuguÃªs' },
+    { code: 'fr', label: 'FranÃ§ais' }
+  ];
+
+  return (
+    <div className="fixed top-28 right-6 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-gray-200/50">
+      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600">
+        <Globe size={16} />
+      </div>
+      <div className="flex gap-1 pr-1">
+        {languages.map((l) => (
+          <button
+            key={l.code}
+            onClick={() => setLang(l.code)}
+            className={cn(
+              "px-3 py-1.5 text-xs font-bold rounded-full transition-all uppercase tracking-wider",
+              lang === l.code 
+                ? "bg-[#C2A878] text-white shadow-md" 
+                : "bg-transparent text-gray-600 hover:bg-gray-100"
+            )}
+          >
+            {l.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/Layout.tsx\n\n```tsx\nimport React, { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Menu, X, Instagram, Mail, Phone } from 'lucide-react';
+import { cn } from '../lib/utils';
+import { AIChat } from './AIChat';
+
+export function Layout() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'The Villa', path: '/the-villa' },
+    { name: 'Amenities', path: '/amenities' },
+    { name: 'Experiences', path: '/experiences' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
+  const isHome = location.pathname === '/';
+
+  return (
+    <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-white">
+      {/* Navigation */}
+      <header 
+        className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-300 border-b",
+          isScrolled || !isHome || mobileMenuOpen
+            ? "bg-white border-gray-200 py-4" 
+            : "bg-transparent border-transparent py-6 text-white"
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <Link to="/" className="font-serif text-2xl tracking-widest uppercase z-50 relative">
+            Casa Estrella
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path} 
+                to={link.path}
+                className={cn(
+                  "text-sm font-medium tracking-widest uppercase hover:opacity-70 transition-opacity",
+                  location.pathname === link.path && "border-b-2 border-current pb-1"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link 
+              to="/contact" 
+              className={cn(
+                "px-6 py-2 text-sm font-bold tracking-widest uppercase border transition-colors",
+                isScrolled || !isHome
+                  ? "border-black bg-black text-white hover:bg-white hover:text-black"
+                  : "border-white bg-white text-black hover:bg-transparent hover:text-white"
+              )}
+            >
+              Reserve
+            </Link>
+          </nav>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden z-50 relative"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} className="text-black" /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Nav */}
+        <div className={cn(
+          "fixed inset-0 bg-white z-40 flex flex-col items-center justify-center transition-transform duration-300 md:hidden",
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}>
+          <nav className="flex flex-col items-center gap-8 text-black">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path} 
+                to={link.path}
+                className="text-xl font-serif tracking-widest uppercase"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="md:col-span-2">
+            <h2 className="font-serif text-3xl tracking-widest uppercase mb-6">Casa Estrella</h2>
+            <p className="text-gray-400 max-w-sm leading-relaxed mb-8">
+              A sanctuary of colonial architecture and modern tranquility in the heart of Cartagena's historic walled city.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram size={20} /></a>
+              <a href="mailto:Reservas@grupozakher.com" className="text-gray-400 hover:text-white transition-colors"><Mail size={20} /></a>
+              <a href="tel:+573148182656" className="text-gray-400 hover:text-white transition-colors"><Phone size={20} /></a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="font-bold tracking-widest uppercase text-sm mb-6">Explore</h3>
+            <ul className="space-y-4 text-gray-400">
+              <li><Link to="/the-villa" className="hover:text-white transition-colors">The Villa</Link></li>
+              <li><Link to="/amenities" className="hover:text-white transition-colors">Amenities</Link></li>
+              <li><Link to="/experiences" className="hover:text-white transition-colors">Experiences</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-bold tracking-widest uppercase text-sm mb-6">Contact</h3>
+            <ul className="space-y-4 text-gray-400">
+              <li>Reservas@grupozakher.com</li>
+              <li>+57 314 818 2656</li>
+              <li>+57 305 299 9971</li>
+              <li>Cartagena de Indias, Colombia</li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-gray-800 text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center">
+          <p>&copy; {new Date().getFullYear()} Casa Estrella de San Pedro. All rights reserved.</p>
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <Link to="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
+          </div>
+        </div>
+      </footer>
+
+      {/* Global AI Chat */}
+      <AIChat />
+    </div>
+  );
+}
+\n```\n\n\n## src/components/MallorcaTheme.tsx\n\n```tsx\nimport React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const translations = {
+  en: {
+    nav: { home: "Home", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Contact" },
+    bookNow: "Reserve",
+    location: "Cartagena, Colombia",
+    heroTitle: "A Haven of Peace",
+    heroSubtitle: "Experience the timeless elegance of our colonial villa, nestled in the heart of the historic walled city.",
+    arrival: "Check-in",
+    departure: "Check-out",
+    dates: "Select dates",
+    guests: "Guests",
+    adults: "2 Adults",
+    search: "Check Availability",
+    welcomeTitle: "Welcome to Casa Estrella de San Pedro",
+    welcomeText: "Discover a sanctuary where history and luxury intertwine. Casa Estrella offers seven exquisite bedrooms, private pools, and lush courtyards, providing an unparalleled retreat in Cartagena. Every detail has been carefully curated to ensure your stay is nothing short of extraordinary.",
+    aboutTitle: "About the home",
+    amenitiesTitle: "Amenities",
+    amenitiesList: [
+      "Air conditioning", "WiFi",
+      "Private pool", "Daily housekeeping",
+      "Concierge", "Breakfast included",
+      "Fully equipped kitchen", "Smart TV"
+    ],
+    showAllAmenities: "Show all amenities",
+    rooms: [
+      { name: "The Architecture", desc: "Colonial elegance" },
+      { name: "The Sanctuary", desc: "Seven exquisite bedrooms" },
+      { name: "The Oasis", desc: "Private pools & courtyards" },
+      { name: "The Dining", desc: "Culinary excellence" }
+    ],
+    discover: "Explore",
+    galleryTitle: "The Villa"
+  },
+  es: {
+    nav: { home: "Inicio", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃ­a", contact: "Contacto" },
+    bookNow: "Reservar",
+    location: "Cartagena, Colombia",
+    heroTitle: "Un Remanso de Paz",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃ³n de la histÃ³rica ciudad amurallada.",
+    arrival: "Llegada",
+    departure: "Salida",
+    dates: "Seleccionar fechas",
+    guests: "HuÃ©spedes",
+    adults: "2 Adultos",
+    search: "Ver Disponibilidad",
+    welcomeTitle: "Bienvenido a Casa Estrella de San Pedro",
+    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃ­a sea nada menos que extraordinaria.",
+    aboutTitle: "Acerca de la casa",
+    amenitiesTitle: "Comodidades",
+    amenitiesList: [
+      "Aire acondicionado", "WiFi",
+      "Piscina privada", "Limpieza diaria",
+      "Conserje", "Desayuno incluido",
+      "Cocina totalmente equipada", "Smart TV"
+    ],
+    showAllAmenities: "Mostrar todas las comodidades",
+    rooms: [
+      { name: "La Arquitectura", desc: "Elegancia colonial" },
+      { name: "El Santuario", desc: "Siete habitaciones exquisitas" },
+      { name: "El Oasis", desc: "Piscinas y patios privados" },
+      { name: "El Comedor", desc: "Excelencia culinaria" }
+    ],
+    discover: "Explorar",
+    galleryTitle: "La Villa"
+  }
+};
+
+export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
+  const t = translations[lang as keyof typeof translations] || translations.en;
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowSticky(window.scrollY > 600);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
+      {/* Custom Fonts */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+      `}} />
+
+      {/* Header */}
+      <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
+        <div className="flex items-center gap-4">
+          <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white">
+            Casa Estrella
+          </div>
+        </div>
+        <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
+          <Link to="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
+          <Link to="/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.villa}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.accommodations}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.gallery}</a>
+          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.contact}</a>
+        </nav>
+        <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
+          {t.bookNow}
+        </button>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img 
+            src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg"
+            alt="Casa Estrella Aerial View"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        </div>
+
+        <div className="relative z-10 text-white max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
+            <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
+              <MapPin size={14} />
+              <span>{t.location}</span>
+            </div>
+            <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6">
+              {t.heroTitle}
+            </h1>
+            <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
+              {t.heroSubtitle}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Booking Widget */}
+      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="bg-white shadow-2xl p-2 flex flex-col md:flex-row items-center"
+        >
+          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
+            <div className="flex flex-col text-left">
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.arrival} - {t.departure}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.dates}</span>
+            </div>
+          </div>
+          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
+            <div className="flex flex-col text-left">
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.guests}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.adults}</span>
+            </div>
+          </div>
+          <div className="px-4 py-4 w-full md:w-auto">
+            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors">
+              {t.search}
+            </button>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* About & Amenities */}
+      <section className="py-24 px-6 max-w-5xl mx-auto">
+        <div className="mb-16">
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
+          <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
+            {t.welcomeText}
+          </p>
+        </div>
+
+        <div className="w-full h-px bg-gray-200 mb-16"></div>
+
+        <div>
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">{t.amenitiesTitle}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
+            {t.amenitiesList.map((amenity, index) => (
+              <div key={index} className="flex items-center gap-4">
+                <Check size={20} className="text-gray-400" strokeWidth={1.5} />
+                <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
+              </div>
+            ))}
+          </div>
+          <button className="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3 font-montserrat text-sm font-medium hover:bg-[#1A1A1A] hover:text-white transition-colors">
+            {t.showAllAmenities}
+          </button>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-16 px-6 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            { name: t.rooms[0].name, desc: t.rooms[0].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" },
+            { name: t.rooms[1].name, desc: t.rooms[1].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg" },
+            { name: t.rooms[2].name, desc: t.rooms[2].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg" },
+            { name: t.rooms[3].name, desc: t.rooms[3].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg" }
+          ].map((room, i) => (
+            <div key={i} className="group relative h-[600px] overflow-hidden">
+              <img 
+                src={room.img} 
+                alt={room.name} 
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700"></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{room.desc}</span>
+                <h3 className="font-cormorant text-4xl font-light mb-8">{room.name}</h3>
+                <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
+                  {t.discover}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-32 bg-[#1A1A1A] text-white">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div>
+              <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-4 block">Immerse Yourself</span>
+              <h2 className="font-cormorant text-4xl md:text-5xl font-light">{t.galleryTitle}</h2>
+            </div>
+            <button className="mt-8 md:mt-0 font-montserrat text-xs tracking-[0.2em] uppercase flex items-center gap-2 hover:text-gray-400 transition-colors">
+              View Full Gallery <ChevronRight size={14} />
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
+              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg"
+            ].map((img, i) => (
+              <div key={i} className="aspect-[3/4] overflow-hidden">
+                <img 
+                  src={img} 
+                  alt={`Gallery image ${i + 1}`} 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="bg-[#111] text-white py-20 px-6 text-center">
+        <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
+          Casa Estrella de San Pedro
+        </div>
+        <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
+          &copy; {new Date().getFullYear()} Casa Estrella. All rights reserved.
+        </p>
+      </footer>
+
+      {/* Sticky Floating Booking Bar */}
+      <AnimatePresence>
+        {showSticky && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-full border border-white/60 p-2 flex items-center justify-between"
+          >
+            <div className="hidden md:flex items-center gap-10 px-8">
+              <div className="flex flex-col text-left">
+                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.arrival} - {t.departure}</span>
+                <span className="font-cormorant text-xl text-gray-900 leading-none">{t.dates}</span>
+              </div>
+              <div className="w-[1px] h-8 bg-gray-300"></div>
+              <div className="flex flex-col text-left">
+                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.guests}</span>
+                <span className="font-cormorant text-xl text-gray-900 leading-none">{t.adults}</span>
+              </div>
+            </div>
+            <div className="flex-1 md:hidden px-6 text-left">
+              <span className="font-cormorant text-xl text-gray-900 leading-none">Casa Estrella</span>
+            </div>
+            <button className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap">
+              {t.search}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+\n```\n\n\n## src/components/ThemeSelector.tsx\n\n```tsx\nimport React from 'react';
+import { cn } from '../lib/utils';
+import { Palette } from 'lucide-react';
+
+export function ThemeSelector({ theme, setTheme }: { theme: string, setTheme: (t: string) => void }) {
+  const themes = [
+    'casadina', 'tulum', 'balinesia', 'mallorca'
+  ] as const;
+
+  return (
+    <div className="fixed top-44 right-6 z-50 flex flex-col gap-2 bg-white/80 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-gray-200/50 max-h-[70vh] overflow-y-auto">
+      <div className="flex items-center gap-2 mb-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider sticky top-0 bg-white/80 backdrop-blur-md py-1">
+        <Palette size={14} />
+        <span>Design Options</span>
+      </div>
+      {themes.map((t) => (
+        <button
+          key={t}
+          onClick={() => setTheme(t)}
+          className={cn(
+            "px-4 py-2 text-sm font-medium rounded-xl transition-all text-left capitalize",
+            theme === t 
+              ? "bg-black text-white shadow-md scale-105" 
+              : "bg-transparent text-gray-600 hover:bg-gray-100"
+          )}
+        >
+          {t}
+        </button>
+      ))}
+    </div>
+  );
+}
+\n```\n\n\n## src/components/TulumTheme.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Leaf, Sun, Wind, Droplets } from 'lucide-react';
+
+const translations = {
+  en: {
+    reserve: "Reserve",
+    heroTitle: "Barefoot Luxury in the Walled City.",
+    heroSubtitle: "A sanctuary of colonial architecture and modern tranquility.",
+    rooftopTitle: "Rooftop Oasis",
+    rooftopDesc: "Panoramic views of Cartagena's historic center.",
+    experiencesTitle: "Curated Experiences",
+    experiencesDesc: "Beyond our 7 luxurious bedrooms, Casa Estrella offers bespoke services designed to rejuvenate the soul. From on-site yoga to private gourmet dining, every detail is tailored to your rhythm.",
+    amenities: [
+      { title: "Yoga & Massage" },
+      { title: "Private Pools" },
+      { title: "Open Air Dining" },
+      { title: "Rooftop Bar" }
+    ]
+  },
+  es: {
+    reserve: "Reservar",
+    heroTitle: "Lujo Descalzo en la Ciudad Amurallada.",
+    heroSubtitle: "Un santuario de arquitectura colonial y tranquilidad moderna.",
+    rooftopTitle: "Oasis en la Azotea",
+    rooftopDesc: "Vistas panorÃ¡micas del centro histÃ³rico de Cartagena.",
+    experiencesTitle: "Experiencias Curadas",
+    experiencesDesc: "MÃ¡s allÃ¡ de nuestras 7 lujosas habitaciones, Casa Estrella ofrece servicios a medida diseÃ±ados para rejuvenecer el alma. Desde yoga en el lugar hasta cenas gourmet privadas, cada detalle se adapta a su ritmo.",
+    amenities: [
+      { title: "Yoga y Masajes" },
+      { title: "Piscinas Privadas" },
+      { title: "Comedor al Aire Libre" },
+      { title: "Bar en la Azotea" }
+    ]
+  }
+};
+
+export function TulumTheme({ lang = 'en' }: { lang?: string }) {
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
+  return (
+    <div className="min-h-screen bg-[#F5F2EB] text-[#2C3B2E] font-sans selection:bg-[#8A9A86] selection:text-white">
+      {/* Header */}
+      <header className="fixed top-0 w-full p-6 flex justify-between items-center z-40 bg-[#F5F2EB]/90 backdrop-blur-sm">
+        <div className="font-serif text-xl tracking-[0.2em] uppercase">Casa Estrella</div>
+        <button className="text-xs font-medium tracking-[0.1em] uppercase border-b border-[#2C3B2E] pb-1 hover:text-[#8A9A86] hover:border-[#8A9A86] transition-colors">
+          {t.reserve}
+        </button>
+      </header>
+
+      {/* Hero */}
+      <section className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="text-center max-w-4xl mx-auto mb-16"
+        >
+          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-[#2C3B2E] leading-tight">
+            {t.heroTitle}
+          </h1>
+          <p className="text-lg md:text-xl text-[#5C6B5E] font-light tracking-wide">
+            {t.heroSubtitle}
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[70vh]">
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.2 }}
+            className="md:col-span-8 rounded-2xl overflow-hidden relative group"
+          >
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            >
+              <source src="https://assets.mixkit.co/videos/preview/mixkit-swimming-pool-in-a-luxury-villa-4181-large.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-[#2C3B2E]/10"></div>
+          </motion.div>
+          <div className="md:col-span-4 grid grid-rows-2 gap-4">
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.4 }}
+              className="rounded-2xl overflow-hidden relative group"
+            >
+              <img 
+                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" 
+                alt="Facade" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.6 }}
+              className="bg-[#EAE5D9] rounded-2xl p-8 flex flex-col justify-center items-center text-center"
+            >
+              <Sun className="text-[#8A9A86] mb-4" size={32} />
+              <h3 className="font-serif text-2xl mb-2">{t.rooftopTitle}</h3>
+              <p className="text-[#5C6B5E] text-sm">{t.rooftopDesc}</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Wellness & Amenities */}
+      <section className="py-24 px-6 bg-[#2C3B2E] text-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="font-serif text-4xl md:text-5xl mb-8">{t.experiencesTitle}</h2>
+            <p className="text-[#A3B1A5] text-lg font-light leading-relaxed mb-12">
+              {t.experiencesDesc}
+            </p>
+            <div className="grid grid-cols-2 gap-8">
+              {[
+                { icon: <Leaf />, title: t.amenities[0].title },
+                { icon: <Droplets />, title: t.amenities[1].title },
+                { icon: <Wind />, title: t.amenities[2].title },
+                { icon: <Sun />, title: t.amenities[3].title }
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col gap-3">
+                  <div className="text-[#8A9A86]">{item.icon}</div>
+                  <span className="font-medium tracking-wide">{item.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-t-full overflow-hidden aspect-[3/4]">
+            <img 
+              src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg" 
+              alt="Living Area" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+\n```\n\n\n## src/index.css\n\n```css\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Anton&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-display: "Anton", ui-sans-serif, system-ui, sans-serif;
+}
+\n```\n\n\n## src/lib/utils.ts\n\n```ts\nimport { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+\n```\n\n\n## src/main.tsx\n\n```tsx\nimport {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+\n```\n\n\n## src/pages/Amenities.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Waves, Shield, Wifi, Coffee } from 'lucide-react';
+
+export function Amenities() {
+  return (
+    <div className="bg-gray-50 pt-32 pb-24 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-gray-900">Amenities</h1>
+          <p className="text-lg text-gray-600 font-light leading-relaxed">
+            Experience resort-style luxury with the privacy of a private estate. Casa Estrella is fully staffed and equipped to exceed your expectations.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { icon: <Waves size={32} />, title: "Private Pools", desc: "A stunning main pool and an intimate mini pool for ultimate relaxation." },
+            { icon: <Shield size={32} />, title: "24/7 Security", desc: "Dedicated security personnel from 6 PM to 7 AM for your peace of mind." },
+            { icon: <Coffee size={32} />, title: "Daily Housekeeping", desc: "Complimentary daily cleaning and turndown service." },
+            { icon: <Wifi size={32} />, title: "High-Speed WiFi", desc: "Seamless connectivity throughout the entire estate." }
+          ].map((item, i) => (
+            <div key={i} className="bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-black mb-6">{item.icon}</div>
+              <h3 className="font-serif text-2xl mb-4">{item.title}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## src/pages/Contact.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+
+export function Contact() {
+  return (
+    <div className="bg-gray-50 pt-32 pb-24 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-gray-900">Contact</h1>
+          <p className="text-lg text-gray-600 font-light leading-relaxed">
+            Ready to experience Casa Estrella? Our concierge team is available to assist with reservations and inquiries.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          {/* Contact Info */}
+          <div className="space-y-12">
+            <div className="flex items-start gap-6">
+              <div className="bg-black text-white p-4 rounded-full shrink-0">
+                <Mail size={24} />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl mb-2">Email Us</h3>
+                <p className="text-gray-600 mb-1">For general inquiries and reservations.</p>
+                <a href="mailto:Reservas@grupozakher.com" className="font-medium hover:underline">Reservas@grupozakher.com</a>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6">
+              <div className="bg-black text-white p-4 rounded-full shrink-0">
+                <Phone size={24} />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl mb-2">Call Us</h3>
+                <p className="text-gray-600 mb-1">Available 24/7 for immediate assistance.</p>
+                <a href="tel:+573148182656" className="font-medium hover:underline block">+57 314 818 2656</a>
+                <a href="tel:+573052999971" className="font-medium hover:underline block">+57 305 299 9971</a>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6">
+              <div className="bg-black text-white p-4 rounded-full shrink-0">
+                <MapPin size={24} />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl mb-2">Location</h3>
+                <p className="text-gray-600 mb-1">Located in the historic center.</p>
+                <p className="font-medium">Cartagena de Indias, Colombia</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="bg-white p-8 md:p-12 shadow-xl border border-gray-100">
+            <h3 className="font-serif text-3xl mb-8">Send an Inquiry</h3>
+            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                  <input type="text" className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                  <input type="text" className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <input type="email" className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea rows={4} className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all"></textarea>
+              </div>
+              <button type="submit" className="w-full bg-black text-white py-4 font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors">
+                Submit Inquiry
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## src/pages/Experiences.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { Utensils, Leaf, Plane, Wine } from 'lucide-react';
+
+export function Experiences() {
+  return (
+    <div className="bg-white pt-32 pb-24 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-gray-900">Curated Experiences</h1>
+          <p className="text-lg text-gray-600 font-light leading-relaxed">
+            Elevate your stay with our bespoke services. From private chefs to wellness therapies, every detail is tailored to your desires.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {[
+            { 
+              icon: <Utensils size={32} />, 
+              title: "Gourmet Dining", 
+              desc: "Experience the vibrant flavors of Colombia with our private chef services. From intimate dinners to lavish breakfasts, enjoy world-class cuisine in the comfort of your villa." 
+            },
+            { 
+              icon: <Leaf size={32} />, 
+              title: "Wellness & Spa", 
+              desc: "Rejuvenate your body and mind with our on-site massage and yoga services. Transform your suite or the rooftop into a private sanctuary." 
+            },
+            { 
+              icon: <Plane size={32} />, 
+              title: "Airport Transfers", 
+              desc: "Arrive in style and comfort. Our private, secure transportation ensures a seamless journey from the airport directly to Casa Estrella." 
+            },
+            { 
+              icon: <Wine size={32} />, 
+              title: "Rooftop Bar", 
+              desc: "Enjoy sunset cocktails with panoramic views of the historic walled city. Our bartender can craft bespoke drinks tailored to your taste." 
+            }
+          ].map((item, i) => (
+            <div key={i} className="flex flex-col md:flex-row gap-8 p-8 border border-gray-100 bg-gray-50 hover:bg-white transition-colors shadow-sm">
+              <div className="text-gray-400 shrink-0">{item.icon}</div>
+              <div>
+                <h3 className="font-serif text-2xl mb-4">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## src/pages/Home.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+export function Home() {
+  return (
+    <div className="bg-white">
+      {/* Hero Section */}
+      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            {/* Note: I'm using a high-quality placeholder video here. You can swap this URL with the exact .mp4 from your Zyro site. */}
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-swimming-pool-in-a-luxury-villa-4181-large.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+        
+        <div className="relative z-10 text-center text-white px-6 mt-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <h2 className="text-sm md:text-base font-medium tracking-[0.3em] uppercase mb-6">Cartagena, Colombia</h2>
+            <h1 className="font-serif text-5xl md:text-8xl mb-8 leading-tight drop-shadow-lg">
+              Casa Estrella<br />de San Pedro
+            </h1>
+            <Link 
+              to="/the-villa" 
+              className="inline-flex items-center gap-2 bg-white text-black px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-black hover:text-white transition-colors"
+            >
+              Discover the Villa <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Intro Section */}
+      <section className="py-24 px-6 max-w-4xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="font-serif text-3xl md:text-5xl mb-8 text-gray-900 leading-tight">
+            The crown jewel of the Zakher portfolio.
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed font-light">
+            Casa Estrella de San Pedro offers an uncompromising blend of colonial grandeur and modern luxury. As our exclusive flagship property, every detail of this seven-bedroom sanctuary is managed with singular focus to provide the ultimate retreat in Cartagena.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Featured Grid */}
+      <section className="py-12 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Link to="/the-villa" className="group relative h-[60vh] overflow-hidden bg-gray-100">
+            <img 
+              src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" 
+              alt="Architecture" 
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+            <div className="absolute bottom-8 left-8 text-white">
+              <h3 className="font-serif text-3xl mb-2">The Architecture</h3>
+              <span className="text-sm font-medium tracking-widest uppercase flex items-center gap-2">
+                Explore <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
+          
+          <Link to="/amenities" className="group relative h-[60vh] overflow-hidden bg-gray-100">
+            <img 
+              src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg" 
+              alt="Amenities" 
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+            <div className="absolute bottom-8 left-8 text-white">
+              <h3 className="font-serif text-3xl mb-2">Resort Amenities</h3>
+              <span className="text-sm font-medium tracking-widest uppercase flex items-center gap-2">
+                Discover <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
+\n```\n\n\n## src/pages/Villa.tsx\n\n```tsx\nimport React from 'react';
+import { motion } from 'motion/react';
+import { BedDouble, Bath, Square, Users } from 'lucide-react';
+
+export function Villa() {
+  return (
+    <div className="bg-white pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <h1 className="font-serif text-5xl md:text-7xl mb-6 text-gray-900">The Villa</h1>
+          <p className="text-lg text-gray-600 font-light leading-relaxed">
+            Seven meticulously designed suites offering total privacy and uncompromising luxury. Each room is a sanctuary of comfort, blending colonial charm with modern amenities.
+          </p>
+        </motion.div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24 border-y border-gray-200 py-12">
+          {[
+            { icon: <BedDouble size={24} />, label: "7 Bedrooms", desc: "En-suite luxury" },
+            { icon: <Users size={24} />, label: "14 Guests", desc: "Maximum capacity" },
+            { icon: <Bath size={24} />, label: "8 Bathrooms", desc: "Spa-like finishes" },
+            { icon: <Square size={24} />, label: "10,000 sq ft", desc: "Living space" }
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col items-center text-center">
+              <div className="text-gray-400 mb-4">{stat.icon}</div>
+              <h3 className="font-bold tracking-widest uppercase text-sm mb-1">{stat.label}</h3>
+              <p className="text-gray-500 text-sm">{stat.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Image Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <img 
+            src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg" 
+            alt="Dining Area" 
+            className="w-full h-[60vh] object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <img 
+            src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg" 
+            alt="Living Area" 
+            className="w-full h-[60vh] object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+\n```\n\n\n## package.json\n\n```json\n{
+  "name": "react-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node zip.js && node export_code.js && vite --port=3000 --host=0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.0",
+    "react-day-picker": "^9.14.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.13.2",
+    "tailwind-merge": "^3.5.0",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "archiver": "^7.0.1",
+    "autoprefixer": "^10.4.21",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
+\n```\n\n\n## vite.config.ts\n\n```ts\nimport tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import {defineConfig, loadEnv} from 'vite';
+
+export default defineConfig(({mode}) => {
+  const env = loadEnv(mode, '.', '');
+  return {
+    plugins: [react(), tailwindcss()],
+    define: {
+      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+    },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '.'),
+      },
+    },
+    server: {
+      // HMR is disabled in AI Studio via DISABLE_HMR env var.
+      // Do not modifyÃ¢Â€Â”file watching is disabled to prevent flickering during agent edits.
+      hmr: process.env.DISABLE_HMR !== 'true',
+    },
+  };
+});
+\n```\n\n\n## index.html\n\n```html\n<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+\n```\n
