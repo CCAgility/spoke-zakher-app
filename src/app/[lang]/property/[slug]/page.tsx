@@ -78,7 +78,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
         title: 'Casa Estrella de San Pedro',
         description: 'A luxurious colonial sanctuary.',
         price: 1500,
-        image_url: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg"
+        image_url: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg"
       };
     } else {
       notFound();
