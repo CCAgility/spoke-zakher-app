@@ -4,6 +4,38 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Check } from 'lucide-react';
 import Link from 'next/link';
+import { Globe } from 'lucide-react';
+
+const translations = {
+  en: {
+    nav: { home: "HOME", property: "PROPERTY", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    reserve: "Reserve",
+    booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
+    aboutTitle: "About Grupo Zakher",
+    aboutP1: "At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.",
+    aboutP2: "Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you're seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.",
+    portfolio: "Our Portfolio",
+    featured: "Featured Properties",
+    explore: "Explore",
+    contactPrice: "Contact for Price",
+    night: "/ Night",
+    rights: "All rights reserved."
+  },
+  es: {
+    nav: { home: "INICIO", property: "PROPIEDAD", casaEstrella: "CASA ESTRELLA", contact: "CONTACTO" },
+    reserve: "Reservar",
+    booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
+    aboutTitle: "Acerca de Grupo Zakher",
+    aboutP1: "En nuestra empresa, nos dedicamos a curar las mejores experiencias de lujo en la impresionante ciudad de Cartagena. Con propiedades excepcionales a nuestra disposición, nos esforzamos por ofrecer a nuestros huéspedes estadías inolvidables que combinan a la perfección comodidad, elegancia y encanto local.",
+    aboutP2: "Cada propiedad está meticulosamente diseñada para proporcionar un ambiente único, permitiendo a los visitantes sumergirse en la vibrante cultura y rica historia de Cartagena. Desde un servicio personalizado hasta comodidades exclusivas, nuestro equipo se compromete a garantizar que cada momento que pase con nosotros sea extraordinario. Ya sea que busque una escapada romántica, unas vacaciones familiares o un retiro rejuvenecedor, lo invitamos a descubrir lo último en hospitalidad de lujo a través de nuestras ofertas excepcionales. Experimente Cartagena como nunca antes y cree recuerdos duraderos en nuestros espléndidos alojamientos.",
+    portfolio: "Nuestro Portafolio",
+    featured: "Propiedades Destacadas",
+    explore: "Explorar",
+    contactPrice: "Contactar para Precio",
+    night: "/ Noche",
+    rights: "Todos los derechos reservados."
+  }
+};
 
 export function ZakherHome({ 
   siteConfig, 
@@ -25,12 +57,7 @@ export function ZakherHome({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const amenitiesList = [
-    "Air conditioning", "WiFi",
-    "Private pool", "Daily housekeeping",
-    "Concierge", "Breakfast included",
-    "Fully equipped kitchen", "Smart TV"
-  ];
+  const t = translations[langState as keyof typeof translations] || translations.en;
 
   return (
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
@@ -49,24 +76,31 @@ export function ZakherHome({
           </div>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity uppercase">HOME</Link>
+          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity uppercase">{t.nav.home}</Link>
           
           <div className="relative group">
             <button className="hover:opacity-70 transition-opacity flex items-center gap-2 uppercase">
-              PROPERTY <span className="text-[8px] opacity-70">▼</span>
+              {t.nav.property} <span className="text-[8px] opacity-70">▼</span>
             </button>
             <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
               <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white">
-                CASA ESTRELLA
+                {t.nav.casaEstrella}
               </Link>
             </div>
           </div>
 
-          <button className="hover:opacity-70 transition-opacity uppercase">CONTACT</button>
+          <button className="hover:opacity-70 transition-opacity uppercase">{t.nav.contact}</button>
         </nav>
-        <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
-          Reserve
-        </button>
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-4 text-[10px] font-montserrat tracking-widest text-white/70">
+            <Globe size={14} />
+            <Link href="/en" className={`hover:text-white transition-colors ${langState === 'en' ? 'text-white' : ''}`}>EN</Link>
+            <Link href="/es" className={`hover:text-white transition-colors ${langState === 'es' ? 'text-white' : ''}`}>ES</Link>
+          </div>
+          <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
+            {t.reserve}
+          </button>
+        </div>
       </header>
 
       {/* Hero Section */}
@@ -111,19 +145,19 @@ export function ZakherHome({
         >
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">Check-in - Check-out</span>
-              <span className="font-cormorant text-xl text-gray-800">Select dates</span>
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.booking.checkIn}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.booking.dates}</span>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">Guests</span>
-              <span className="font-cormorant text-xl text-gray-800">2 Adults</span>
+              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.booking.guests}</span>
+              <span className="font-cormorant text-xl text-gray-800">{t.booking.adults}</span>
             </div>
           </div>
           <div className="px-4 py-4 w-full md:w-auto">
             <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors">
-              Check Availability
+              {t.booking.search}
             </button>
           </div>
         </motion.div>
@@ -132,11 +166,11 @@ export function ZakherHome({
       {/* About Grupo Zakher */}
       <section className="py-24 px-6 max-w-5xl mx-auto">
         <div className="mb-16">
-          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">About Grupo Zakher</h2>
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
           <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
-            At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.
+            {t.aboutP1}
             <br /><br />
-            Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you&apos;re seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.
+            {t.aboutP2}
           </p>
         </div>
       </section>
@@ -144,8 +178,8 @@ export function ZakherHome({
       {/* Features Grid - Sovereign Property Loop */}
       <section className="py-16 px-6 max-w-[1400px] mx-auto">
         <div className="text-center mb-16">
-          <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Our Portfolio</span>
-          <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Featured Properties</h2>
+          <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">{t.portfolio}</span>
+          <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">{t.featured}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {properties?.map((prop, i) => (
@@ -158,11 +192,11 @@ export function ZakherHome({
               />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-700"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{prop.price ? `$${prop.price} / Night` : 'Contact for Price'}</span>
+                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{prop.price ? `$${prop.price} ${t.night}` : t.contactPrice}</span>
                 <h3 className="font-cormorant text-4xl font-light mb-8 text-center px-4">{prop.title}</h3>
-                <Link href={`/property/${prop.slug}`}>
+                <Link href={`/${langState}/property/${prop.slug}`}>
                   <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
-                    Explore
+                    {t.explore}
                   </button>
                 </Link>
               </div>
@@ -177,7 +211,7 @@ export function ZakherHome({
           {siteConfig?.site_title || "Grupo Zakher"}
         </div>
         <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
-          &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. All rights reserved.
+          &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. {t.rights}
         </p>
       </footer>
 
