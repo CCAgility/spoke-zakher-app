@@ -143,6 +143,10 @@ export function ZakherHome({
 
       {/* Features Grid - Sovereign Property Loop */}
       <section className="py-16 px-6 max-w-[1400px] mx-auto">
+        <div className="text-center mb-16">
+          <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Our Portfolio</span>
+          <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Featured Properties</h2>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {properties?.map((prop, i) => (
             <div key={i} className="group relative h-[600px] overflow-hidden">
