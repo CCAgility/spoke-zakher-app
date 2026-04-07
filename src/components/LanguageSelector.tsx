@@ -1,14 +1,14 @@
-// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
+'use client';
+
 import React from 'react';
-import { cn } from '../lib/utils';
 import { Globe } from 'lucide-react';
 
 export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
   const languages = [
     { code: 'en', label: 'English' },
-    { code: 'es', label: 'EspaÃƒÂ±ol' },
-    { code: 'pt', label: 'PortuguÃƒÂªs' },
-    { code: 'fr', label: 'FranÃƒÂ§ais' }
+    { code: 'es', label: 'Español' },
+    { code: 'pt', label: 'Português' },
+    { code: 'fr', label: 'Français' }
   ];
 
   return (
@@ -21,12 +21,11 @@ export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l:
           <button
             key={l.code}
             onClick={() => setLang(l.code)}
-            className={cn(
-              "px-3 py-1.5 text-xs font-bold rounded-full transition-all uppercase tracking-wider",
+            className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all uppercase tracking-wider ${
               lang === l.code 
                 ? "bg-[#C2A878] text-white shadow-md" 
                 : "bg-transparent text-gray-600 hover:bg-gray-100"
-            )}
+            }`}
           >
             {l.label}
           </button>

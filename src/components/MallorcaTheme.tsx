@@ -1,4 +1,5 @@
-// @ts-nocheck — Legacy Vite component, not used by Next.js App Router
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
@@ -38,19 +39,19 @@ const translations = {
     galleryTitle: "The Villa"
   },
   es: {
-    nav: { home: "Inicio", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "GalerÃ­a", contact: "Contacto" },
+    nav: { home: "Inicio", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Contacto" },
     bookNow: "Reservar",
     location: "Cartagena, Colombia",
     heroTitle: "Un Remanso de Paz",
-    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazÃ³n de la histÃ³rica ciudad amurallada.",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazón de la histórica ciudad amurallada.",
     arrival: "Llegada",
     departure: "Salida",
     dates: "Seleccionar fechas",
-    guests: "HuÃ©spedes",
+    guests: "Huéspedes",
     adults: "2 Adultos",
     search: "Ver Disponibilidad",
     welcomeTitle: "Bienvenido a Casa Estrella de San Pedro",
-    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadÃ­a sea nada menos que extraordinaria.",
+    welcomeText: "Descubra un santuario donde la historia y el lujo se entrelazan. Casa Estrella ofrece siete exquisitas habitaciones, piscinas privadas y exuberantes patios, brindando un refugio incomparable en Cartagena. Cada detalle ha sido cuidadosamente seleccionado para asegurar que su estadía sea nada menos que extraordinaria.",
     aboutTitle: "Acerca de la casa",
     amenitiesTitle: "Comodidades",
     amenitiesList: [
@@ -101,7 +102,7 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
           <Link href="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
-          <Link href="/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
+          <Link href="/property/casa-estrella" className="hover:opacity-70 transition-opacity">{t.nav.casaEstrella}</Link>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.villa}</a>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.accommodations}</a>
           <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.gallery}</a>

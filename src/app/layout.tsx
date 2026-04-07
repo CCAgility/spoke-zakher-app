@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { GlobalUI } from '../components/GlobalUI';
 
 export const metadata: Metadata = {
   title: 'Grupo Zakher — Casa Estrella de San Pedro',
@@ -20,6 +21,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-white text-gray-900 antialiased">
+        <GlobalUI />
         {children}
       </body>
     </html>
