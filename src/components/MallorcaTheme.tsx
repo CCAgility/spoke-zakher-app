@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const translations = {
   en: {
@@ -134,11 +135,13 @@ export function MallorcaTheme({
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <img 
+          <Image 
             src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/fallback-luxury.jpg'} 
             alt={property?.title || "Casa Estrella Aerial View"}
-            className="absolute inset-0 w-full h-full object-cover scale-105"
-            referrerPolicy="no-referrer"
+            fill
+            priority
+            quality={100}
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-[#1A1A1A]/30"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/40 to-transparent"></div>
