@@ -72,7 +72,7 @@ export function ZakherHome({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img 
-            src={siteConfig?.hero_image || "/parent-hero.png"}
+            src={siteConfig?.hero_image || "/parent-hero.jpg"}
             alt={siteConfig?.site_title || "Grupo Zakher Night Skyline"}
             className="absolute inset-0 w-full h-full object-cover scale-105"
             referrerPolicy="no-referrer"
