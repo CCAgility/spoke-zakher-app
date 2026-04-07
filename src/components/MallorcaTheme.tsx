@@ -24,10 +24,14 @@ const translations = {
     aboutTitle: "About the home",
     amenitiesTitle: "Amenities",
     amenitiesList: [
-      "Air conditioning", "WiFi",
-      "Private pool", "Daily housekeeping",
-      "Concierge", "Breakfast included",
-      "Fully equipped kitchen", "Smart TV"
+      "Pool & Mini Pool",
+      "Rooftop Bar",
+      "Outdoor Dining table",
+      "Security 6 PM - 7 AM",
+      "Complimentary Daily Housekeeping, WiFi & Toiletries",
+      "On-Site Gourmet Food & Beverage Options (Extra)",
+      "On-Site Massage & Yoga Services (Extra)",
+      "Private Airport Transfers (Extra)"
     ],
     showAllAmenities: "Show all amenities",
     rooms: [
@@ -56,10 +60,14 @@ const translations = {
     aboutTitle: "Acerca de la casa",
     amenitiesTitle: "Comodidades",
     amenitiesList: [
-      "Aire acondicionado", "WiFi",
-      "Piscina privada", "Limpieza diaria",
-      "Conserje", "Desayuno incluido",
-      "Cocina totalmente equipada", "Smart TV"
+      "Piscina y Mini Piscina",
+      "Bar en la Azotea",
+      "Mesa de Comedor al Aire Libre",
+      "Seguridad 6 PM - 7 AM",
+      "Limpieza Diaria, WiFi y Artículos de Aseo de Cortesía",
+      "Opciones de Comidas y Bebidas Gourmet en la Casa (Extra)",
+      "Servicios de Masajes y Yoga en la Casa (Extra)",
+      "Traslados Privados al Aeropuerto (Extra)"
     ],
     showAllAmenities: "Mostrar todas las comodidades",
     rooms: [
