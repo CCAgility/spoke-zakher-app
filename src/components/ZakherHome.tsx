@@ -47,7 +47,8 @@ export function ZakherHome({
   lang?: string;
 }) {
   const [showSticky, setShowSticky] = useState(false);
-  const [langState, setLang] = useState(lang || 'en');
+  // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
+  const langState = lang || 'en';
 
   useEffect(() => {
     const handleScroll = () => {
