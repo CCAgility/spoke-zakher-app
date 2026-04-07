@@ -8,7 +8,7 @@ import { resolveTitle, resolveDescription, resolveOgImage } from '@/lib/seo-util
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: { slug: string, lang: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string, lang: string }> }): Promise<Metadata> {
   const { slug } = await params;
   let property = null;
   let siteConfig = null;
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: { slug: string, lan
   };
 }
 
-export default async function PropertyPage({ params }: { params: { slug: string, lang: string } }) {
+export default async function PropertyPage({ params }: { params: Promise<{ slug: string, lang: string }> }) {
   const { slug, lang } = await params;
   let property = null;
   let siteConfig = null;

@@ -1,0 +1,54 @@
+{
+    "name": "Google AI Agent Orchestration",
+    "description": "Orchestrates multi-tenant AI agents with lead capture and product display capabilities.",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "functionDeclaration": {
+                "name": "captureLead",
+                "description": "Collects lead contact information for a callback.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "phone": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "email"
+                    ]
+                }
+            }
+        },
+        {
+            "functionDeclaration": {
+                "name": "showProducts",
+                "description": "Displays specific products to the user.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "handles": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "handles"
+                    ]
+                }
+            }
+        }
+    ],
+    "promptBlocks": [
+        "You have access to lead capture tools to help users get in touch with specialists.",
+        "You can also display products directly if the user expresses interest in specific items."
+    ]
+}

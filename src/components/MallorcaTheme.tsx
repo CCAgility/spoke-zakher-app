@@ -96,13 +96,13 @@ export function MallorcaTheme({
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
       {/* Custom Fonts */}
       <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
-        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+        .font-cormorant { font-family: 'Playfair Display', serif; }
+        .font-montserrat { font-family: 'Inter', sans-serif; }
       `}} />
 
       {/* Header */}
-      <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
+      <header className="fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 bg-[#1A1A1A]/40 backdrop-blur-md border-b border-white/10 text-white drop-shadow-md transition-all duration-300">
         <div className="flex items-center gap-4">
           <Link href="/" className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
             {siteConfig?.site_title || "Grupo Zakher"}
@@ -135,12 +135,13 @@ export function MallorcaTheme({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img 
-            src={property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : `/gallery/casa-estrella/img-01.webp`} 
-            alt="Casa Estrella Aerial View"
+            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/fallback-luxury.jpg'} 
+            alt={property?.title || "Casa Estrella Aerial View"}
             className="absolute inset-0 w-full h-full object-cover scale-105"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-[#1A1A1A]/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/40 to-transparent"></div>
         </div>
 
         <div className="relative z-10 text-white max-w-4xl">

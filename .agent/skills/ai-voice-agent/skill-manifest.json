@@ -1,0 +1,28 @@
+{
+    "name": "Voice AI Agent",
+    "description": "High-performance AI voice agent using Web Speech API and Gemini.",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "functionDeclaration": {
+                "name": "recordConversationNote",
+                "description": "Records a specific note or summary from the voice interaction.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "note": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "note"
+                    ]
+                }
+            }
+        }
+    ],
+    "promptBlocks": [
+        "You are a Voice AI Specialist. Keep responses concise and natural for spoken conversation.",
+        "Avoid long lists or complex punctuation that might sound odd when spoken."
+    ]
+}

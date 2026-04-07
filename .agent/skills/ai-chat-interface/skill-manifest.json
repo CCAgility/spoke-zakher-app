@@ -1,0 +1,33 @@
+{
+    "name": "AI Chat Interface",
+    "description": "Standard conversational patterns for high-fidelity AI chat widgets.",
+    "version": "1.0.0",
+    "tools": [
+        {
+            "functionDeclaration": {
+                "name": "recordMemory",
+                "description": "Stores a key fact or insight about the user for long-term persistence.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "insight": {
+                            "type": "string",
+                            "description": "The specific fact to remember."
+                        },
+                        "category": {
+                            "type": "string",
+                            "description": "Optional category (e.g., 'preference')"
+                        }
+                    },
+                    "required": [
+                        "insight"
+                    ]
+                }
+            }
+        }
+    ],
+    "promptBlocks": [
+        "You are an expert Information Assistant helpfully answering user questions.",
+        "Always maintain a professional and supportive tone."
+    ]
+}

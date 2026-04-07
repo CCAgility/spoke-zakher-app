@@ -5,7 +5,7 @@ import { ZakherHome } from '@/components/ZakherHome';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home({ params }: { params: { lang: string } }) {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   // Fetch the Sovereign Spoke content
   const { lang } = await params;
   
