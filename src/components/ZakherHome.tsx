@@ -47,9 +47,19 @@ export function ZakherHome({
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
           <Link href="/" className="hover:opacity-70 transition-opacity">Home</Link>
-          <Link href="/property/casa-estrella" className="hover:opacity-70 transition-opacity">Casa Estrella de San Pedro</Link>
-          <button className="hover:opacity-70 transition-opacity">The Villa</button>
-          <button className="hover:opacity-70 transition-opacity">Accommodations</button>
+          
+          <div className="relative group">
+            <button className="hover:opacity-70 transition-opacity flex items-center gap-2">
+              Property <span className="text-[8px] opacity-70">▼</span>
+            </button>
+            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
+              <Link href="/property/casa-estrella" className="block px-6 py-4 text-[10px] tracking-widest hover:bg-white/10 transition-colors text-white/90 hover:text-white">
+                Casa Estrella
+              </Link>
+            </div>
+          </div>
+
+          <button className="hover:opacity-70 transition-opacity">Amenities</button>
           <button className="hover:opacity-70 transition-opacity">Gallery</button>
           <button className="hover:opacity-70 transition-opacity">Contact</button>
         </nav>
@@ -62,8 +72,8 @@ export function ZakherHome({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img 
-            src={siteConfig?.hero_image || "/images/placeholder-night.jpg"}
-            alt={siteConfig?.site_title || "Grupo Zakher"}
+            src={siteConfig?.hero_image || "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg"}
+            alt={siteConfig?.site_title || "Grupo Zakher Night Skyline"}
             className="absolute inset-0 w-full h-full object-cover scale-105"
             referrerPolicy="no-referrer"
           />
