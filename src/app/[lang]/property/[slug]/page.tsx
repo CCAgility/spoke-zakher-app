@@ -6,10 +6,10 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export default async function PropertyPage({ params }: { params: { slug: string } }) {
+export default async function PropertyPage({ params }: { params: { slug: string, lang: string } }) {
+  const { slug, lang } = await params;
   let property = null;
   let siteConfig = null;
-  const { slug } = await params; // Next 16 async params handling if needed
 
   try {
     const siteConfigs = await directus.request(readItems('site_config', { limit: 1 }));
@@ -52,6 +52,6 @@ export default async function PropertyPage({ params }: { params: { slug: string 
 
   // Inject current property into the child theme component
   return (
-    <MallorcaTheme property={property} siteConfig={siteConfig} />
+    <MallorcaTheme property={property} siteConfig={siteConfig} lang={lang} />
   );
 }

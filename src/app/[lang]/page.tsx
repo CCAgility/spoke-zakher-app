@@ -5,8 +5,9 @@ import { ZakherHome } from '@/components/ZakherHome';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+export default async function Home({ params }: { params: { lang: string } }) {
   // Fetch the Sovereign Spoke content
+  const { lang } = await params;
   
   let siteConfig = null;
   let property = null;
@@ -43,6 +44,6 @@ export default async function Home() {
   }
 
   return (
-    <ZakherHome siteConfig={siteConfig} properties={properties} />
+    <ZakherHome siteConfig={siteConfig} properties={properties} lang={lang} />
   );
 }

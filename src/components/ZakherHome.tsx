@@ -7,12 +7,15 @@ import Link from 'next/link';
 
 export function ZakherHome({ 
   siteConfig, 
-  properties 
+  properties,
+  lang
 }: { 
   siteConfig: any; 
-  properties: any[]; 
+  properties: any[];
+  lang?: string;
 }) {
   const [showSticky, setShowSticky] = useState(false);
+  const [langState, setLang] = useState(lang || 'en');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,14 +49,14 @@ export function ZakherHome({
           </div>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href="/" className="hover:opacity-70 transition-opacity">Home</Link>
+          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity">Home</Link>
           
           <div className="relative group">
             <button className="hover:opacity-70 transition-opacity flex items-center gap-2">
               Property <span className="text-[8px] opacity-70">▼</span>
             </button>
             <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
-              <Link href="/property/casa-estrella" className="block px-6 py-4 text-[10px] tracking-widest hover:bg-white/10 transition-colors text-white/90 hover:text-white">
+              <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest hover:bg-white/10 transition-colors text-white/90 hover:text-white">
                 Casa Estrella
               </Link>
             </div>
