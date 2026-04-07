@@ -78,6 +78,78 @@ const translations = {
     ],
     discover: "Explorar",
     galleryTitle: "La Villa"
+  },
+  pt: {
+    nav: { home: "Início", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Contato" },
+    bookNow: "Reservar",
+    location: "Cartagena, Colômbia",
+    heroTitle: "Um Refúgio de Paz",
+    heroSubtitle: "Experimente a elegância atemporal da nossa vila colonial, aninhada no coração da histórica cidade murada.",
+    arrival: "Check-in",
+    departure: "Check-out",
+    dates: "Selecionar datas",
+    guests: "Hóspedes",
+    adults: "2 Adultos",
+    search: "Verificar Disponibilidade",
+    welcomeTitle: "Bem-vindo à Casa Estrella de San Pedro",
+    welcomeText: "Escondida no coração do bairro histórico de Cartagena, a Casa Estrella de San Pedro é um santuário de elegância colonial atemporal. Esta propriedade cuidadosamente restaurada de classe mundial oferece privacidade inigualável, vida de luxo luxuosa e as mais deslumbrantes vistas da cobertura no Caribe.",
+    aboutTitle: "Sobre a casa",
+    amenitiesTitle: "Comodidades",
+    amenitiesList: [
+      "Piscina e Mini Piscina",
+      "Bar na Cobertura",
+      "Mesa de Jantar ao Ar Livre",
+      "Segurança 6 PM - 7 AM",
+      "Serviço de Limpeza Diário Cortesia, WiFi e Artigos de Banho",
+      "Opções de Alimentos e Bebidas Gourmet no Local (Extra)",
+      "Serviços de Massagem e Yoga no Local (Extra)",
+      "Traslados Particulares do Aeroporto (Extra)"
+    ],
+    showAllAmenities: "Mostrar todas as comodidades",
+    rooms: [
+      { name: "A Arquitetura", desc: "Elegância colonial" },
+      { name: "O Santuário", desc: "Sete suítes requintadas" },
+      { name: "O Oásis", desc: "Piscinas e pátios privativos" },
+      { name: "O Jantar", desc: "Excelência culinária" }
+    ],
+    discover: "Explorar",
+    galleryTitle: "A Villa"
+  },
+  fr: {
+    nav: { home: "Accueil", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Contact" },
+    bookNow: "Réserver",
+    location: "Carthagène, Colombie",
+    heroTitle: "Un Havre de Paix",
+    heroSubtitle: "Découvrez l'élégance intemporelle de notre villa coloniale, nichée au cœur de la ville fortifiée historique.",
+    arrival: "Arrivée",
+    departure: "Départ",
+    dates: "Sélectionner dates",
+    guests: "Voyageurs",
+    adults: "2 Adultes",
+    search: "Vérifier la Disponibilité",
+    welcomeTitle: "Bienvenue à Casa Estrella de San Pedro",
+    welcomeText: "Nichée au cœur du quartier historique de Carthagène, la Casa Estrella de San Pedro est un sanctuaire d'élégance coloniale intemporelle. Ce domaine de classe mondiale méticuleusement restauré offre une intimité inégalée, une vie de luxe somptueuse et les vues sur les toits les plus époustouflantes des Caraïbes.",
+    aboutTitle: "À propos de la maison",
+    amenitiesTitle: "Commodités",
+    amenitiesList: [
+      "Piscine et Mini Piscine",
+      "Lounge sur le Toit",
+      "Table à Manger Extérieure",
+      "Sécurité de 18h à 7h",
+      "Ménage Quotidien Gratuit, WiFi et Articles de Toilette",
+      "Options de Restauration Gastronomique sur Place (En Supplément)",
+      "Services de Massage et de Yoga sur Place (En Supplément)",
+      "Transferts Aéroport Privés (En Supplément)"
+    ],
+    showAllAmenities: "Afficher tous les équipements",
+    rooms: [
+      { name: "L'Architecture", desc: "Élégance coloniale" },
+      { name: "Le Sanctuaire", desc: "Sept suites exquises" },
+      { name: "L'Oasis", desc: "Piscines et patios privés" },
+      { name: "La Salle à Manger", desc: "Excellence culinaire" }
+    ],
+    discover: "Explorer",
+    galleryTitle: "La Villa"
   }
 };
 
