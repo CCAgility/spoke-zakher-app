@@ -49,22 +49,20 @@ export function ZakherHome({
           </div>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity">Home</Link>
+          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity uppercase">HOME</Link>
           
           <div className="relative group">
-            <button className="hover:opacity-70 transition-opacity flex items-center gap-2">
-              Property <span className="text-[8px] opacity-70">▼</span>
+            <button className="hover:opacity-70 transition-opacity flex items-center gap-2 uppercase">
+              PROPERTY <span className="text-[8px] opacity-70">▼</span>
             </button>
             <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
-              <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest hover:bg-white/10 transition-colors text-white/90 hover:text-white">
-                Casa Estrella
+              <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white">
+                CASA ESTRELLA
               </Link>
             </div>
           </div>
 
-          <button className="hover:opacity-70 transition-opacity">Amenities</button>
-          <button className="hover:opacity-70 transition-opacity">Gallery</button>
-          <button className="hover:opacity-70 transition-opacity">Contact</button>
+          <button className="hover:opacity-70 transition-opacity uppercase">CONTACT</button>
         </nav>
         <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
           Reserve
@@ -104,7 +102,7 @@ export function ZakherHome({
       </section>
 
       {/* Booking Widget */}
-      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6">
+      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6 hidden">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -131,27 +129,15 @@ export function ZakherHome({
         </motion.div>
       </div>
 
-      {/* About & Amenities */}
+      {/* About Grupo Zakher */}
       <section className="py-24 px-6 max-w-5xl mx-auto">
         <div className="mb-16">
-          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">About the home</h2>
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">About Grupo Zakher</h2>
           <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
-            Discover a sanctuary where history and luxury intertwine. Our properties offer exquisite accommodations, private pools, and lush courtyards, providing an unparalleled retreat in Cartagena. Every detail has been carefully curated to ensure your stay is nothing short of extraordinary.
+            At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.
+            <br /><br />
+            Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you&apos;re seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.
           </p>
-        </div>
-
-        <div className="w-full h-px bg-gray-200 mb-16"></div>
-
-        <div>
-          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">Amenities</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
-            {amenitiesList.map((amenity, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <Check size={20} className="text-gray-400" strokeWidth={1.5} />
-                <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -199,7 +185,7 @@ export function ZakherHome({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-full border border-white/60 p-2 flex items-center justify-between"
+            className="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-full border border-white/60 p-2 items-center justify-between"
           >
             <div className="hidden md:flex items-center gap-10 px-8">
               <div className="flex flex-col text-left">
