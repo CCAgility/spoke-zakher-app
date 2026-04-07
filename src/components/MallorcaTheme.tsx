@@ -136,7 +136,7 @@ export function MallorcaTheme({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
-            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/fallback-luxury.jpg'} 
+            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || 'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg'} 
             alt={property?.title || "Casa Estrella Aerial View"}
             fill
             priority
@@ -168,7 +168,7 @@ export function MallorcaTheme({
       </section>
 
       {/* Booking Widget */}
-      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6">
+      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6 hidden">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
