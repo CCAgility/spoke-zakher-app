@@ -126,12 +126,21 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <img 
-            src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg"
-            alt="Casa Estrella Aerial View"
-            className="absolute inset-0 w-full h-full object-cover scale-105"
-            referrerPolicy="no-referrer"
-          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className={`relative group overflow-hidden ${i === 1 || i === 4 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
+                <img 
+                  src={`/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`} 
+                  alt={`Casa Estrella Gallery ${i}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center cursor-pointer">
+                  <span className="font-montserrat text-[10px] tracking-widest uppercase">View Image</span>
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
         </div>
 
@@ -210,32 +219,57 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-16 px-6 max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            { name: t.rooms[0].name, desc: t.rooms[0].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg" },
-            { name: t.rooms[1].name, desc: t.rooms[1].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg" },
-            { name: t.rooms[2].name, desc: t.rooms[2].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg" },
-            { name: t.rooms[3].name, desc: t.rooms[3].desc, img: "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg" }
-          ].map((room, i) => (
-            <div key={i} className="group relative h-[600px] overflow-hidden">
-              <img 
-                src={room.img} 
-                alt={room.name} 
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700"></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{room.desc}</span>
-                <h3 className="font-cormorant text-4xl font-light mb-8">{room.name}</h3>
-                <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
-                  {t.discover}
-                </button>
+      {/* Property Layout & Rates Module */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-16 md:text-center text-left">
+            <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Floor Plan & Configuration</span>
+            <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Private Villa Layout</h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Rooms List */}
+            <div className="space-y-6">
+              <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">7 Luxury Bedrooms</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 font-montserrat text-sm font-light text-gray-600">
+                <div className="flex border-l-2 border-black/10 pl-4 py-2 flex-col"><span className="font-medium text-black mb-1">Master Suite</span>King bed, Sofa, Bath, TV, A/C</div>
+                <div className="flex border-l-2 border-black/10 pl-4 py-2 flex-col"><span className="font-medium text-black mb-1">Junior Suite</span>King bed, Sofa, Bath, TV, A/C</div>
+                <div className="flex border-l-2 border-black/10 pl-4 py-2 flex-col"><span className="font-medium text-black mb-1">Double Room 1</span>Double bed, Bath, A/C</div>
+                <div className="flex border-l-2 border-black/10 pl-4 py-2 flex-col"><span className="font-medium text-black mb-1">Double Room 2 & 3</span>Double bed, Shared Bath, A/C</div>
+                <div className="flex border-l-2 border-black/10 pl-4 py-2 flex-col"><span className="font-medium text-black mb-1">Double Room 4 & 5</span>Double bed, Shared Bath, A/C</div>
               </div>
             </div>
-          ))}
+
+            {/* Rental Rates & Details */}
+            <div className="bg-[#1A1A1A] text-white p-10 flex flex-col justify-between h-full">
+              <div>
+                <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
+                <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
+                  Casa Estrella de San Pedro is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">16 guests</strong>.
+                </p>
+                <div className="mb-8">
+                  <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-gray-400 mb-4">Included Daily Services</h4>
+                  <ul className="space-y-3 font-montserrat text-sm font-light text-white/90">
+                    <li className="flex items-center gap-3"><Check size={16} /> Virtual Concierge</li>
+                    <li className="flex items-center gap-3"><Check size={16} /> Private Chef for Breakfast</li>
+                    <li className="flex items-center gap-3"><Check size={16} /> Complete Housekeeping</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="border-t border-white/20 pt-6 mt-8">
+                <div className="flex justify-between items-center mb-2 font-montserrat text-sm">
+                  <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">Low Season (3 Nights Min)</span>
+                  <span>$1,050 <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                </div>
+                <div className="flex justify-between items-center font-montserrat text-sm">
+                  <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">High Season (7 Nights Min)</span>
+                  <span>$1,995 <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
