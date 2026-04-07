@@ -78,7 +78,7 @@ export function ZakherHome({
             className="absolute inset-0 w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
 
         <div className="relative z-10 text-white max-w-4xl">
@@ -152,7 +152,7 @@ export function ZakherHome({
                 className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-700"></div>
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-700"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                 <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{prop.price ? `$${prop.price} / Night` : 'Contact for Price'}</span>
                 <h3 className="font-cormorant text-4xl font-light mb-8 text-center px-4">{prop.title}</h3>

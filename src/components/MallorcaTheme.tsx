@@ -151,8 +151,8 @@ export function MallorcaTheme({
             quality={100}
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#1A1A1A]/30"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-[#1A1A1A]/10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
 
         <div className="relative z-10 text-white max-w-4xl">
