@@ -147,7 +147,7 @@ export function ZakherHome({
           {properties?.map((prop, i) => (
             <div key={i} className="group relative h-[600px] overflow-hidden">
               <img 
-                src={prop.image_url} 
+                src={prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/img-01.webp' : '/fallback-luxury.jpg')} 
                 alt={prop.title} 
                 className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
                 referrerPolicy="no-referrer"
