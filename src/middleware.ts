@@ -7,10 +7,11 @@ const defaultLocale = 'en';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Exclude API routes, next internal files, and public assets
+  // Exclude API routes, next internal files, public assets, and private-admin routes
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
+    pathname.startsWith('/private-admin') ||
     pathname.includes('.')
   ) {
     return NextResponse.next();
