@@ -77,7 +77,7 @@ export function ZakherHome({
           <img 
             src={siteConfig?.hero_image || "/parent-hero.jpg"}
             alt={siteConfig?.site_title || "Grupo Zakher Night Skyline"}
-            className="absolute inset-0 w-full h-full object-cover scale-105"
+            className="absolute inset-0 w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
