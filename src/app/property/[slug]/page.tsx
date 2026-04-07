@@ -8,7 +8,18 @@ export const dynamic = 'force-dynamic';
 
 export default async function PropertyPage({ params }: { params: { slug: string } }) {
   let property = null;
+  let siteConfig = null;
   const { slug } = await params; // Next 16 async params handling if needed
+
+  try {
+    const siteConfigs = await directus.request(readItems('site_config', { limit: 1 }));
+    siteConfig = siteConfigs?.[0] || {
+      site_title: 'Grupo Zakher',
+      site_description: 'Premium property management and luxury real estate listings.'
+    };
+  } catch (e) {
+    console.error("Failed to fetch site_config:", e);
+  }
 
   try {
     const properties = await directus.request(
@@ -16,7 +27,8 @@ export default async function PropertyPage({ params }: { params: { slug: string 
         filter: {
           slug: { _eq: slug }
         },
-        limit: 1
+        limit: 1,
+        fields: ['*', 'gallery.*', 'amenities.amenity_id.*']
       })
     );
     property = properties?.[0];
@@ -39,8 +51,7 @@ export default async function PropertyPage({ params }: { params: { slug: string 
   }
 
   // Inject current property into the child theme component
-  // (We adapt MallorcaTheme to expect property prop eventually, but for now we just render it as is)
   return (
-    <MallorcaTheme />
+    <MallorcaTheme property={property} siteConfig={siteConfig} />
   );
 }

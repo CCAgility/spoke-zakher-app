@@ -25,7 +25,10 @@ export default async function Home() {
 
   try {
     properties = await directus.request(
-      readItems('properties', { limit: 10 })
+      readItems('properties', { 
+        limit: 10,
+        fields: ['*', 'gallery.*', 'amenities.amenity_id.*']
+      })
     );
   } catch (e) {
     console.error("Failed to fetch properties:", e);

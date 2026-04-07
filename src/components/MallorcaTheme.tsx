@@ -72,7 +72,15 @@ const translations = {
   }
 };
 
-export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
+export function MallorcaTheme({ 
+  lang = 'en',
+  property = null,
+  siteConfig = null
+}: { 
+  lang?: string,
+  property?: any,
+  siteConfig?: any
+}) {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [showSticky, setShowSticky] = useState(false);
 
@@ -96,9 +104,9 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
       {/* Header */}
       <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
         <div className="flex items-center gap-4">
-          <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white">
-            Casa Estrella
-          </div>
+          <Link href="/" className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
+            {siteConfig?.site_title || "Grupo Zakher"}
+          </Link>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
           <Link href="/" className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
@@ -127,7 +135,7 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img 
-            src={`/gallery/casa-estrella/img-01.webp`} 
+            src={property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : `/gallery/casa-estrella/img-01.webp`} 
             alt="Casa Estrella Aerial View"
             className="absolute inset-0 w-full h-full object-cover scale-105"
             referrerPolicy="no-referrer"
@@ -143,13 +151,13 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
           >
             <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
               <MapPin size={14} />
-              <span>{t.location}</span>
+              <span>{property?.location || "Cartagena, Colombia"}</span>
             </div>
-            <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6">
-              {t.heroTitle}
+            <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
+              {property?.title || "Casa Estrella de San Pedro"}
             </h1>
             <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
-              {t.heroSubtitle}
+              {property?.description || t.heroSubtitle}
             </p>
           </motion.div>
         </div>
@@ -237,7 +245,7 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
-                  Casa Estrella de San Pedro is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">16 guests</strong>.
+                  {property?.title || "Casa Estrella de San Pedro"} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
                 <div className="mb-8">
                   <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-gray-400 mb-4">Included Daily Services</h4>
@@ -252,11 +260,11 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
               <div className="border-t border-white/20 pt-6 mt-8">
                 <div className="flex justify-between items-center mb-2 font-montserrat text-sm">
                   <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">Low Season (3 Nights Min)</span>
-                  <span>$1,050 <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                  <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
                 </div>
                 <div className="flex justify-between items-center font-montserrat text-sm">
                   <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">High Season (7 Nights Min)</span>
-                  <span>$1,995 <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                  <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
                 </div>
               </div>
             </div>
@@ -278,11 +286,16 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className={`relative group overflow-hidden ${i === 1 || i === 4 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
+            {(property?.gallery?.length ? property.gallery : [1, 2, 3, 4, 5, 6, 7, 8]).map((item: any, i: number) => {
+              const imgSrc = item?.directus_files_id 
+                ? `https://directus-cms-159885988938.us-central1.run.app/assets/${item.directus_files_id}` 
+                : `/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`;
+              
+              return (
+              <div key={i} className={`relative group overflow-hidden ${i === 0 || i === 3 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
                 <img 
-                  src={`/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`} 
-                  alt={`Casa Estrella Gallery ${i}`}
+                  src={imgSrc} 
+                  alt={`${property?.title || "Casa Estrella"} Gallery ${i}`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   loading="lazy"
                 />
@@ -290,7 +303,7 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
                   <span className="font-montserrat text-[10px] tracking-widest uppercase">View Image</span>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -298,10 +311,10 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
       {/* Footer */}
       <footer className="bg-[#111] text-white py-20 px-6 text-center">
         <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
-          Casa Estrella de San Pedro
+          {property?.title || "Casa Estrella de San Pedro"}
         </div>
         <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
-          &copy; {new Date().getFullYear()} Casa Estrella. All rights reserved.
+          &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. All rights reserved.
         </p>
       </footer>
 
