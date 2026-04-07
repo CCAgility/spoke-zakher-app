@@ -126,21 +126,12 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className={`relative group overflow-hidden ${i === 1 || i === 4 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
-                <img 
-                  src={`/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`} 
-                  alt={`Casa Estrella Gallery ${i}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center cursor-pointer">
-                  <span className="font-montserrat text-[10px] tracking-widest uppercase">View Image</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <img 
+            src={`/gallery/casa-estrella/img-01.webp`} 
+            alt="Casa Estrella Aerial View"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            referrerPolicy="no-referrer"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
         </div>
 
@@ -286,19 +277,18 @@ export function MallorcaTheme({ lang = 'en' }: { lang?: string }) {
             </button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
-              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
-              "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg"
-            ].map((img, i) => (
-              <div key={i} className="aspect-[3/4] overflow-hidden">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className={`relative group overflow-hidden ${i === 1 || i === 4 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
                 <img 
-                  src={img} 
-                  alt={`Gallery image ${i + 1}`} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
-                  referrerPolicy="no-referrer"
+                  src={`/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`} 
+                  alt={`Casa Estrella Gallery ${i}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                  loading="lazy"
                 />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center cursor-pointer">
+                  <span className="font-montserrat text-[10px] tracking-widest uppercase">View Image</span>
+                </div>
               </div>
             ))}
           </div>
