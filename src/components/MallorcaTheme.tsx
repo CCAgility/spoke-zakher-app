@@ -248,11 +248,27 @@ export function MallorcaTheme({
                   {property?.title || "Casa Estrella de San Pedro"} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
                 <div className="mb-8">
-                  <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-gray-400 mb-4">Included Daily Services</h4>
+                  <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-gray-400 mb-4">Amenities & Services</h4>
                   <ul className="space-y-3 font-montserrat text-sm font-light text-white/90">
-                    <li className="flex items-center gap-3"><Check size={16} /> Virtual Concierge</li>
-                    <li className="flex items-center gap-3"><Check size={16} /> Private Chef for Breakfast</li>
-                    <li className="flex items-center gap-3"><Check size={16} /> Complete Housekeeping</li>
+                    {property?.amenities?.length ? (
+                      property.amenities.map((item: any, idx: number) => (
+                        <li key={idx} className="flex items-center gap-3">
+                          <Check size={16} className="text-white/60" /> 
+                          {item.amenity_id?.name || item}
+                        </li>
+                      ))
+                    ) : (
+                      <>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Pool & Mini Pool</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Rooftop Bar</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Outdoor Dining Table</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Security 6 PM - 7 AM</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Complimentary Daily Housekeeping, WiFi & Toiletries</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> On-Site Gourmet Food & Beverage Options (Extra)</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> On-Site Massage & Yoga Services (Extra)</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Private Airport Transfers (Extra)</li>
+                      </>
+                    )}
                   </ul>
                 </div>
               </div>
