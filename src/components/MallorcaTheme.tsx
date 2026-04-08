@@ -196,7 +196,7 @@ export function MallorcaTheme({
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
         <div className="flex items-center w-full">
-          <div className="w-[350px] lg:w-[420px] flex-shrink-0">
+          <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
             <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
               {getLocStr('title', t.nav.casaEstrella)}
             </Link>
