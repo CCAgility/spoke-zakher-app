@@ -303,11 +303,11 @@ export function MallorcaTheme({
           </div>
 
           <div className="lg:col-span-7">
-            <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">{t.amenitiesTitle}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-16">
+            <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.amenitiesTitle}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-12">
               {t.amenitiesList.map((amenity, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <Check size={14} className="text-orange-500 flex-shrink-0 mt-[3px]" strokeWidth={2} />
+                <div key={index} className="flex items-start gap-3">
+                  <Check size={14} className="text-orange-500 flex-shrink-0 mt-[4px]" strokeWidth={2} />
                   <span className="font-montserrat text-gray-500 font-light text-sm leading-relaxed">{amenity}</span>
                 </div>
               ))}
