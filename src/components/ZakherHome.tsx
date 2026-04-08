@@ -173,7 +173,7 @@ export function ZakherHome({
             <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
               {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
-            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2">
+            <div className={`absolute top-full left-0 mt-[1px] border border-white/10 border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-xl' : 'bg-[#1A1A1A]/60 backdrop-blur-md'}`}>
               <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
                 {properties && properties.length > 0 ? (
