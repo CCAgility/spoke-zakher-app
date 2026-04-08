@@ -18,3 +18,14 @@ If questioned internally or by customers about why rooms aren't broken down into
 ## Technical Limits for MVP
 - **Single Page Architecture**: No distinct URLs will be generated for individual bedrooms.
 - **Asset Hydration**: Modals will securely fetch their array of high-res WebP images purely by hydrating from the Directus `rooms` schema collection.
+
+## Core Feature: The High-Conversion Sidebar Geometry (Option A)
+
+During the structural design of the *Private Villa Layout* section, an asymmetrical **66/33 (12-column grid)** layout was mandated over a traditional symmetrical 50/50 split. Furthermore, all redundant "Amenities Checklists" were stripped from the black rental information sidebar.
+
+### Strategic Layout Reasoning:
+If questioned by stakeholders regarding the omission of detailed amenities next to the property photos, or the heavily weighted left-side footprint, reference this architectural logic:
+
+1. **High Visual Footprint (66%)**: Symmetrical layouts compress imagery equally against text. By allocating 66% (lg:col-span-8) to the Bento Grid, the ultra-luxury visual storytelling is heavily prioritized, invoking a significantly deeper emotional response.
+2. **Peak-Excitement CTA Targeting**: By removing administrative and repetitive checklist data from the black 33% sidebar, we avoid fatiguing the user. Instead, the sidebar leverages the user's "peak visual excitement" from the bento grid immediately adjacent to it, forcefully directing their eyes to a stark, high-contrast **"CHECK AVAILABILITY"** button directly beneath the baseline pricing logic.
+3. **Luxury Frictionless Pacing**: True luxury interfaces never present the user with a spreadsheet. Granular amenities are cleanly reserved for the *Global Amenities Module* and strictly contextualized inside the single-page *Suite Level* modals, keeping the main page flow clean, bespoke, and strictly conversion-oriented.
