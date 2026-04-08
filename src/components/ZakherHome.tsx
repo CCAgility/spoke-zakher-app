@@ -412,10 +412,29 @@ export function ZakherHome({
                   </div>
 
                   {inquiryType === 'reservation' && (
-                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-4 rounded-xl bg-white/5 border border-white/10 shadow-inner">
-                      <p className="text-gray-300 text-xs font-montserrat leading-relaxed">
-                        <span className="text-white font-medium tracking-wide">Ready to book?</span> Please indicate your desired dates and whether you'd like a specific room (7 available) or the entire villa in the message box below.
-                      </p>
+                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2">
+                      <div className="flex gap-6">
+                        <div className="flex-1 relative">
+                          <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check In</span>
+                          <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
+                        </div>
+                        <div className="flex-1 relative">
+                          <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check Out</span>
+                          <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
+                        </div>
+                      </div>
+                      <div className="relative">
+                        <select defaultValue="" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 appearance-none cursor-pointer">
+                          <option value="" disabled className="text-gray-500">Number of Guests</option>
+                          <option value="1" className="bg-[#1A1A1A] text-white">1 Guest</option>
+                          <option value="2" className="bg-[#1A1A1A] text-white">2 Guests</option>
+                          <option value="3" className="bg-[#1A1A1A] text-white">3+ Guests</option>
+                          <option value="villa" className="bg-[#1A1A1A] text-white">Entire Villa (Buyout)</option>
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pb-2">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                      </div>
                     </motion.div>
                   )}
 
