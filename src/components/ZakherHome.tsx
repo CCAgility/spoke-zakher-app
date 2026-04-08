@@ -135,6 +135,7 @@ export function ZakherHome({
   const [showSticky, setShowSticky] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
+  const [inquiryType, setInquiryType] = useState('questions');
   const [contactLang, setContactLang] = useState("");
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
@@ -399,16 +400,24 @@ export function ZakherHome({
                   {/* Inquiry Type Radios */}
                   <div className="flex gap-4">
                     <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
-                      <input type="radio" name="inquiryType" value="reservation" className="peer sr-only" />
+                      <input type="radio" name="inquiryType" value="reservation" checked={inquiryType === 'reservation'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
                       <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
                       <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Reservation</span>
                     </label>
                     <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
-                      <input type="radio" name="inquiryType" value="questions" defaultChecked className="peer sr-only" />
+                      <input type="radio" name="inquiryType" value="questions" checked={inquiryType === 'questions'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
                       <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
                       <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Questions</span>
                     </label>
                   </div>
+
+                  {inquiryType === 'reservation' && (
+                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-4 rounded-xl bg-white/5 border border-white/10 shadow-inner">
+                      <p className="text-gray-300 text-xs font-montserrat leading-relaxed">
+                        <span className="text-white font-medium tracking-wide">Ready to book?</span> Please indicate your desired dates and whether you'd like a specific room (7 available) or the entire villa in the message box below.
+                      </p>
+                    </motion.div>
+                  )}
 
                   <input required type="text" placeholder={t.contactForm?.name || "Full Name *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
                   <input required type="email" placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
