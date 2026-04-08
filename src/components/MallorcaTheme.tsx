@@ -216,7 +216,7 @@ export function MallorcaTheme({
             </div>
           </div>
 
-          <button onClick={(e) => { e.preventDefault(); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+          <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
           </nav>
         </div>
         <div className="flex items-center gap-6 hidden">
