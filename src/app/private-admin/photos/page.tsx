@@ -2,17 +2,50 @@
 
 import React, { useState, useEffect } from 'react';
 
-const LEGACY_URLS = [
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0416-AE0PJaGLJKikzKEo.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0648-AQExgDanpDUpa2Kz.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg"
+const LOCAL_URLS = [
+  "/gallery/casa-estrella/1.webp",
+  "/gallery/casa-estrella/5.webp",
+  "/gallery/casa-estrella/6.webp",
+  "/gallery/casa-estrella/9.webp",
+  "/gallery/casa-estrella/casa-estrella-bedroom.webp",
+  "/gallery/casa-estrella/casa-estrella-ext-dining-room.webp",
+  "/gallery/casa-estrella/casa-estrella-double-room-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-2-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-2-3.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-2-4.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-2.jpg",
+  "/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-3-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-3-3.jpg",
+  "/gallery/casa-estrella/casa-estrella-double-room-3-4.jpg",
+  "/gallery/casa-estrella/casa-estrella-double-room-3.jpg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4-3.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4-4.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4-5.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-4.jpg",
+  "/gallery/casa-estrella/casa-estrella-double-room-5-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-5-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-5-3.jpeg",
+  "/gallery/casa-estrella/casa-estrella-double-room-5-4.jpeg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-4.jpg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-5.jpg",
+  "/gallery/casa-estrella/casa-estrella-junior-suite-6.jpg",
+  "/gallery/casa-estrella/casa-estrella-kitchen.webp",
+  "/gallery/casa-estrella/casa-estrella-living-room-2.webp",
+  "/gallery/casa-estrella/casa-estrella-living-room.webp",
+  "/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg",
+  "/gallery/casa-estrella/casa-estrella-master-suite-2.jpeg",
+  "/gallery/casa-estrella/casa-estrella-master-suite-3.jpeg",
+  "/gallery/casa-estrella/casa-estrella-master-suite-4.jpeg",
+  "/gallery/casa-estrella/casa-estrella-master-suite-5.jpeg",
+  "/gallery/casa-estrella/casa-estrella-master-suite-6.jpg"
 ];
-
-const LOCAL_URLS = Array.from({ length: 9 }, (_, i) => `/gallery/casa-estrella/img-0${i + 1}.webp`);
 
 export default function PhotosAdmin() {
   const [notes, setNotes] = useState<Record<string, string>>({});
@@ -37,10 +70,47 @@ export default function PhotosAdmin() {
     }
   };
 
-  const images = [...LEGACY_URLS, ...LOCAL_URLS];
+  const images = [...LOCAL_URLS];
+
+  const stats = images.reduce((acc, url) => {
+    let category = "Misc";
+    if (url.includes('master-suite')) category = "Master Suite";
+    else if (url.includes('junior-suite')) category = "Junior Suite";
+    else if (url.includes('double-room-2')) category = "Double Room 2";
+    else if (url.includes('double-room-3')) category = "Double Room 3";
+    else if (url.includes('double-room-4')) category = "Double Room 4";
+    else if (url.includes('double-room-5')) category = "Double Room 5";
+    else if (url.includes('double-room')) category = "Double Room";
+    else if (url.includes('living-room')) category = "Living Room";
+    else if (url.includes('dining-room')) category = "Dining Room";
+    else if (url.includes('kitchen')) category = "Kitchen";
+    else if (url.includes('bedroom')) category = "Bedroom";
+    else if (/\d+\.webp$/.test(url)) category = "Exterior / Hero";
+    
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-8 font-sans pb-32">
+      <div className="mb-12 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <h2 className="text-xl font-bold mb-6 font-serif text-[#0f2e24]">Gallery Asset Dashboard</h2>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="bg-[#0f2e24] text-[#daae6a] p-6 rounded-xl flex-shrink-0 flex flex-col justify-center items-center h-full min-w-[200px]">
+             <div className="text-5xl font-light mb-2">{images.length}</div>
+             <div className="text-sm font-semibold uppercase tracking-wider">Total Assets</div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 flex-1">
+             {Object.entries(stats).sort((a, b) => b[1] - a[1]).map(([cat, count]) => (
+                <div key={cat} className="flex flex-col bg-gray-50 p-4 rounded-xl border border-gray-100 justify-center">
+                   <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1">{cat}</span>
+                   <span className="text-2xl text-gray-900 font-light">{count}</span>
+                </div>
+             ))}
+          </div>
+        </div>
+      </div>
+
       <h1 className="text-3xl font-light mb-2">Dev Administration</h1>
       <p className="text-gray-500 mb-8">Internal tool for annotating and tagging photography assets.</p>
 
