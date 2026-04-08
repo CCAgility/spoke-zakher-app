@@ -332,9 +332,9 @@ export function MallorcaTheme({
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">7 Luxury Bedrooms</h3>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {/* Master Suite Bento (Spans full width) */}
-                <div className="col-span-2 group relative h-[250px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                <div className="col-span-3 group relative h-[300px] md:h-[350px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
                   title: 'The Master Suite',
                   img: '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
                   gallery: ['/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-4.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-5.jpeg'],
@@ -355,7 +355,7 @@ export function MallorcaTheme({
                 </div>
                 
                 {/* Junior Suite Bento */}
-                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
                   title: 'Junior Suite',
                   img: '/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg',
                   gallery: ['/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-4.jpg'],
@@ -370,13 +370,13 @@ export function MallorcaTheme({
                   <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-xl md:text-2xl mb-1 drop-shadow-md">Junior Suite</h4>
+                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Junior Suite</h4>
                     <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                   </div>
                 </div>
 
                 {/* Guest Quarters Bento */}
-                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
                   title: 'Guest Quarters',
                   img: '/gallery/casa-estrella/6.webp',
                   gallery: ['/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg'],
@@ -391,11 +391,32 @@ export function MallorcaTheme({
                   <Image src="/gallery/casa-estrella/6.webp" alt="Double Rooms" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-xl md:text-2xl mb-1 drop-shadow-md">Guest Quarters</h4>
+                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Guest Quarters</h4>
                     <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                   </div>
                   <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 font-montserrat text-[10px] uppercase tracking-widest text-white border border-white/20">
                     5 ROOMS
+                  </div>
+                </div>
+
+                {/* Common Areas Bento (New 3rd Box) */}
+                <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                  title: 'Living Spaces',
+                  img: '/gallery/casa-estrella/casa-estrella-living-room.webp',
+                  gallery: ['/gallery/casa-estrella/casa-estrella-living-room.webp', '/gallery/casa-estrella/casa-estrella-ext-dining-room.webp', '/gallery/casa-estrella/casa-estrella-kitchen.webp'],
+                  desc: 'Breathtaking communal areas designed for hosting. From the lush courtyard dining space to the meticulously curated indoor lounging areas, every corner invites connection.',
+                  amenities: [
+                    { label: 'Outdoor Dining', icon: 'sun' },
+                    { label: 'Lounge Areas', icon: 'users' },
+                    { label: 'Courtyard Pool', icon: 'anchor' },
+                    { label: 'Rooftop Bar', icon: 'map-pin' }
+                  ]
+                })}>
+                  <Image src="/gallery/casa-estrella/casa-estrella-living-room.webp" alt="Common Areas" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
+                  <div className="absolute bottom-5 left-5 text-white">
+                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Living Spaces</h4>
+                    <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                   </div>
                 </div>
               </div>
@@ -580,6 +601,9 @@ export function MallorcaTheme({
                            {amenity.icon === 'bath' && <Bath size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
                            {amenity.icon === 'wind' && <Wind size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
                            {amenity.icon === 'users' && <Users size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'sun' && <Sun size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'anchor' && <Anchor size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'map-pin' && <MapPin size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
                            <span className="font-light leading-tight">{amenity.label}</span>
                          </div>
                       ))}
