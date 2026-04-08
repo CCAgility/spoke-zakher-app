@@ -387,7 +387,7 @@ export function MallorcaTheme({
       </section>
 
       {/* Gallery Section */}
-      <section className="py-32 bg-[#1A1A1A] text-white">
+      <section className="hidden py-32 bg-[#1A1A1A] text-white">
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16">
             <div>
@@ -434,7 +434,7 @@ export function MallorcaTheme({
 
       {/* Sticky Floating Booking Bar */}
       <AnimatePresence>
-        {showSticky && (
+        {false && showSticky && (
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
