@@ -29,3 +29,9 @@ We need to formalize this Spoke by inserting the `AG_IDENTITY.md` blueprint and 
 4. Wipe the local `.governance` folder and initialize the new `AG_IDENTITY.md`.
 
 Let me know if you would like me to proceed with these repairs.
+
+## 5. 📸 Photo Tagging Dev Sandbox
+A private, Zero-Auth development environment has been deployed to facilitate legacy photo migration and tagging. 
+- **Access Route**: [http://localhost:3000/private-admin/photos](http://localhost:3000/private-admin/photos)
+- **Architecture**: Bypasses Netxt.js `[lang]` middleware and leverages a Node.js FileSystem API (`/api/dev-notes`) to auto-save inputs directly to `dev-notes.json` in the project root.
+- **Purpose**: Annotating legacy Zyrosite assets alongside new local Turbopack WebP assets before mapping them securely to the Directus schema.

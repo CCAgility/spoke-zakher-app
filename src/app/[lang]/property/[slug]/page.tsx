@@ -78,7 +78,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
         title: 'Casa Estrella de San Pedro',
         description: 'A luxurious colonial sanctuary.',
         price: 1500,
-        image_url: "/gallery/casa-estrella/img-01.webp"
+        image_url: "/gallery/casa-estrella/1.webp"
       };
     } else {
       notFound();

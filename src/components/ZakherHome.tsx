@@ -34,6 +34,34 @@ const translations = {
     contactPrice: "Contactar para Precio",
     night: "/ Noche",
     rights: "Todos los derechos reservados."
+  },
+  pt: {
+    nav: { home: "INÍCIO", property: "PROPRIEDADE", casaEstrella: "CASA ESTRELLA", contact: "CONTATO" },
+    reserve: "Reservar",
+    booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
+    aboutTitle: "Sobre Grupo Zakher",
+    aboutP1: "Em nossa empresa, nos dedicamos a selecionar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos nossos hóspedes estadias inesquecíveis que combinam perfeitamente conforto, elegância e charme local.",
+    aboutP2: "Cada propriedade é meticulosamente projetada para proporcionar um ambiente único, permitindo que os visitantes mergulhem na cultura vibrante e rica história de Cartagena. De atendimento personalizado a comodidades exclusivas, nossa equipe está comprometida em garantir que cada momento passado conosco seja extraordinário. Seja em busca de uma escapada romântica, férias em família ou um refúgio revigorante, convidamos você a descobrir o máximo em hospitalidade de luxo através de nossas ofertas excepcionais. Descubra Cartagena como nunca antes e crie memórias eternas em nossas luxuosas acomodações.",
+    portfolio: "Nosso Portfólio",
+    featured: "Propriedades em Destaque",
+    explore: "Explorar",
+    contactPrice: "Contatar para Preço",
+    night: "/ Noite",
+    rights: "Todos os direitos reservados."
+  },
+  fr: {
+    nav: { home: "ACCUEIL", property: "PROPRIÉTÉ", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    reserve: "Réserver",
+    booking: { checkIn: "Arrivée - Départ", dates: "Sélectionner dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
+    aboutTitle: "À propos du Grupo Zakher",
+    aboutP1: "Dans notre entreprise, nous nous consacrons à organiser les meilleures expériences de luxe dans la ville éblouissante de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables qui allient harmonieusement confort, élégance et charme local.",
+    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. Du service personnalisé aux aménagements exclusifs, notre équipe s'engage à garantir que chaque instant passé avec nous soit extraordinaire. Que vous recherchiez une escapade romantique, des vacances en famille ou une retraite régénérante, nous vous invitons à découvrir le summum de l'hospitalité de luxe grâce à nos offres exceptionnelles. Découvrez Carthagène comme jamais auparavant et créez des souvenirs inoubliables dans nos somptueux hébergements.",
+    portfolio: "Notre Portefeuille",
+    featured: "Propriétés en Vedette",
+    explore: "Explorer",
+    contactPrice: "Demander le Prix",
+    night: "/ Nuit",
+    rights: "Tous droits réservés."
   }
 };
 
@@ -97,6 +125,8 @@ export function ZakherHome({
             <Globe size={14} />
             <Link href="/en" className={`hover:text-white transition-colors ${langState === 'en' ? 'text-white' : ''}`}>EN</Link>
             <Link href="/es" className={`hover:text-white transition-colors ${langState === 'es' ? 'text-white' : ''}`}>ES</Link>
+            <Link href="/pt" className={`hover:text-white transition-colors ${langState === 'pt' ? 'text-white' : ''}`}>PT</Link>
+            <Link href="/fr" className={`hover:text-white transition-colors ${langState === 'fr' ? 'text-white' : ''}`}>FR</Link>
           </div>
           <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
             {t.reserve}
@@ -186,7 +216,7 @@ export function ZakherHome({
           {properties?.map((prop, i) => (
             <div key={i} className="group relative h-[600px] overflow-hidden">
               <img 
-                src={prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/img-01.webp' : '/fallback-luxury.jpg')} 
+                src={prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/1.webp' : '/fallback-luxury.jpg')} 
                 alt={prop.title} 
                 className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
                 referrerPolicy="no-referrer"

@@ -2,17 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-const LEGACY_URLS = [
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0389-mp8WRqw9M5T49WDb.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0398-m7V3a5Gq50IoWDoN.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0416-AE0PJaGLJKikzKEo.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0430-AVL7R1jyNyFoWb4O.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0644-m5KM1LpyNxsxzl9b.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0648-AQExgDanpDUpa2Kz.jpeg",
-  "https://assets.zyrosite.com/Yan15JwwoxIyZnZ0/_mg_0667-mxB4RMNwkBc51ekz.jpeg"
-];
-
-const LOCAL_URLS = Array.from({ length: 9 }, (_, i) => `/gallery/casa-estrella/img-0${i + 1}.webp`);
+const LOCAL_URLS = Array.from({ length: 9 }, (_, i) => `/gallery/casa-estrella/${i + 1}.webp`);
 
 export default function PhotosAdmin() {
   const [notes, setNotes] = useState<Record<string, string>>({});
@@ -37,7 +27,7 @@ export default function PhotosAdmin() {
     }
   };
 
-  const images = [...LEGACY_URLS, ...LOCAL_URLS];
+  const images = [...LOCAL_URLS];
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-8 font-sans pb-32">

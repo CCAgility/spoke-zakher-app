@@ -216,7 +216,7 @@ export function MallorcaTheme({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
-            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/gallery/casa-estrella/img-01.webp'} 
+            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/gallery/casa-estrella/1.webp'} 
             alt={property?.title || "Casa Estrella Aerial View"}
             fill
             priority
