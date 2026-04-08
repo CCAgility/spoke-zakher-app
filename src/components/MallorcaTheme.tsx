@@ -198,11 +198,11 @@ export function MallorcaTheme({
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center w-full">
           <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
-            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-semibold hover:opacity-70 transition-colors">
+            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
               {getLocStr('title', t.nav.casaEstrella)}
             </Link>
           </div>
-          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-semibold">
+          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
           <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
