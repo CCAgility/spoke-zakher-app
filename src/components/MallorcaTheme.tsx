@@ -423,7 +423,9 @@ export function MallorcaTheme({
             </div>
 
             {/* Rental Rates & Details */}
-            <div className="lg:col-span-5 xl:col-span-4 bg-[#1A1A1A] text-white p-10 md:p-12 flex flex-col justify-between h-full shadow-2xl transition-all duration-300">
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col h-full">
+              <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-transparent mb-8 border-b border-transparent pb-4 select-none pointer-events-none hidden lg:block" aria-hidden="true">-</h3>
+              <div className="bg-[#1A1A1A] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-2xl transition-all duration-300">
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
@@ -446,6 +448,7 @@ export function MallorcaTheme({
                   CHECK AVAILABILITY
                 </button>
                 <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">No booking fees. Contact our concierge directly.</p>
+              </div>
               </div>
             </div>
           </div>
