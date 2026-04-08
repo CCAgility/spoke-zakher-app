@@ -166,8 +166,7 @@ export function ZakherHome({
             {siteConfig?.site_title || "Grupo Zakher"}
           </Link>
           <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${langState}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
-          
+
           <div className="relative group focus-within:opacity-100">
             <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
               {t.nav.property} <span className="text-xs opacity-70">▼</span>
