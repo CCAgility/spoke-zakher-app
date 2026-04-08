@@ -164,6 +164,14 @@ export function MallorcaTheme({
   siteConfig?: any
 }) {
   const t = translations[lang as keyof typeof translations] || translations.en;
+
+  // Resolver: Prevent root English CMS strings from contaminating translated pages if no CMS translation row exists.
+  const getLocStr = (field: string, localFallback: any) => {
+    const tr = property?.translations?.find((x: any) => x.languages_code === lang || x.languages_code?.startsWith(lang));
+    if (tr && tr[field]) return tr[field];
+    if (lang === 'en' && property && property[field]) return property[field];
+    return localFallback;
+  };
   const [showSticky, setShowSticky] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
@@ -223,7 +231,7 @@ export function MallorcaTheme({
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
             src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/gallery/casa-estrella/1.webp'} 
-            alt={property?.title || "Casa Estrella Aerial View"}
+            alt={getLocStr('title', t.nav.casaEstrella) + " Aerial View"}
             fill
             priority
             quality={100}
@@ -244,10 +252,10 @@ export function MallorcaTheme({
               <span>{property?.location || "Cartagena, Colombia"}</span>
             </div>
             <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
-              {property?.title || "Casa Estrella de San Pedro"}
+              {getLocStr('title', t.nav.casaEstrella)}
             </h1>
             <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
-              {property?.description || t.heroSubtitle}
+              {getLocStr('description', t.heroSubtitle)}
             </p>
           </motion.div>
         </div>
@@ -286,7 +294,7 @@ export function MallorcaTheme({
         <div className="mb-16">
           <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
           <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
-            {t.welcomeText}
+            {getLocStr('about_description', t.welcomeText) || getLocStr('description', t.welcomeText)}
           </p>
         </div>
 
@@ -335,7 +343,7 @@ export function MallorcaTheme({
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
-                  {property?.title || "Casa Estrella de San Pedro"} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
+                  {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
                 <div className="mb-8">
                   <h4 className="font-montserrat text-xs tracking-widest uppercase text-gray-500 mb-4">Amenities & Services</h4>
@@ -401,7 +409,7 @@ export function MallorcaTheme({
               <div key={i} className={`relative group overflow-hidden ${i === 0 || i === 3 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
                 <Image 
                   src={imgSrc} 
-                  alt={`${property?.title || "Casa Estrella"} Gallery ${i}`}
+                  alt={`${getLocStr('title', t.nav.casaEstrella)} Gallery ${i}`}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                 />
@@ -417,7 +425,7 @@ export function MallorcaTheme({
       {/* Footer */}
       <footer className="bg-[#111] text-white py-20 px-6 text-center">
         <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
-          {property?.title || "Casa Estrella de San Pedro"}
+          {getLocStr('title', t.nav.casaEstrella)}
         </div>
         <p className="font-montserrat text-xs tracking-widest text-gray-600 uppercase">
           &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. All rights reserved.

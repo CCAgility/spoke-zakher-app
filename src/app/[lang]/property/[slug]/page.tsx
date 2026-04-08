@@ -63,7 +63,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
           slug: { _eq: slug }
         },
         limit: 1,
-        fields: ['*', 'gallery.*', 'amenities.amenity_id.*']
+        fields: ['*', 'gallery.*', 'amenities.amenity_id.*', 'translations.*']
       })
     );
     property = properties?.[0];
@@ -72,17 +72,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
   }
 
   if (!property) {
-    // If Directus failed and it's casa-estrella, use fallback for now just to keep demo up
-    if (slug === 'casa-estrella') {
-      property = {
-        title: 'Casa Estrella de San Pedro',
-        description: 'A luxurious colonial sanctuary.',
-        price: 1500,
-        image_url: "/gallery/casa-estrella/1.webp"
-      };
-    } else {
-      notFound();
-    }
+    notFound();
   }
 
   // Inject current property into the child theme component
