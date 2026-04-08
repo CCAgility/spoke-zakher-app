@@ -542,11 +542,11 @@ export function MallorcaTheme({
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative w-full max-w-5xl bg-[#1A1A1A] border border-white/10 shadow-2xl flex flex-col md:flex-row overflow-hidden"
+              className="relative w-[95vw] max-w-7xl bg-[#1A1A1A] border border-white/10 shadow-2xl flex flex-col md:flex-row overflow-hidden h-[90vh] md:h-[85vh]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Visual Suite Gallery: Scrollable Left Pane */}
-              <div className="relative w-full md:w-2/3 h-[300px] md:h-[700px] bg-black overflow-y-auto flex flex-col snap-y snap-mandatory cursor-ns-resize" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="relative w-full flex-1 bg-black overflow-y-auto flex flex-col snap-y snap-mandatory cursor-ns-resize" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 <style dangerouslySetInnerHTML={{__html: `::-webkit-scrollbar { display: none; }`}} />
                 {(activeRoom.gallery || [activeRoom.img]).map((photo: string, i: number) => (
                   <div key={i} className="relative w-full min-h-full snap-start">
@@ -561,7 +561,7 @@ export function MallorcaTheme({
               </div>
 
               {/* Structured Info Box: Right Pane */}
-              <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-white relative max-h-[700px] overflow-y-auto">
+              <div className="w-full md:w-[420px] flex-shrink-0 p-8 md:p-10 flex flex-col justify-center bg-white relative overflow-y-auto">
                 <button className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors bg-gray-50 p-2 rounded-full" onClick={() => setActiveRoom(null)}><X size={20} strokeWidth={1.5} /></button>
                 
                 <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 block">Casa Estrella de San Pedro</span>
