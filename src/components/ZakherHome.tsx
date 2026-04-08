@@ -5,18 +5,19 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Globe } from 'lucide-react';
+import { PropertySlideshow } from './PropertySlideshow';
+import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
   en: {
-    nav: { home: "HOME", property: "PROPERTY", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
-    heroSubtitle: "Premium property management and luxury real estate listings.",
+    heroSubtitle: "Experience the timeless elegance of our colonial villa, nestled in the heart of the historic walled city.",
     reserve: "Reserve",
     booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
-    aboutTitle: "About Grupo Zakher",
-    aboutP1: "At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.",
-    aboutP2: "Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you're seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.",
+    aboutTitle: "The Grupo Zakher Standard",
+    aboutP1: "Grupo Zakher curates an exclusive collection of luxury properties, specializing in unparalleled guest experiences. Our estates merge historic charm with modern sophistication.",
+    aboutP2: "From sprawling colonial courtyards to rooftop plunge pools, every Zakher property promises absolute privacy and world-class concierge service.",
     portfolio: "Our Portfolio",
+    nav: { home: "Home", property: "Properties", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Featured Properties",
     explore: "Explore",
     contactPrice: "Contact for Price",
@@ -25,14 +26,14 @@ const translations = {
     rights: "All rights reserved."
   },
   es: {
-    nav: { home: "INICIO", property: "PROPIEDAD", casaEstrella: "CASA ESTRELLA", contact: "CONTACTO" },
-    heroSubtitle: "Gestión inmobiliaria premium y listados de bienes raíces de lujo.",
+    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazón de la histórica ciudad amurallada.",
     reserve: "Reservar",
     booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
-    aboutTitle: "Acerca de Grupo Zakher",
-    aboutP1: "En nuestra empresa, nos dedicamos a curar las mejores experiencias de lujo en la impresionante ciudad de Cartagena. Con propiedades excepcionales a nuestra disposición, nos esforzamos por ofrecer a nuestros huéspedes estadías inolvidables que combinan a la perfección comodidad, elegancia y encanto local.",
-    aboutP2: "Cada propiedad está meticulosamente diseñada para proporcionar un ambiente único, permitiendo a los visitantes sumergirse en la vibrante cultura y rica historia de Cartagena. Desde un servicio personalizado hasta comodidades exclusivas, nuestro equipo se compromete a garantizar que cada momento que pase con nosotros sea extraordinario. Ya sea que busque una escapada romántica, unas vacaciones familiares o un retiro rejuvenecedor, lo invitamos a descubrir lo último en hospitalidad de lujo a través de nuestras ofertas excepcionales. Experimente Cartagena como nunca antes y cree recuerdos duraderos en nuestros espléndidos alojamientos.",
+    aboutTitle: "El Estándar Grupo Zakher",
+    aboutP1: "Grupo Zakher selecciona una colección exclusiva de propiedades de lujo, especializándose en experiencias incomparables para los huéspedes. Nuestras fincas combinan el encanto histórico con la sofisticación moderna.",
+    aboutP2: "Desde extensos patios coloniales hasta piscinas de inmersión en la azotea, cada propiedad de Zakher promete privacidad absoluta y servicio de conserjería de clase mundial.",
     portfolio: "Nuestro Portafolio",
+    nav: { home: "Inicio", property: "Propiedades", casaEstrella: "Casa Estrella", contact: "Conserjería" },
     featured: "Propiedades Destacadas",
     explore: "Explorar",
     contactPrice: "Contactar para Precio",
@@ -41,14 +42,14 @@ const translations = {
     rights: "Todos los derechos reservados."
   },
   pt: {
-    nav: { home: "INÍCIO", property: "PROPRIEDADE", casaEstrella: "CASA ESTRELLA", contact: "CONTATO" },
-    heroSubtitle: "Gestão imobiliária premium e listagens de imóveis de luxo.",
+    heroSubtitle: "Experimente a elegância atemporal da nossa vila colonial, aninhada no coração da histórica cidade murada.",
     reserve: "Reservar",
     booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
-    aboutTitle: "Sobre o Grupo Zakher",
-    aboutP1: "Em nossa empresa, nos dedicamos a organizar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos hóspedes estadias inesquecíveis que combinam conforto, elegância e charme local.",
-    aboutP2: "Cada propriedade é cuidadosamente projetada para proporcionar um ambiente único, permitindo aos visitantes mergulhar na rica história de Cartagena. Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário.",
+    aboutTitle: "O Padrão Grupo Zakher",
+    aboutP1: "O Grupo Zakher faz a curadoria de uma coleção exclusiva de propriedades de luxo, especializando-se em experiências inigualáveis para os hóspedes. Nossas propriedades mesclam charme histórico com sofisticação moderna.",
+    aboutP2: "Desde extensos pátios coloniais até piscinas nas coberturas, cada propriedade Zakher promete privacidade absoluta e serviço de concierge de classe mundial.",
     portfolio: "Nosso Portfólio",
+    nav: { home: "Início", property: "Propriedades", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Propriedades em Destaque",
     explore: "Explorar",
     contactPrice: "Consultar Preço",
@@ -57,14 +58,14 @@ const translations = {
     rights: "Todos os direitos reservados."
   },
   fr: {
-    nav: { home: "ACCUEIL", property: "PROPRIÉTÉ", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
-    heroSubtitle: "Gestion immobilière haut de gamme et annonces immobilières de luxe.",
+    heroSubtitle: "Découvrez l'élégance intemporelle de notre villa coloniale, nichée au cœur de la ville fortifiée historique.",
     reserve: "Réserver",
-    booking: { checkIn: "Arrivée - Départ", dates: "Sélectionnez vos dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
-    aboutTitle: "À propos de Grupo Zakher",
-    aboutP1: "Dans notre entreprise, nous nous engageons à offrir les meilleures expériences de luxe dans la magnifique ville de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables où se mêlent confort, élégance et charme local.",
-    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant passé avec nous est extraordinaire.",
+    booking: { checkIn: "Arrivée - Départ", dates: "Sélectionner dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
+    aboutTitle: "Le Standard Grupo Zakher",
+    aboutP1: "Grupo Zakher sélectionne une collection exclusive de propriétés de luxe, se spécialisant dans des expériences clients inégalées. Nos domaines allient charme historique et sophistication moderne.",
+    aboutP2: "Des vastes cours coloniales aux bassins sur les toits, chaque propriété Zakher promet une intimité absolue et un service de conciergerie de classe mondiale.",
     portfolio: "Notre Portefeuille",
+    nav: { home: "Accueil", property: "Propriétés", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
     featured: "Propriétés en Vedette",
     explore: "Explorer",
     contactPrice: "Contactez pour le Prix",
@@ -325,156 +326,7 @@ export function ZakherHome({
       </AnimatePresence>
 
       {/* Contact Drawer - 60/40 Split */}
-      <AnimatePresence>
-        {isDrawerOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsDrawerOpen(false)}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: "spring", damping: 30, stiffness: 220 }}
-              className="fixed right-0 top-0 bottom-0 w-full md:w-[40%] bg-black/85 backdrop-blur-3xl z-50 p-8 md:p-12 text-white shadow-[-20px_0_50px_rgba(0,0,0,0.5)] border-l border-white/5 overflow-y-auto"
-            >
-              <button onClick={() => setIsDrawerOpen(false)} className="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors duration-300"><X size={28} strokeWidth={1} /></button>
-              
-              {/* Concierge Segmented Control */}
-              <div className="hidden bg-white/5 rounded-full p-1 mb-10 w-fit">
-                <button 
-                  onClick={() => setDrawerTab('reserve')}
-                  className={`px-8 py-2 rounded-full text-[10px] font-montserrat tracking-[0.2em] uppercase transition-all duration-300 ${drawerTab === 'reserve' ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'text-gray-400 hover:text-white'}`}
-                >
-                  {t.reserve}
-                </button>
-                <button 
-                  onClick={() => setDrawerTab('contact')}
-                  className={`px-8 py-2 rounded-full text-[10px] font-montserrat tracking-[0.2em] uppercase transition-all duration-300 ${drawerTab === 'contact' ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'text-gray-400 hover:text-white'}`}
-                >
-                  {t.nav.contact}
-                </button>
-              </div>
-
-              <h2 className="text-4xl font-cormorant font-light mb-2 tracking-wide">
-                {drawerTab === 'reserve' ? "Book Your Stay" : (t.contactForm?.title || "Contact Concierge")}
-              </h2>
-              <p className="text-gray-400 font-montserrat text-xs tracking-wide mb-12">
-                {drawerTab === 'reserve' ? "Select your dates to check availability." : (t.contactForm?.subtitle || "How can we assist with your stay?")}
-              </p>
-
-              {/* Reserve Tab Content */}
-              {drawerTab === 'reserve' && (
-                <div className="space-y-8 font-montserrat animate-in fade-in slide-in-from-right-4 duration-500">
-                  <div className="border border-white/10 rounded-2xl p-6 bg-white/5">
-                    <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">Dates</p>
-                    <input type="text" placeholder="Check In - Check Out" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors" />
-                  </div>
-                  <div className="border border-white/10 rounded-2xl p-6 bg-white/5">
-                    <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">Guests</p>
-                    <select defaultValue="2 Guests" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors appearance-none cursor-pointer">
-                      <option className="bg-[#1A1A1A]">1 Guest</option>
-                      <option className="bg-[#1A1A1A]" value="2 Guests">2 Guests</option>
-                      <option className="bg-[#1A1A1A]">3 Guests</option>
-                      <option className="bg-[#1A1A1A]">4+ Guests</option>
-                    </select>
-                  </div>
-                  <div className="pt-4">
-                    <button className="w-full bg-white text-black py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-transparent hover:text-white border border-white transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] relative overflow-hidden group">
-                      <span className="relative z-10 group-hover:tracking-[0.4em] transition-all duration-500">Check Availability</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Contact Tab Content */}
-              {drawerTab === 'contact' && (
-                <form 
-                  onSubmit={(e) => { e.preventDefault(); alert(t.contactForm?.success || "Thanks for your inquiry. A concierge will be in touch shortly."); setIsDrawerOpen(false); }} 
-                  className="space-y-8 font-montserrat animate-in fade-in slide-in-from-left-4 duration-500"
-                >
-                  {/* Inquiry Type Radios */}
-                  <div className="flex gap-4">
-                    <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
-                      <input type="radio" name="inquiryType" value="reservation" checked={inquiryType === 'reservation'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
-                      <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
-                      <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Reservation</span>
-                    </label>
-                    <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
-                      <input type="radio" name="inquiryType" value="questions" checked={inquiryType === 'questions'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
-                      <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
-                      <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Questions</span>
-                    </label>
-                  </div>
-
-                  {inquiryType === 'reservation' && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2">
-                      <div className="flex gap-6">
-                        <div className="flex-1 relative">
-                          <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check In</span>
-                          <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
-                        </div>
-                        <div className="flex-1 relative">
-                          <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check Out</span>
-                          <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
-                        </div>
-                      </div>
-                      <div className="relative">
-                        <select defaultValue="" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 appearance-none cursor-pointer">
-                          <option value="" disabled className="text-gray-500">Number of Guests</option>
-                          <option value="1" className="bg-[#1A1A1A] text-white">1 Guest</option>
-                          <option value="2" className="bg-[#1A1A1A] text-white">2 Guests</option>
-                          <option value="3" className="bg-[#1A1A1A] text-white">3+ Guests</option>
-                          <option value="villa" className="bg-[#1A1A1A] text-white">Entire Villa (Buyout)</option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pb-2">
-                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  <input required type="text" placeholder={t.contactForm?.name || "Full Name *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
-                  <input required type="email" placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
-                  <input required type="tel" placeholder={t.contactForm?.phone || "WhatsApp / Phone *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
-                  <div className="relative">
-                    <select value={contactLang} onChange={(e) => setContactLang(e.target.value)} className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 appearance-none cursor-pointer">
-                      <option value="" disabled className="text-gray-500">{t.contactForm?.language || "Preferred Language (Optional)"}</option>
-                      <option value="en" className="bg-[#1A1A1A] text-white">English</option>
-                      <option value="es" className="bg-[#1A1A1A] text-white">Español</option>
-                      <option value="pt" className="bg-[#1A1A1A] text-white">Português</option>
-                      <option value="fr" className="bg-[#1A1A1A] text-white">Français</option>
-                      <option value="other" className="bg-[#1A1A1A] text-white">Other</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pb-2">
-                      <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                  </div>
-                  {contactLang === 'other' && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                      <input type="text" placeholder={t.contactForm?.specifyLanguage || "Please specify language"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
-                    </motion.div>
-                  )}
-                  <textarea required placeholder={t.contactForm?.requests || "Message/Special Requests *"} rows={3} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 resize-none"></textarea>
-                  
-                  <div className="pt-4">
-                    <button type="submit" className="w-full bg-white text-black py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-transparent hover:text-white border border-white transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] relative overflow-hidden group">
-                      <span className="relative z-10 group-hover:tracking-[0.4em] transition-all duration-500">{t.contactForm?.send || "Send Message"}</span>
-                    </button>
-                    <p className="mt-6 text-center text-[9px] font-montserrat text-gray-500/70 tracking-widest uppercase">
-                      * {t.contactForm?.mandatory || "Indicates a mandatory field"}
-                    </p>
-                  </div>
-                </form>
-              )}
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
     </div>
   );
 }

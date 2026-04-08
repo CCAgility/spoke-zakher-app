@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
   en: {
-    nav: { home: "Home", property: "Property", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Contact" },
+    nav: { home: "Home", property: "Property", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Concierge" },
     bookNow: "Reserve",
     location: "Cartagena, Colombia",
     heroTitle: "A Haven of Peace",
@@ -44,7 +45,7 @@ const translations = {
     galleryTitle: "The Villa"
   },
   es: {
-    nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Contacto" },
+    nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Conserjería" },
     bookNow: "Reservar",
     location: "Cartagena, Colombia",
     heroTitle: "Un Remanso de Paz",
@@ -80,7 +81,7 @@ const translations = {
     galleryTitle: "La Villa"
   },
   pt: {
-    nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Contato" },
+    nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Concierge" },
     bookNow: "Reservar",
     location: "Cartagena, Colômbia",
     heroTitle: "Um Refúgio de Paz",
@@ -116,7 +117,7 @@ const translations = {
     galleryTitle: "A Villa"
   },
   fr: {
-    nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Contact" },
+    nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Conciergerie" },
     bookNow: "Réserver",
     location: "Carthagène, Colombie",
     heroTitle: "Un Havre de Paix",
@@ -164,6 +165,8 @@ export function MallorcaTheme({
 }) {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [showSticky, setShowSticky] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -205,9 +208,9 @@ export function MallorcaTheme({
 
           <a href="#" className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.accommodations}</a>
           <a href="#" className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.gallery}</a>
-          <a href="#" className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.contact}</a>
+          <button onClick={(e) => { e.preventDefault(); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.contact}</button>
         </nav>
-        <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
+        <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95 hidden">
           {t.bookNow}
         </button>
       </header>
@@ -448,6 +451,8 @@ export function MallorcaTheme({
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
     </div>
   );
 }
