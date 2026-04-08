@@ -254,7 +254,7 @@ export function MallorcaTheme({
               <MapPin size={14} />
               <span>{property?.location || "Cartagena, Colombia"}</span>
             </div>
-            <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
+            <h1 className="font-montserrat text-5xl md:text-7xl lg:text-8xl font-light tracking-[0.05em] uppercase leading-none mb-6 drop-shadow-lg">
               {getLocStr('title', t.nav.casaEstrella)}
             </h1>
             <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
@@ -296,18 +296,18 @@ export function MallorcaTheme({
       <section className="py-24 px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           <div className="lg:col-span-5">
-            <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
+            <h2 className="font-montserrat text-2xl md:text-3xl text-[#1A1A1A] mb-8 font-medium tracking-[0.1em] uppercase">{t.aboutTitle}</h2>
             <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
               {getLocStr('about_description', t.welcomeText) || getLocStr('description', t.welcomeText)}
             </p>
           </div>
 
           <div className="lg:col-span-7">
-            <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">{t.amenitiesTitle}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-16">
+            <h2 className="font-montserrat text-2xl md:text-3xl text-[#1A1A1A] mb-8 font-medium tracking-[0.1em] uppercase">{t.amenitiesTitle}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-12">
               {t.amenitiesList.map((amenity, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <Check size={14} className="text-orange-500 flex-shrink-0 mt-[3px]" strokeWidth={2} />
+                <div key={index} className="flex items-start gap-3">
+                  <Check size={14} className="text-orange-500 flex-shrink-0 mt-[4px]" strokeWidth={2} />
                   <span className="font-montserrat text-gray-500 font-light text-sm leading-relaxed">{amenity}</span>
                 </div>
               ))}
@@ -321,7 +321,7 @@ export function MallorcaTheme({
         <div className="max-w-[1400px] mx-auto">
           <div className="mb-16 md:text-center text-left">
             <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Floor Plan & Configuration</span>
-            <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Private Villa Layout</h2>
+            <h2 className="font-montserrat text-2xl md:text-3xl font-light text-black tracking-[0.1em] uppercase">Private Villa Layout</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
@@ -347,7 +347,7 @@ export function MallorcaTheme({
                   <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt="Master Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-6 left-6 text-white">
-                    <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">The Master Suite</h4>
+                    <h4 className="font-montserrat text-xl mb-1 drop-shadow-md tracking-[0.1em] uppercase">The Master Suite</h4>
                     <span className="font-montserrat text-xs tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">View Layout <ChevronRight size={14} /></span>
                   </div>
                 </div>
@@ -389,7 +389,7 @@ export function MallorcaTheme({
                     <Image src="/gallery/casa-estrella/6.webp" alt={`Double Room ${i + 1}`} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                     <div className="absolute bottom-5 left-5 text-white">
-                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Bedroom {i + 3}</h4>
+                      <h4 className="font-montserrat text-xs md:text-sm mb-1 drop-shadow-md leading-tight tracking-[0.1em] uppercase">Bedroom {i + 3}</h4>
                       <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export function MallorcaTheme({
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-transparent mb-8 border-b border-transparent pb-4 select-none pointer-events-none hidden lg:block" aria-hidden="true">-</h3>
               <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transition-all duration-700">
               <div>
-                <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
+                <h3 className="font-montserrat text-xl font-light mb-6 tracking-[0.1em] uppercase">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-white/80 mb-8">
                   {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
