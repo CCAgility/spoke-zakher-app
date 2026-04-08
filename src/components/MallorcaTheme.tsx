@@ -305,17 +305,14 @@ export function MallorcaTheme({
 
         <div>
           <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-10 font-medium">{t.amenitiesTitle}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-16">
             {t.amenitiesList.map((amenity, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <Check size={20} className="text-orange-500" strokeWidth={2} />
-                <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
+              <div key={index} className="flex items-start gap-4">
+                <Check size={14} className="text-orange-500 flex-shrink-0 mt-[3px]" strokeWidth={2} />
+                <span className="font-montserrat text-gray-500 font-light text-sm leading-relaxed">{amenity}</span>
               </div>
             ))}
           </div>
-          <button className="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3 font-montserrat text-sm font-medium hover:bg-[#1A1A1A] hover:text-white transition-colors active:scale-95">
-            {t.showAllAmenities}
-          </button>
         </div>
       </section>
 
