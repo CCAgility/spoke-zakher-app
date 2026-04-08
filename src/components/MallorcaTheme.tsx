@@ -257,7 +257,7 @@ export function MallorcaTheme({
             <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
               {getLocStr('title', t.nav.casaEstrella)}
             </h1>
-            <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
+            <p className="font-cormorant text-2xl font-light italic max-w-xl leading-relaxed text-white/90">
               {getLocStr('description', t.heroSubtitle)}
             </p>
           </motion.div>
@@ -296,7 +296,7 @@ export function MallorcaTheme({
       <section className="py-24 px-6 max-w-5xl mx-auto">
         <div className="mb-16">
           <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
-          <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
+          <p className="font-cormorant text-gray-800 leading-loose text-xl md:text-2xl font-light">
             {getLocStr('about_description', t.welcomeText) || getLocStr('description', t.welcomeText)}
           </p>
         </div>
@@ -308,8 +308,8 @@ export function MallorcaTheme({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-16">
             {t.amenitiesList.map((amenity, index) => (
               <div key={index} className="flex items-start gap-4">
-                <Check size={14} className="text-orange-500 flex-shrink-0 mt-[3px]" strokeWidth={2} />
-                <span className="font-montserrat text-gray-500 font-light text-sm leading-relaxed">{amenity}</span>
+                <Check size={16} className="text-orange-500 flex-shrink-0 mt-[6px]" strokeWidth={1.5} />
+                <span className="font-cormorant text-gray-600 font-light text-lg md:text-xl leading-relaxed">{amenity}</span>
               </div>
             ))}
           </div>
@@ -404,7 +404,7 @@ export function MallorcaTheme({
               <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transition-all duration-700">
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
-                <p className="font-montserrat text-sm font-light leading-relaxed text-white/80 mb-8">
+                <p className="font-cormorant text-xl md:text-2xl font-light leading-relaxed text-white/90 mb-8">
                   {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
               </div>
