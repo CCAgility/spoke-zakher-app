@@ -173,17 +173,32 @@ export function MallorcaTheme({
     return localFallback;
   };
   const [showSticky, setShowSticky] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
   const [activeRoom, setActiveRoom] = useState<any>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowSticky(window.scrollY > 600);
+      const currentScrollY = window.scrollY;
+      setShowSticky(currentScrollY > 100); // Visual transition fires earlier
+
+      if (currentScrollY > 600) {
+        // Scroll-smart visibility check
+        if (currentScrollY > lastScrollY && !isDrawerOpen) {
+          setIsHeaderVisible(false); // Hide when scrolling down
+        } else {
+          setIsHeaderVisible(true);  // Show when scrolling up
+        }
+      } else {
+        setIsHeaderVisible(true);    // Always show at top
+      }
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY, isDrawerOpen]);
 
   return (
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
@@ -195,14 +210,14 @@ export function MallorcaTheme({
       `}} />
 
       {/* Header */}
-      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] transform ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'} ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center w-full">
           <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
-            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light hover:opacity-70 transition-colors">
+            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
               {getLocStr('title', t.nav.casaEstrella)}
             </Link>
           </div>
-          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase">
+          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
           <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
