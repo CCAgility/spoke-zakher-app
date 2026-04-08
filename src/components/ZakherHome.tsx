@@ -9,12 +9,12 @@ import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
   en: {
-    heroSubtitle: "Experience the timeless elegance of our colonial villa, nestled in the heart of the historic walled city.",
+    heroSubtitle: "Premium property management and luxury real estate listings.",
     reserve: "Reserve",
     booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
-    aboutTitle: "The Grupo Zakher Standard",
-    aboutP1: "Grupo Zakher curates an exclusive collection of luxury properties, specializing in unparalleled guest experiences. Our estates merge historic charm with modern sophistication.",
-    aboutP2: "From sprawling colonial courtyards to rooftop plunge pools, every Zakher property promises absolute privacy and world-class concierge service.",
+    aboutTitle: "About Grupo Zakher",
+    aboutP1: "At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.",
+    aboutP2: "Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you're seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.",
     portfolio: "Our Portfolio",
     nav: { home: "Home", property: "Properties", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Featured Properties",
@@ -25,12 +25,12 @@ const translations = {
     rights: "All rights reserved."
   },
   es: {
-    heroSubtitle: "Experimente la elegancia atemporal de nuestra villa colonial, enclavada en el corazón de la histórica ciudad amurallada.",
+    heroSubtitle: "Gestión inmobiliaria premium y listados de bienes raíces de lujo.",
     reserve: "Reservar",
     booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
-    aboutTitle: "El Estándar Grupo Zakher",
-    aboutP1: "Grupo Zakher selecciona una colección exclusiva de propiedades de lujo, especializándose en experiencias incomparables para los huéspedes. Nuestras fincas combinan el encanto histórico con la sofisticación moderna.",
-    aboutP2: "Desde extensos patios coloniales hasta piscinas de inmersión en la azotea, cada propiedad de Zakher promete privacidad absoluta y servicio de conserjería de clase mundial.",
+    aboutTitle: "Acerca de Grupo Zakher",
+    aboutP1: "En nuestra empresa, nos dedicamos a curar las mejores experiencias de lujo en la impresionante ciudad de Cartagena. Con propiedades excepcionales a nuestra disposición, nos esforzamos por ofrecer a nuestros huéspedes estadías inolvidables que combinan a la perfección comodidad, elegancia y encanto local.",
+    aboutP2: "Cada propiedad está meticulosamente diseñada para proporcionar un ambiente único, permitiendo a los visitantes sumergirse en la vibrante cultura y rica historia de Cartagena. Desde un servicio personalizado hasta comodidades exclusivas, nuestro equipo se compromete a garantizar que cada momento que pase con nosotros sea extraordinario. Ya sea que busque una escapada romántica, unas vacaciones familiares o un retiro rejuvenecedor, lo invitamos a descubrir lo último en hospitalidad de lujo a través de nuestras ofertas excepcionales. Experimente Cartagena como nunca antes y cree recuerdos duraderos en nuestros espléndidos alojamientos.",
     portfolio: "Nuestro Portafolio",
     nav: { home: "Inicio", property: "Propiedades", casaEstrella: "Casa Estrella", contact: "Conserjería" },
     featured: "Propiedades Destacadas",
@@ -41,12 +41,12 @@ const translations = {
     rights: "Todos los derechos reservados."
   },
   pt: {
-    heroSubtitle: "Experimente a elegância atemporal da nossa vila colonial, aninhada no coração da histórica cidade murada.",
+    heroSubtitle: "Gestão imobiliária premium e listagens de imóveis de luxo.",
     reserve: "Reservar",
     booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
-    aboutTitle: "O Padrão Grupo Zakher",
-    aboutP1: "O Grupo Zakher faz a curadoria de uma coleção exclusiva de propriedades de luxo, especializando-se em experiências inigualáveis para os hóspedes. Nossas propriedades mesclam charme histórico com sofisticação moderna.",
-    aboutP2: "Desde extensos pátios coloniais até piscinas nas coberturas, cada propriedade Zakher promete privacidade absoluta e serviço de concierge de classe mundial.",
+    aboutTitle: "Sobre o Grupo Zakher",
+    aboutP1: "Em nossa empresa, nos dedicamos a organizar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos hóspedes estadias inesquecíveis que combinam conforto, elegância e charme local.",
+    aboutP2: "Cada propriedade é cuidadosamente projetada para proporcionar um ambiente único, permitindo aos visitantes mergulhar na rica história de Cartagena. Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário.",
     portfolio: "Nosso Portfólio",
     nav: { home: "Início", property: "Propriedades", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Propriedades em Destaque",
@@ -57,12 +57,12 @@ const translations = {
     rights: "Todos os direitos reservados."
   },
   fr: {
-    heroSubtitle: "Découvrez l'élégance intemporelle de notre villa coloniale, nichée au cœur de la ville fortifiée historique.",
+    heroSubtitle: "Gestion immobilière haut de gamme et annonces immobilières de luxe.",
     reserve: "Réserver",
     booking: { checkIn: "Arrivée - Départ", dates: "Sélectionner dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
-    aboutTitle: "Le Standard Grupo Zakher",
-    aboutP1: "Grupo Zakher sélectionne une collection exclusive de propriétés de luxe, se spécialisant dans des expériences clients inégalées. Nos domaines allient charme historique et sophistication moderne.",
-    aboutP2: "Des vastes cours coloniales aux bassins sur les toits, chaque propriété Zakher promet une intimité absolue et un service de conciergerie de classe mondiale.",
+    aboutTitle: "À propos de Grupo Zakher",
+    aboutP1: "Dans notre entreprise, nous nous engageons à offrir les meilleures expériences de luxe dans la magnifique ville de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables où se mêlent confort, élégance et charme local.",
+    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant passé avec nous est extraordinaire.",
     portfolio: "Notre Portefeuille",
     nav: { home: "Accueil", property: "Propriétés", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
     featured: "Propriétés en Vedette",
