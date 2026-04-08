@@ -375,50 +375,27 @@ export function MallorcaTheme({
                   </div>
                 </div>
 
-                {/* Guest Quarters Bento */}
-                <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                  title: 'Guest Quarters',
-                  img: '/gallery/casa-estrella/6.webp',
-                  gallery: ['/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg'],
-                  desc: 'Five meticulous double bedrooms designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts.',
-                  amenities: [
-                    { label: 'Double Bed', icon: 'bed' },
-                    { label: 'Shared Bath', icon: 'bath' },
-                    { label: 'Air Conditioning', icon: 'wind' },
-                    { label: '2 Guests', icon: 'users' }
-                  ]
-                })}>
-                  <Image src="/gallery/casa-estrella/6.webp" alt="Double Rooms" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
-                  <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Guest Quarters</h4>
-                    <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                    title: `Double Bedroom ${i + 1}`,
+                    img: '/gallery/casa-estrella/6.webp',
+                    gallery: ['/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg'],
+                    desc: `A meticulous double bedroom designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts.`,
+                    amenities: [
+                      { label: 'Double Bed', icon: 'bed' },
+                      { label: 'Shared Bath', icon: 'bath' },
+                      { label: 'Air Conditioning', icon: 'wind' },
+                      { label: '2 Guests', icon: 'users' }
+                    ]
+                  })}>
+                    <Image src="/gallery/casa-estrella/6.webp" alt={`Double Room ${i + 1}`} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
+                    <div className="absolute bottom-5 left-5 text-white">
+                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Bedroom {i + 3}</h4>
+                      <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
+                    </div>
                   </div>
-                  <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 font-montserrat text-[10px] uppercase tracking-widest text-white border border-white/20">
-                    5 ROOMS
-                  </div>
-                </div>
-
-                {/* Common Areas Bento (New 3rd Box) */}
-                <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                  title: 'Living Spaces',
-                  img: '/gallery/casa-estrella/casa-estrella-living-room.webp',
-                  gallery: ['/gallery/casa-estrella/casa-estrella-living-room.webp', '/gallery/casa-estrella/casa-estrella-ext-dining-room.webp', '/gallery/casa-estrella/casa-estrella-kitchen.webp'],
-                  desc: 'Breathtaking communal areas designed for hosting. From the lush courtyard dining space to the meticulously curated indoor lounging areas, every corner invites connection.',
-                  amenities: [
-                    { label: 'Outdoor Dining', icon: 'sun' },
-                    { label: 'Lounge Areas', icon: 'users' },
-                    { label: 'Courtyard Pool', icon: 'anchor' },
-                    { label: 'Rooftop Bar', icon: 'map-pin' }
-                  ]
-                })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-living-room.webp" alt="Common Areas" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
-                  <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Living Spaces</h4>
-                    <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -444,10 +421,12 @@ export function MallorcaTheme({
                      <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-gray-500 uppercase tracking-widest">/ night</span></span>
                    </div>
                 </div>
-                <button className="w-full bg-white text-black py-4 font-montserrat text-sm tracking-[0.2em] uppercase hover:bg-gray-200 transition-colors active:scale-[0.98] duration-300 font-medium">
-                  CHECK AVAILABILITY
+                <button 
+                  onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }}
+                  className="w-full bg-white text-black py-4 font-montserrat text-sm tracking-[0.2em] uppercase hover:bg-gray-200 transition-colors active:scale-[0.98] duration-300 font-medium">
+                  SPEAK WITH YOUR CONCIERGE
                 </button>
-                <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">No booking fees. Contact our concierge directly.</p>
+                <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">Private itineraries and bespoke scheduling.</p>
               </div>
               </div>
             </div>
