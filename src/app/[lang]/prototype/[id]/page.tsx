@@ -5,9 +5,12 @@ import { PrototypeC } from '@/components/prototypes/PrototypeC';
 import { PrototypeD } from '@/components/prototypes/PrototypeD';
 import Link from 'next/link';
 
-export default function PrototypePage({ params }: { params: { lang: string, id: string } }) {
+export default async function PrototypePage({ params }: { params: Promise<{ lang: string, id: string }> }) {
+  const resolvedParams = await params;
+  const { lang, id } = resolvedParams;
+
   const renderPrototype = () => {
-    switch(params.id?.toLowerCase()) {
+    switch(id?.toLowerCase()) {
       case 'a': return <PrototypeA />;
       case 'b': return <PrototypeB />;
       case 'c': return <PrototypeC />;
@@ -26,10 +29,10 @@ export default function PrototypePage({ params }: { params: { lang: string, id: 
                 <h1 className="font-cormorant text-4xl">Room Layout Sandbox</h1>
             </div>
             <div className="flex gap-4 mt-6 md:mt-0">
-                <Link href={`/${params.lang}/prototype/a`} className={`px-4 py-2 text-xs uppercase tracking-widest ${params.id === 'a' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>A: Parallax</Link>
-                <Link href={`/${params.lang}/prototype/b`} className={`px-4 py-2 text-xs uppercase tracking-widest ${params.id === 'b' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>B: Blueprint</Link>
-                <Link href={`/${params.lang}/prototype/c`} className={`px-4 py-2 text-xs uppercase tracking-widest ${params.id === 'c' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>C: Lookbook</Link>
-                <Link href={`/${params.lang}/prototype/d`} className={`px-4 py-2 text-xs uppercase tracking-widest ${params.id === 'd' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>D: Bento Grid</Link>
+                <Link href={`/${lang}/prototype/a`} className={`px-4 py-2 text-xs uppercase tracking-widest ${id === 'a' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>A: Parallax</Link>
+                <Link href={`/${lang}/prototype/b`} className={`px-4 py-2 text-xs uppercase tracking-widest ${id === 'b' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>B: Blueprint</Link>
+                <Link href={`/${lang}/prototype/c`} className={`px-4 py-2 text-xs uppercase tracking-widest ${id === 'c' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>C: Lookbook</Link>
+                <Link href={`/${lang}/prototype/d`} className={`px-4 py-2 text-xs uppercase tracking-widest ${id === 'd' ? 'bg-black text-white' : 'border border-black/20 hover:border-black'}`}>D: Bento Grid</Link>
             </div>
         </div>
 
