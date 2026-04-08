@@ -189,7 +189,7 @@ export function ZakherHome({
 
           <button onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 hidden">
           <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
             {t.reserve}
           </button>
@@ -294,7 +294,7 @@ export function ZakherHome({
 
       {/* Sticky Floating Booking Bar */}
       <AnimatePresence>
-        {showSticky && (
+        {false && showSticky && (
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -344,7 +344,7 @@ export function ZakherHome({
               <button onClick={() => setIsDrawerOpen(false)} className="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors duration-300"><X size={28} strokeWidth={1} /></button>
               
               {/* Concierge Segmented Control */}
-              <div className="flex bg-white/5 rounded-full p-1 mb-10 w-fit">
+              <div className="hidden bg-white/5 rounded-full p-1 mb-10 w-fit">
                 <button 
                   onClick={() => setDrawerTab('reserve')}
                   className={`px-8 py-2 rounded-full text-[10px] font-montserrat tracking-[0.2em] uppercase transition-all duration-300 ${drawerTab === 'reserve' ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'text-gray-400 hover:text-white'}`}
