@@ -2,8 +2,23 @@
 
 import React from 'react';
 import { Globe } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
-export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
+export function LanguageSelector() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Extract current lang from segment like '/en' or '/es/property/slug'
+  const segments = typeof pathname === 'string' ? pathname.split('/') : [];
+  const currentLang = segments[1] || 'en';
+
+  const switchLang = (newLang: string) => {
+    if (!pathname) return;
+    const newSegments = [...segments];
+    newSegments[1] = newLang; // swap the locale prefix
+    router.push(newSegments.join('/') || '/');
+  };
+
   const languages = [
     { code: 'en', label: 'English' },
     { code: 'es', label: 'Español' },
@@ -20,9 +35,9 @@ export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l:
         {languages.map((l) => (
           <button
             key={l.code}
-            onClick={() => setLang(l.code)}
+            onClick={() => switchLang(l.code)}
             className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all uppercase tracking-wider ${
-              lang === l.code 
+              currentLang === l.code 
                 ? "bg-[#C2A878] text-white shadow-md" 
                 : "bg-transparent text-gray-600 hover:bg-gray-100"
             }`}

@@ -35,6 +35,34 @@ const translations = {
     contactPrice: "Contactar para Precio",
     night: "/ Noche",
     rights: "Todos los derechos reservados."
+  },
+  pt: {
+    nav: { home: "INÍCIO", property: "PROPRIEDADE", casaEstrella: "CASA ESTRELLA", contact: "CONTATO" },
+    reserve: "Reservar",
+    booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
+    aboutTitle: "Sobre o Grupo Zakher",
+    aboutP1: "Em nossa empresa, nos dedicamos a organizar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos hóspedes estadias inesquecíveis que combinam conforto, elegância e charme local.",
+    aboutP2: "Cada propriedade é cuidadosamente projetada para proporcionar um ambiente único, permitindo aos visitantes mergulhar na rica história de Cartagena. Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário.",
+    portfolio: "Nosso Portfólio",
+    featured: "Propriedades em Destaque",
+    explore: "Explorar",
+    contactPrice: "Consultar Preço",
+    night: "/ Noite",
+    rights: "Todos os direitos reservados."
+  },
+  fr: {
+    nav: { home: "ACCUEIL", property: "PROPRIÉTÉ", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    reserve: "Réserver",
+    booking: { checkIn: "Arrivée - Départ", dates: "Sélectionnez vos dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
+    aboutTitle: "À propos de Grupo Zakher",
+    aboutP1: "Dans notre entreprise, nous nous engageons à offrir les meilleures expériences de luxe dans la magnifique ville de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables où se mêlent confort, élégance et charme local.",
+    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant passé avec nous est extraordinaire.",
+    portfolio: "Notre Portefeuille",
+    featured: "Propriétés en Vedette",
+    explore: "Explorer",
+    contactPrice: "Contactez pour le Prix",
+    night: "/ Nuit",
+    rights: "Tous droits réservés."
   }
 };
 
@@ -71,7 +99,7 @@ export function ZakherHome({
       `}} />
 
       {/* Header */}
-      <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
         <div className="flex items-center gap-4">
           <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white">
             {siteConfig?.site_title || "Grupo Zakher"}
@@ -94,11 +122,6 @@ export function ZakherHome({
           <button className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-4 text-xs font-montserrat tracking-widest text-white/70">
-            <Globe size={14} />
-            <Link href="/en" className={`p-3 min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-white transition-colors active:scale-95 ${langState === 'en' ? 'text-white' : ''}`}>EN</Link>
-            <Link href="/es" className={`p-3 min-h-[44px] min-w-[44px] flex items-center justify-center hover:text-white transition-colors active:scale-95 ${langState === 'es' ? 'text-white' : ''}`}>ES</Link>
-          </div>
           <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
             {t.reserve}
           </button>
