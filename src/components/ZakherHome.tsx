@@ -396,6 +396,20 @@ export function ZakherHome({
                   onSubmit={(e) => { e.preventDefault(); alert(t.contactForm?.success || "Thanks for your inquiry. A concierge will be in touch shortly."); setIsDrawerOpen(false); }} 
                   className="space-y-8 font-montserrat animate-in fade-in slide-in-from-left-4 duration-500"
                 >
+                  {/* Inquiry Type Radios */}
+                  <div className="flex gap-4">
+                    <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
+                      <input type="radio" name="inquiryType" value="reservation" className="peer sr-only" />
+                      <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
+                      <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Reservation</span>
+                    </label>
+                    <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
+                      <input type="radio" name="inquiryType" value="questions" defaultChecked className="peer sr-only" />
+                      <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
+                      <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Questions</span>
+                    </label>
+                  </div>
+
                   <input required type="text" placeholder={t.contactForm?.name || "Full Name *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
                   <input required type="email" placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
                   <input required type="tel" placeholder={t.contactForm?.phone || "WhatsApp / Phone *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300" />
