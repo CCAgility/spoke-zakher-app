@@ -404,7 +404,7 @@ export function MallorcaTheme({
               <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transition-all duration-700">
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
-                <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
+                <p className="font-montserrat text-sm font-light leading-relaxed text-white/80 mb-8">
                   {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
               </div>
@@ -412,12 +412,12 @@ export function MallorcaTheme({
               <div className="flex flex-col gap-6 mt-6 md:mt-10">
                 <div className="border border-white/20 p-6 flex flex-col gap-4">
                    <div className="flex justify-between items-center font-montserrat text-sm">
-                     <span className="font-light text-gray-400 uppercase tracking-widest text-xs">Standard Rate</span>
-                     <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-gray-500 uppercase tracking-widest">/ night</span></span>
+                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">Standard Rate</span>
+                     <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-white/50 uppercase tracking-widest">/ night</span></span>
                    </div>
                    <div className="flex justify-between items-center font-montserrat text-sm">
-                     <span className="font-light text-gray-400 uppercase tracking-widest text-xs">Holiday Premium</span>
-                     <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-gray-500 uppercase tracking-widest">/ night</span></span>
+                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">Holiday Premium</span>
+                     <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-white/50 uppercase tracking-widest">/ night</span></span>
                    </div>
                 </div>
                 <button 
@@ -426,7 +426,7 @@ export function MallorcaTheme({
                   <span className="relative z-10">SPEAK WITH YOUR CONCIERGE</span>
                   <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />
                 </button>
-                <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">Private itineraries and bespoke scheduling.</p>
+                <p className="text-center font-montserrat text-xs text-white/50 font-light mt-4">Private itineraries and bespoke scheduling.</p>
               </div>
               </div>
             </div>
