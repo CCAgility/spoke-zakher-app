@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { PropertySlideshow } from './PropertySlideshow';
 import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
