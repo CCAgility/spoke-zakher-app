@@ -135,7 +135,7 @@ export function ZakherHome({
   const [showSticky, setShowSticky] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
-  const [inquiryType, setInquiryType] = useState('questions');
+  const [inquiryType, setInquiryType] = useState('reservation');
   const [contactLang, setContactLang] = useState("");
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
