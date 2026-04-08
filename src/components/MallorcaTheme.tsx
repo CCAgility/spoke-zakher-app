@@ -420,9 +420,21 @@ export function MallorcaTheme({
                      <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-white/50 uppercase tracking-widest">/ night</span></span>
                    </div>
                 </div>
+                <style dangerouslySetInnerHTML={{__html: `
+                  @keyframes luxuryBreath {
+                    0%, 100% { background-color: white; color: #1A1A1A; box-shadow: none; }
+                    50% { background-color: #C2A878; color: white; box-shadow: 0 10px 30px rgba(194,168,120,0.5); }
+                  }
+                  .animate-luxury-breath {
+                    animation: luxuryBreath 5s ease-in-out infinite;
+                  }
+                  .animate-luxury-breath:hover {
+                    animation-play-state: paused;
+                  }
+                `}} />
                 <button 
                   onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }}
-                  className="group w-full bg-white text-[#1A1A1A] py-4 font-montserrat text-sm tracking-[0.2em] uppercase transition-all duration-700 ease-out font-medium hover:bg-[#D4AF37] hover:text-white hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] active:scale-[0.98] relative overflow-hidden">
+                  className="group w-full py-4 font-montserrat text-sm tracking-[0.2em] uppercase transition-all duration-700 ease-out font-medium active:scale-[0.98] relative overflow-hidden animate-luxury-breath">
                   <span className="relative z-10">SPEAK WITH YOUR CONCIERGE</span>
                   <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />
                 </button>
