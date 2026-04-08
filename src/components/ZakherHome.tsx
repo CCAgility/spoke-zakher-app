@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Check } from 'lucide-react';
+import { Calendar, Users, ChevronRight, MapPin, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
@@ -129,6 +129,7 @@ export function ZakherHome({
   lang?: string;
 }) {
   const [showSticky, setShowSticky] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
 
@@ -180,7 +181,7 @@ export function ZakherHome({
             </div>
           </div>
 
-          <button className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+          <button onClick={() => setIsContactOpen(true)} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
         <div className="flex items-center gap-6">
           <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
@@ -313,6 +314,38 @@ export function ZakherHome({
               Check Availability
             </button>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Contact Drawer - 60/40 Split */}
+      <AnimatePresence>
+        {isContactOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsContactOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 w-full md:w-[40%] bg-[#1A1A1A] z-50 p-8 md:p-12 text-white shadow-2xl border-l border-white/10 overflow-y-auto"
+            >
+              <button onClick={() => setIsContactOpen(false)} className="absolute top-8 right-8 hover:opacity-70 text-gray-400 hover:text-white transition-colors"><X size={28} strokeWidth={1.5} /></button>
+              <h2 className="text-4xl font-cormorant font-light mb-2">Contact Concierge</h2>
+              <p className="text-gray-400 font-montserrat text-sm mb-12">How can we assist with your stay?</p>
+              <div className="space-y-10 font-montserrat">
+                <input type="text" placeholder="Full Name" className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-white transition-colors" />
+                <input type="text" placeholder="WhatsApp / Phone" className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-white transition-colors" />
+                <textarea placeholder="Special Requests" rows={4} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-3 focus:outline-none focus:border-white transition-colors resize-none"></textarea>
+                <button className="w-full bg-white text-black py-4 text-xs tracking-widest uppercase hover:bg-gray-200 transition-colors mt-4 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]">Send Message</button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
