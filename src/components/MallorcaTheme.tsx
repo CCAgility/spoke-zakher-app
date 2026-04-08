@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X } from 'lucide-react';
+import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed, Bath } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
@@ -334,18 +334,40 @@ export function MallorcaTheme({
               
               <div className="grid grid-cols-2 gap-3">
                 {/* Master Suite Bento (Spans full width) */}
-                <div className="col-span-2 group relative h-[250px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({ title: 'Master Suite', img: '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg', desc: 'King bed, Sofa, Private Bath, TV, A/C' })}>
+                <div className="col-span-2 group relative h-[250px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                  title: 'The Master Suite',
+                  img: '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
+                  gallery: ['/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-4.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-5.jpeg'],
+                  desc: 'A sanctuary of colonial elegance featuring soaring ceilings, a private en-suite bathroom, and exclusive terrace access. Restored with impeccable historical detail.',
+                  amenities: [
+                    { label: 'King Bed', icon: 'bed' },
+                    { label: 'Private Bath', icon: 'bath' },
+                    { label: 'Filtered A/C', icon: 'wind' },
+                    { label: '2 Guests', icon: 'users' }
+                  ]
+                })}>
                   <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt="Master Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-6 left-6 text-white">
-                    <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">Master Suite</h4>
+                    <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">The Master Suite</h4>
                     <span className="font-montserrat text-xs tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">View Layout <ChevronRight size={14} /></span>
                   </div>
                 </div>
                 
                 {/* Junior Suite Bento */}
-                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({ title: 'Junior Suite', img: '/gallery/casa-estrella/casa-estrella-bedroom.webp', desc: 'King bed, Sofa, Private Bath, TV, A/C' })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-bedroom.webp" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                  title: 'Junior Suite',
+                  img: '/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg',
+                  gallery: ['/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-4.jpg'],
+                  desc: 'Refined botanical comfort. This spacious suite offers an intimate retreat with curated artisanal furnishings and a lush, tranquil atmosphere.',
+                  amenities: [
+                    { label: 'King Bed', icon: 'bed' },
+                    { label: 'Private Bath', icon: 'bath' },
+                    { label: 'Filtered A/C', icon: 'wind' },
+                    { label: '2 Guests', icon: 'users' }
+                  ]
+                })}>
+                  <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
                     <h4 className="font-cormorant text-xl md:text-2xl mb-1 drop-shadow-md">Junior Suite</h4>
@@ -353,12 +375,23 @@ export function MallorcaTheme({
                   </div>
                 </div>
 
-                {/* Standard Rooms Bento */}
-                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({ title: 'Double Rooms', img: '/gallery/casa-estrella/6.webp', desc: 'Double bed, Shared Bath, A/C. 5 Rooms Total.' })}>
+                {/* Guest Quarters Bento */}
+                <div className="col-span-1 group relative h-[200px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                  title: 'Guest Quarters',
+                  img: '/gallery/casa-estrella/6.webp',
+                  gallery: ['/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg'],
+                  desc: 'Five meticulous double bedrooms designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts.',
+                  amenities: [
+                    { label: 'Double Bed', icon: 'bed' },
+                    { label: 'Shared Bath', icon: 'bath' },
+                    { label: 'Air Conditioning', icon: 'wind' },
+                    { label: '2 Guests', icon: 'users' }
+                  ]
+                })}>
                   <Image src="/gallery/casa-estrella/6.webp" alt="Double Rooms" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-xl md:text-2xl mb-1 drop-shadow-md">Guest Rooms</h4>
+                    <h4 className="font-cormorant text-xl md:text-2xl mb-1 drop-shadow-md">Guest Quarters</h4>
                     <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                   </div>
                   <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 font-montserrat text-[10px] uppercase tracking-widest text-white border border-white/20">
@@ -512,18 +545,48 @@ export function MallorcaTheme({
               className="relative w-full max-w-5xl bg-[#1A1A1A] border border-white/10 shadow-2xl flex flex-col md:flex-row overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full md:w-2/3 h-[250px] md:h-[600px] bg-black">
-                <Image src={activeRoom.img} alt={activeRoom.title} fill className="object-cover" />
+              {/* Visual Suite Gallery: Scrollable Left Pane */}
+              <div className="relative w-full md:w-2/3 h-[300px] md:h-[700px] bg-black overflow-y-auto flex flex-col snap-y snap-mandatory cursor-ns-resize" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style dangerouslySetInnerHTML={{__html: `::-webkit-scrollbar { display: none; }`}} />
+                {(activeRoom.gallery || [activeRoom.img]).map((photo: string, i: number) => (
+                  <div key={i} className="relative w-full min-h-full snap-start">
+                    <Image src={photo} alt={`${activeRoom.title} View ${i + 1}`} fill className="object-cover" />
+                  </div>
+                ))}
+                {activeRoom.gallery && activeRoom.gallery.length > 1 && (
+                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 font-montserrat text-[10px] tracking-widest uppercase text-white rounded-full flex items-center gap-2 pointer-events-none">
+                    Scroll for more <ChevronRight size={12} className="rotate-90" />
+                  </div>
+                )}
               </div>
-              <div className="w-full md:w-1/3 p-10 flex flex-col justify-center bg-white">
-                <button className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors" onClick={() => setActiveRoom(null)}><X size={24} strokeWidth={1} /></button>
-                <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-gray-400 mb-4 block">Casa Estrella de San Pedro</span>
-                <h2 className="font-cormorant text-5xl text-black mb-8">{activeRoom.title}</h2>
-                <h4 className="font-montserrat text-xs tracking-[0.2em] uppercase text-gray-500 mb-4">Suite Configuration</h4>
-                <p className="font-montserrat text-sm font-light leading-relaxed text-gray-700 mb-12">
-                  {activeRoom.desc}. Enjoy the ultimate privacy and luxury of Casa Estrella in this meticulously restored, flawlessly air-conditioned space.
+
+              {/* Structured Info Box: Right Pane */}
+              <div className="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-center bg-white relative max-h-[700px] overflow-y-auto">
+                <button className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors bg-gray-50 p-2 rounded-full" onClick={() => setActiveRoom(null)}><X size={20} strokeWidth={1.5} /></button>
+                
+                <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 block">Casa Estrella de San Pedro</span>
+                <h2 className="font-cormorant text-5xl text-black mb-6 leading-tight">{activeRoom.title}</h2>
+                
+                <p className="font-montserrat text-sm font-light leading-relaxed text-gray-600 mb-10">
+                  {activeRoom.desc}
                 </p>
-                <button className="border border-black px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-colors active:scale-95 duration-300" onClick={() => setActiveRoom(null)}>Close Viewer</button>
+
+                <div className="border-t border-b border-black/10 py-8 mb-10">
+                   <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-black mb-6">Room Features & Configuration</h4>
+                   <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+                      {(activeRoom.amenities || []).map((amenity: any, idx: number) => (
+                         <div key={idx} className="flex items-center gap-3 font-montserrat text-xs text-gray-600">
+                           {amenity.icon === 'bed' && <Bed size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'bath' && <Bath size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'wind' && <Wind size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           {amenity.icon === 'users' && <Users size={16} strokeWidth={1.5} className="text-gray-400 flex-shrink-0" />}
+                           <span className="font-light leading-tight">{amenity.label}</span>
+                         </div>
+                      ))}
+                   </div>
+                </div>
+
+                <button className="w-full bg-black text-white px-8 py-4 font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-gray-800 transition-colors active:scale-[0.98] duration-300" onClick={() => setActiveRoom(null)}>Close Gallery</button>
               </div>
             </motion.div>
           </motion.div>
