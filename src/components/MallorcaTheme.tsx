@@ -429,41 +429,23 @@ export function MallorcaTheme({
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
                   {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
-                <div className="mb-8">
-                  <h4 className="font-montserrat text-xs tracking-widest uppercase text-gray-500 mb-4">Amenities & Services</h4>
-                  <ul className="space-y-3 font-montserrat text-sm font-light text-white/90">
-                    {property?.amenities?.length ? (
-                      property.amenities.map((item: any, idx: number) => (
-                        <li key={idx} className="flex items-center gap-3">
-                          <Check size={16} className="text-white/60" strokeWidth={2} /> 
-                          {item.amenity_id?.name || item}
-                        </li>
-                      ))
-                    ) : (
-                      <>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Pool & Mini Pool</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Rooftop Bar</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Outdoor Dining Table</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Security 6 PM - 7 AM</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Complimentary Daily Housekeeping, WiFi & Toiletries</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> On-Site Gourmet Food & Beverage Options (Extra)</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> On-Site Massage & Yoga Services (Extra)</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Private Airport Transfers (Extra)</li>
-                      </>
-                    )}
-                  </ul>
-                </div>
               </div>
               
-              <div className="border-t border-white/20 pt-6 mt-8">
-                <div className="flex justify-between items-center mb-2 font-montserrat text-sm">
-                  <span className="font-light text-gray-500 uppercase tracking-widest text-xs">Low Season (3 Nights Min)</span>
-                  <span>${property?.low_season_rate || "1,050"} <span className="text-xs text-gray-500 uppercase">/ night</span></span>
+              <div className="flex flex-col gap-6 mt-6 md:mt-10">
+                <div className="border border-white/20 p-6 flex flex-col gap-4">
+                   <div className="flex justify-between items-center font-montserrat text-sm">
+                     <span className="font-light text-gray-400 uppercase tracking-widest text-xs">Standard Rate</span>
+                     <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-gray-500 uppercase tracking-widest">/ night</span></span>
+                   </div>
+                   <div className="flex justify-between items-center font-montserrat text-sm">
+                     <span className="font-light text-gray-400 uppercase tracking-widest text-xs">Holiday Premium</span>
+                     <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-gray-500 uppercase tracking-widest">/ night</span></span>
+                   </div>
                 </div>
-                <div className="flex justify-between items-center font-montserrat text-sm">
-                  <span className="font-light text-gray-500 uppercase tracking-widest text-xs">High Season (7 Nights Min)</span>
-                  <span>${property?.high_season_rate || "1,995"} <span className="text-xs text-gray-500 uppercase">/ night</span></span>
-                </div>
+                <button className="w-full bg-white text-black py-4 font-montserrat text-sm tracking-[0.2em] uppercase hover:bg-gray-200 transition-colors active:scale-[0.98] duration-300 font-medium">
+                  CHECK AVAILABILITY
+                </button>
+                <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">No booking fees. Contact our concierge directly.</p>
               </div>
             </div>
           </div>
