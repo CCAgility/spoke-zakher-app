@@ -180,23 +180,23 @@ export function MallorcaTheme({
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
       {/* Custom Fonts */}
       <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
-        .font-cormorant { font-family: 'Playfair Display', serif; }
-        .font-montserrat { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
       `}} />
 
       {/* Header */}
-      <header className="fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 bg-[#1A1A1A]/40 backdrop-blur-md border-b border-white/10 text-white drop-shadow-md transition-all duration-300">
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
         <div className="flex items-center gap-4">
-          <Link href="/" className="p-3 min-h-[44px] flex items-center font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors active:scale-95">
-            {property?.title || siteConfig?.site_title || "Grupo Zakher"}
+          <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
+            {siteConfig?.site_title || "Grupo Zakher"}
           </Link>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.home}</Link>
+          <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
-            <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center gap-2 uppercase active:scale-95">
+            <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
               {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
             <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
@@ -206,13 +206,13 @@ export function MallorcaTheme({
             </div>
           </div>
 
-          <a href="#" className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.accommodations}</a>
-          <a href="#" className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.gallery}</a>
-          <button onClick={(e) => { e.preventDefault(); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity active:scale-95">{t.nav.contact}</button>
+          <button onClick={(e) => { e.preventDefault(); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
-        <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95 hidden">
-          {t.bookNow}
-        </button>
+        <div className="flex items-center gap-6 hidden">
+          <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
+            {t.bookNow}
+          </button>
+        </div>
       </header>
 
       {/* Hero Section */}
