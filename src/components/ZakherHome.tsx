@@ -10,6 +10,7 @@ import { Globe } from 'lucide-react';
 const translations = {
   en: {
     nav: { home: "HOME", property: "PROPERTY", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    heroSubtitle: "Premium property management and luxury real estate listings.",
     reserve: "Reserve",
     booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
     aboutTitle: "About Grupo Zakher",
@@ -24,6 +25,7 @@ const translations = {
   },
   es: {
     nav: { home: "INICIO", property: "PROPIEDAD", casaEstrella: "CASA ESTRELLA", contact: "CONTACTO" },
+    heroSubtitle: "Gestión inmobiliaria premium y listados de bienes raíces de lujo.",
     reserve: "Reservar",
     booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
     aboutTitle: "Acerca de Grupo Zakher",
@@ -38,6 +40,7 @@ const translations = {
   },
   pt: {
     nav: { home: "INÍCIO", property: "PROPRIEDADE", casaEstrella: "CASA ESTRELLA", contact: "CONTATO" },
+    heroSubtitle: "Gestão imobiliária premium e listagens de imóveis de luxo.",
     reserve: "Reservar",
     booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
     aboutTitle: "Sobre o Grupo Zakher",
@@ -52,6 +55,7 @@ const translations = {
   },
   fr: {
     nav: { home: "ACCUEIL", property: "PROPRIÉTÉ", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    heroSubtitle: "Gestion immobilière haut de gamme et annonces immobilières de luxe.",
     reserve: "Réserver",
     booking: { checkIn: "Arrivée - Départ", dates: "Sélectionnez vos dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
     aboutTitle: "À propos de Grupo Zakher",
@@ -155,7 +159,7 @@ export function ZakherHome({
               {siteConfig?.site_title || "Grupo Zakher"}
             </h1>
             <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90 drop-shadow-md">
-              {siteConfig?.site_description}
+              {t.heroSubtitle}
             </p>
           </motion.div>
         </div>
