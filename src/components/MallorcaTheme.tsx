@@ -402,7 +402,7 @@ export function MallorcaTheme({
             {/* Rental Rates & Details */}
             <div className="lg:col-span-5 xl:col-span-4 flex flex-col h-full">
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-transparent mb-8 border-b border-transparent pb-4 select-none pointer-events-none hidden lg:block" aria-hidden="true">-</h3>
-              <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-2xl transition-all duration-300">
+              <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transform transition-all duration-700 hover:-translate-y-1">
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
@@ -423,8 +423,9 @@ export function MallorcaTheme({
                 </div>
                 <button 
                   onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }}
-                  className="w-full bg-white text-black py-4 font-montserrat text-sm tracking-[0.2em] uppercase hover:bg-gray-200 transition-colors active:scale-[0.98] duration-300 font-medium">
-                  SPEAK WITH YOUR CONCIERGE
+                  className="group w-full bg-white text-[#1A1A1A] py-4 font-montserrat text-sm tracking-[0.2em] uppercase transition-all duration-700 ease-out font-medium hover:bg-[#D4AF37] hover:text-white hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)] active:scale-[0.98] relative overflow-hidden">
+                  <span className="relative z-10">SPEAK WITH YOUR CONCIERGE</span>
+                  <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />
                 </button>
                 <p className="text-center font-montserrat text-xs text-gray-500 font-light mt-2">Private itineraries and bespoke scheduling.</p>
               </div>
