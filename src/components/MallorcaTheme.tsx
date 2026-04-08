@@ -295,16 +295,16 @@ export function MallorcaTheme({
       {/* About & Amenities */}
       <section className="py-24 px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-7 xl:col-span-8">
             <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
             <p className="font-montserrat text-gray-500 leading-relaxed text-[15px] font-light">
               {getLocStr('about_description', t.welcomeText) || getLocStr('description', t.welcomeText)}
             </p>
           </div>
 
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-5 xl:col-span-4">
             <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.amenitiesTitle}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-12">
+            <div className="grid grid-cols-1 gap-y-4">
               {t.amenitiesList.map((amenity, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <Check size={15} className="text-orange-500 flex-shrink-0 mt-[4px]" strokeWidth={2} />
