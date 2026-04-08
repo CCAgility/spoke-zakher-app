@@ -2,107 +2,126 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Check } from 'lucide-react';
+import { Calendar, Users, ChevronRight, MapPin, Check, X } from 'lucide-react';
 import Link from 'next/link';
-import { Globe } from 'lucide-react';
+import Image from 'next/image';
+import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
   en: {
-    nav: { home: "HOME", property: "PROPERTY", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    heroSubtitle: "Premium property management and luxury real estate listings.",
     reserve: "Reserve",
     booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
     aboutTitle: "About Grupo Zakher",
     aboutP1: "At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.",
     aboutP2: "Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you're seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.",
     portfolio: "Our Portfolio",
+    nav: { home: "Home", property: "Properties", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Featured Properties",
     explore: "Explore",
     contactPrice: "Contact for Price",
+    contactForm: { title: "Contact Concierge", subtitle: "How can we assist with your stay?", name: "Full Name *", email: "Email Address *", phone: "WhatsApp / Phone *", language: "Preferred Language (Optional)", requests: "Message/Special Requests *", send: "Send Message", success: "Thanks for your inquiry. A concierge will be in touch shortly.", specifyLanguage: "Please specify language", mandatory: "Indicates a mandatory field" },
     night: "/ Night",
     rights: "All rights reserved."
   },
   es: {
-    nav: { home: "INICIO", property: "PROPIEDAD", casaEstrella: "CASA ESTRELLA", contact: "CONTACTO" },
+    heroSubtitle: "Gestión inmobiliaria premium y listados de bienes raíces de lujo.",
     reserve: "Reservar",
     booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
     aboutTitle: "Acerca de Grupo Zakher",
     aboutP1: "En nuestra empresa, nos dedicamos a curar las mejores experiencias de lujo en la impresionante ciudad de Cartagena. Con propiedades excepcionales a nuestra disposición, nos esforzamos por ofrecer a nuestros huéspedes estadías inolvidables que combinan a la perfección comodidad, elegancia y encanto local.",
     aboutP2: "Cada propiedad está meticulosamente diseñada para proporcionar un ambiente único, permitiendo a los visitantes sumergirse en la vibrante cultura y rica historia de Cartagena. Desde un servicio personalizado hasta comodidades exclusivas, nuestro equipo se compromete a garantizar que cada momento que pase con nosotros sea extraordinario. Ya sea que busque una escapada romántica, unas vacaciones familiares o un retiro rejuvenecedor, lo invitamos a descubrir lo último en hospitalidad de lujo a través de nuestras ofertas excepcionales. Experimente Cartagena como nunca antes y cree recuerdos duraderos en nuestros espléndidos alojamientos.",
     portfolio: "Nuestro Portafolio",
+    nav: { home: "Inicio", property: "Propiedades", casaEstrella: "Casa Estrella", contact: "Conserjería" },
     featured: "Propiedades Destacadas",
     explore: "Explorar",
     contactPrice: "Contactar para Precio",
+    contactForm: { title: "Contactar Conserjería", subtitle: "¿Cómo podemos asistirle con su estadía?", name: "Nombre Completo *", email: "Correo Electrónico *", phone: "WhatsApp / Teléfono *", language: "Idioma Preferido (Opcional)", requests: "Mensaje/Solicitudes Especiales *", send: "Enviar Mensaje", success: "Gracias por su consulta. Un conserje se pondrá en contacto pronto.", specifyLanguage: "Por favor especifique el idioma", mandatory: "Indica un campo obligatorio" },
     night: "/ Noche",
     rights: "Todos los derechos reservados."
   },
   pt: {
-    nav: { home: "INÍCIO", property: "PROPRIEDADE", casaEstrella: "CASA ESTRELLA", contact: "CONTATO" },
+    heroSubtitle: "Gestão imobiliária premium e listagens de imóveis de luxo.",
     reserve: "Reservar",
     booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
-    aboutTitle: "Sobre Grupo Zakher",
-    aboutP1: "Em nossa empresa, nos dedicamos a selecionar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos nossos hóspedes estadias inesquecíveis que combinam perfeitamente conforto, elegância e charme local.",
-    aboutP2: "Cada propriedade é meticulosamente projetada para proporcionar um ambiente único, permitindo que os visitantes mergulhem na cultura vibrante e rica história de Cartagena. De atendimento personalizado a comodidades exclusivas, nossa equipe está comprometida em garantir que cada momento passado conosco seja extraordinário. Seja em busca de uma escapada romântica, férias em família ou um refúgio revigorante, convidamos você a descobrir o máximo em hospitalidade de luxo através de nossas ofertas excepcionais. Descubra Cartagena como nunca antes e crie memórias eternas em nossas luxuosas acomodações.",
+    aboutTitle: "Sobre o Grupo Zakher",
+    aboutP1: "Em nossa empresa, nos dedicamos a organizar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos hóspedes estadias inesquecíveis que combinam conforto, elegância e charme local.",
+    aboutP2: "Cada propriedade é cuidadosamente projetada para proporcionar um ambiente único, permitindo aos visitantes mergulhar na rica história de Cartagena. Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário.",
     portfolio: "Nosso Portfólio",
+    nav: { home: "Início", property: "Propriedades", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Propriedades em Destaque",
     explore: "Explorar",
-    contactPrice: "Contatar para Preço",
+    contactPrice: "Consultar Preço",
+    contactForm: { title: "Contatar Concierge", subtitle: "Como podemos ajudar com sua estadia?", name: "Nome Completo *", email: "Endereço de E-mail *", phone: "WhatsApp / Telefone *", language: "Idioma Preferido (Opcional)", requests: "Mensagem/Pedidos Especiais *", send: "Enviar Mensagem", success: "Obrigado por sua consulta. Um concierge entrará em contato em breve.", specifyLanguage: "Por favor especifique o idioma", mandatory: "Indica um campo obrigatório" },
     night: "/ Noite",
     rights: "Todos os direitos reservados."
   },
   fr: {
-    nav: { home: "ACCUEIL", property: "PROPRIÉTÉ", casaEstrella: "CASA ESTRELLA", contact: "CONTACT" },
+    heroSubtitle: "Gestion immobilière haut de gamme et annonces immobilières de luxe.",
     reserve: "Réserver",
     booking: { checkIn: "Arrivée - Départ", dates: "Sélectionner dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
-    aboutTitle: "À propos du Grupo Zakher",
-    aboutP1: "Dans notre entreprise, nous nous consacrons à organiser les meilleures expériences de luxe dans la ville éblouissante de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables qui allient harmonieusement confort, élégance et charme local.",
-    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. Du service personnalisé aux aménagements exclusifs, notre équipe s'engage à garantir que chaque instant passé avec nous soit extraordinaire. Que vous recherchiez une escapade romantique, des vacances en famille ou une retraite régénérante, nous vous invitons à découvrir le summum de l'hospitalité de luxe grâce à nos offres exceptionnelles. Découvrez Carthagène comme jamais auparavant et créez des souvenirs inoubliables dans nos somptueux hébergements.",
+    aboutTitle: "À propos de Grupo Zakher",
+    aboutP1: "Dans notre entreprise, nous nous engageons à offrir les meilleures expériences de luxe dans la magnifique ville de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables où se mêlent confort, élégance et charme local.",
+    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant passé avec nous est extraordinaire.",
     portfolio: "Notre Portefeuille",
+    nav: { home: "Accueil", property: "Propriétés", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
     featured: "Propriétés en Vedette",
     explore: "Explorer",
-    contactPrice: "Demander le Prix",
+    contactPrice: "Contactez pour le Prix",
+    contactForm: { title: "Contacter le Concierge", subtitle: "Comment pouvons-nous vous aider avec votre séjour ?", name: "Nom Complet *", email: "Adresse E-mail *", phone: "WhatsApp / Téléphone *", language: "Langue Préférée (Optionnel)", requests: "Message/Demandes Spéciales *", send: "Envoyer le Message", success: "Merci pour votre demande. Un concierge vous contactera sous peu.", specifyLanguage: "Veuillez préciser la langue", mandatory: "Indique un champ obligatoire" },
     night: "/ Nuit",
     rights: "Tous droits réservés."
   }
 };
 
-const FeaturedImageGallery = ({ prop }: { prop: any }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
-  const baseImage = prop?.image_url || 
-    (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || 
-    (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/1.webp' : '/fallback-luxury.jpg');
+function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langState: string }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
 
   const images = prop?.slug === 'casa-estrella' ? [
-    baseImage,
+    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/gallery/casa-estrella/img-01.webp',
     '/gallery/casa-estrella/5.webp',
     '/gallery/casa-estrella/6.webp',
-    '/gallery/casa-estrella/casa-estrella-living-room-2.webp',
+    '/gallery/casa-estrella/casa-estrella-bedroom.webp',
+    '/gallery/casa-estrella/casa-estrella-ext-dining-room.webp',
     '/gallery/casa-estrella/casa-estrella-living-room.webp',
-    '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
-  ] : [baseImage];
+    '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg'
+  ].filter(Boolean) as string[] : [
+    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/fallback-luxury.jpg'
+  ].filter(Boolean) as string[];
 
   useEffect(() => {
     if (images.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+      setCurrentIdx(prev => (prev + 1) % images.length);
+    }, 4000);
     return () => clearInterval(interval);
   }, [images.length]);
 
   return (
-    <>
-      {images.map((imgSrc, idx) => (
-        <img 
-          key={idx}
-          src={imgSrc} 
-          alt={prop.title || "Featured Property"} 
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-[2000ms] group-hover:scale-[1.03] ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          referrerPolicy="no-referrer"
+    <div className="group relative h-[600px] overflow-hidden">
+      {images.map((src, idx) => (
+        <Image 
+          key={src}
+          src={src}
+          alt={prop.title}
+          fill
+          className={`object-cover transition-opacity duration-[2s] ease-in-out ${idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
         />
       ))}
-    </>
+      <div className="absolute inset-0 z-20 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 pointer-events-none"></div>
+      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300 text-white">
+          <h3 className="font-cormorant text-5xl md:text-6xl font-light mb-8 text-center px-4 drop-shadow-lg">{prop.title}</h3>
+          <Link href={`/${langState}/property/${prop.slug}`} className="p-3">
+            <button className="border border-white px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300 active:scale-95 bg-black/20 backdrop-blur-sm animate-pulse hover:animate-none shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)]">
+              {t.explore}
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
-};
+}
 
 export function ZakherHome({ 
   siteConfig, 
@@ -114,6 +133,10 @@ export function ZakherHome({
   lang?: string;
 }) {
   const [showSticky, setShowSticky] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
+  const [inquiryType, setInquiryType] = useState('reservation');
+  const [contactLang, setContactLang] = useState("");
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
 
@@ -137,31 +160,41 @@ export function ZakherHome({
       `}} />
 
       {/* Header */}
-      <header className="fixed top-0 w-full px-6 py-8 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent text-white drop-shadow-md">
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
         <div className="flex items-center gap-4">
-          <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white">
+          <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
             {siteConfig?.site_title || "Grupo Zakher"}
-          </div>
+          </Link>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${langState}`} className="hover:opacity-70 transition-opacity uppercase">{t.nav.home}</Link>
+          <Link href={`/${langState}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
-          <div className="relative group">
-            <button className="hover:opacity-70 transition-opacity flex items-center gap-2 uppercase">
-              {t.nav.property} <span className="text-[8px] opacity-70">▼</span>
+          <div className="relative group focus-within:opacity-100">
+            <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
+              {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
-            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
-              <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white">
-                {t.nav.casaEstrella}
-              </Link>
+            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2">
+              <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                {properties && properties.length > 0 ? (
+                  properties.map((prop, idx) => (
+                    <Link key={prop.slug || idx} href={`/${langState}/property/${prop.slug}`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white min-h-[44px] flex items-center">
+                      {prop.title}
+                    </Link>
+                  ))
+                ) : (
+                  <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white min-h-[44px] flex items-center">
+                    {t.nav.casaEstrella}
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
 
-          <button className="hover:opacity-70 transition-opacity uppercase">{t.nav.contact}</button>
+          <button onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
-        <div className="flex items-center gap-6">
-
-          <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
+        <div className="flex items-center gap-6 hidden">
+          <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
             {t.reserve}
           </button>
         </div>
@@ -170,11 +203,12 @@ export function ZakherHome({
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <img 
+          <Image 
             src={siteConfig?.hero_image || "/parent-hero.jpg"}
             alt={siteConfig?.site_title || "Grupo Zakher Night Skyline"}
-            className="absolute inset-0 w-full h-full object-cover"
-            referrerPolicy="no-referrer"
+            className="object-cover"
+            fill
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
@@ -183,7 +217,7 @@ export function ZakherHome({
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 0.3, type: "spring", bounce: 0.1 }}
           >
             <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
               <MapPin size={14} />
@@ -193,7 +227,7 @@ export function ZakherHome({
               {siteConfig?.site_title || "Grupo Zakher"}
             </h1>
             <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90 drop-shadow-md">
-              {siteConfig?.site_description}
+              {t.heroSubtitle}
             </p>
           </motion.div>
         </div>
@@ -209,18 +243,18 @@ export function ZakherHome({
         >
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.booking.checkIn}</span>
+              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.booking.checkIn}</span>
               <span className="font-cormorant text-xl text-gray-800">{t.booking.dates}</span>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.booking.guests}</span>
+              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.booking.guests}</span>
               <span className="font-cormorant text-xl text-gray-800">{t.booking.adults}</span>
             </div>
           </div>
           <div className="px-4 py-4 w-full md:w-auto">
-            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors">
+            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors active:scale-95">
               {t.booking.search}
             </button>
           </div>
@@ -245,20 +279,9 @@ export function ZakherHome({
           <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">{t.portfolio}</span>
           <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">{t.featured}</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className={`grid grid-cols-1 ${properties && properties.length > 1 ? 'md:grid-cols-2' : 'max-w-5xl mx-auto w-full'} gap-8`}>
           {properties?.map((prop, i) => (
-            <div key={i} className="group relative h-[600px] overflow-hidden">
-              <FeaturedImageGallery prop={prop} />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-700 z-20 pointer-events-none"></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-80 group-hover:opacity-100 transition-opacity duration-700 z-30">
-                <h3 className="font-cormorant text-4xl font-light mb-8 text-center px-4">{prop.title}</h3>
-                <Link href={`/${langState}/property/${prop.slug}`}>
-                  <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
-                    {t.explore}
-                  </button>
-                </Link>
-              </div>
-            </div>
+            <PropertySlideshow key={prop.slug || i} prop={prop} t={t} langState={langState} />
           ))}
         </div>
       </section>
@@ -268,14 +291,14 @@ export function ZakherHome({
         <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
           {siteConfig?.site_title || "Grupo Zakher"}
         </div>
-        <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
+        <p className="font-montserrat text-xs tracking-widest text-gray-500 uppercase">
           &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. {t.rights}
         </p>
       </footer>
 
       {/* Sticky Floating Booking Bar */}
       <AnimatePresence>
-        {showSticky && (
+        {false && showSticky && (
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -285,24 +308,27 @@ export function ZakherHome({
           >
             <div className="hidden md:flex items-center gap-10 px-8">
               <div className="flex flex-col text-left">
-                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">Check-in - Check-out</span>
+                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">Check-in - Check-out</span>
                 <span className="font-cormorant text-xl text-gray-900 leading-none">Select dates</span>
               </div>
               <div className="w-[1px] h-8 bg-gray-300"></div>
               <div className="flex flex-col text-left">
-                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">Guests</span>
+                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">Guests</span>
                 <span className="font-cormorant text-xl text-gray-900 leading-none">2 Adults</span>
               </div>
             </div>
             <div className="flex-1 md:hidden px-6 text-left">
               <span className="font-cormorant text-xl text-gray-900 leading-none">{siteConfig?.site_title || "Grupo Zakher"}</span>
             </div>
-            <button className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap">
+            <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap active:scale-95">
               Check Availability
             </button>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Contact Drawer - 60/40 Split */}
+      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
     </div>
   );
 }

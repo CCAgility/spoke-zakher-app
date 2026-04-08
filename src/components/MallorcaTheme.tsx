@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ConciergeDrawer } from './ConciergeDrawer';
 
 const translations = {
   en: {
-    nav: { home: "Home", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Contact" },
+    nav: { home: "Home", property: "Property", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Concierge" },
     bookNow: "Reserve",
     location: "Cartagena, Colombia",
     heroTitle: "A Haven of Peace",
@@ -44,7 +45,7 @@ const translations = {
     galleryTitle: "The Villa"
   },
   es: {
-    nav: { home: "Inicio", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Contacto" },
+    nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Conserjería" },
     bookNow: "Reservar",
     location: "Cartagena, Colombia",
     heroTitle: "Un Remanso de Paz",
@@ -80,7 +81,7 @@ const translations = {
     galleryTitle: "La Villa"
   },
   pt: {
-    nav: { home: "Início", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Contato" },
+    nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Concierge" },
     bookNow: "Reservar",
     location: "Cartagena, Colômbia",
     heroTitle: "Um Refúgio de Paz",
@@ -116,7 +117,7 @@ const translations = {
     galleryTitle: "A Villa"
   },
   fr: {
-    nav: { home: "Accueil", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Contact" },
+    nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Conciergerie" },
     bookNow: "Réserver",
     location: "Carthagène, Colombie",
     heroTitle: "Un Havre de Paix",
@@ -164,6 +165,8 @@ export function MallorcaTheme({
 }) {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [showSticky, setShowSticky] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -177,39 +180,42 @@ export function MallorcaTheme({
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
       {/* Custom Fonts */}
       <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
-        .font-cormorant { font-family: 'Playfair Display', serif; }
-        .font-montserrat { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
       `}} />
 
       {/* Header */}
-      <header className="fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 bg-[#1A1A1A]/40 backdrop-blur-md border-b border-white/10 text-white drop-shadow-md transition-all duration-300">
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
         <div className="flex items-center gap-4">
-          <Link href="/" className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
+          <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
             {siteConfig?.site_title || "Grupo Zakher"}
           </Link>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
-          <Link href={`/${lang}`} className="hover:opacity-70 transition-opacity">{t.nav.home}</Link>
+          <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
-          <div className="relative group">
-            <button className="hover:opacity-70 transition-opacity flex items-center gap-2 uppercase">
-              PROPERTY <span className="text-[8px] opacity-70">▼</span>
+          <div className="relative group focus-within:opacity-100">
+            <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
+              {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
-            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
-              <Link href={`/${lang}/property/casa-estrella`} className="block px-6 py-4 text-[10px] tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white">
-                CASA ESTRELLA
-              </Link>
+            <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2">
+              <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                <Link href={`/${lang}/property/${property?.slug || 'casa-estrella'}`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white min-h-[44px] flex items-center">
+                  {property?.title || t.nav.casaEstrella}
+                </Link>
+              </div>
             </div>
           </div>
 
-          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.accommodations}</a>
-          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.gallery}</a>
-          <a href="#" className="hover:opacity-70 transition-opacity">{t.nav.contact}</a>
+          <button onClick={(e) => { e.preventDefault(); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
         </nav>
-        <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
-          {t.bookNow}
-        </button>
+        <div className="flex items-center gap-6 hidden">
+          <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
+            {t.bookNow}
+          </button>
+        </div>
       </header>
 
       {/* Hero Section */}
@@ -231,7 +237,7 @@ export function MallorcaTheme({
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 0.3, type: "spring", bounce: 0.1 }}
           >
             <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
               <MapPin size={14} />
@@ -257,18 +263,18 @@ export function MallorcaTheme({
         >
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.arrival} - {t.departure}</span>
+              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.arrival} - {t.departure}</span>
               <span className="font-cormorant text-xl text-gray-800">{t.dates}</span>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
             <div className="flex flex-col text-left">
-              <span className="font-montserrat text-[10px] text-gray-400 uppercase tracking-widest mb-1">{t.guests}</span>
+              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.guests}</span>
               <span className="font-cormorant text-xl text-gray-800">{t.adults}</span>
             </div>
           </div>
           <div className="px-4 py-4 w-full md:w-auto">
-            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors">
+            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors active:scale-95">
               {t.search}
             </button>
           </div>
@@ -291,12 +297,12 @@ export function MallorcaTheme({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
             {t.amenitiesList.map((amenity, index) => (
               <div key={index} className="flex items-center gap-4">
-                <Check size={20} className="text-orange-500" strokeWidth={2} />
+                <Check size={20} className="text-gray-400" strokeWidth={2} />
                 <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
               </div>
             ))}
           </div>
-          <button className="hidden border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3 font-montserrat text-sm font-medium hover:bg-[#1A1A1A] hover:text-white transition-colors">
+          <button className="border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3 font-montserrat text-sm font-medium hover:bg-[#1A1A1A] hover:text-white transition-colors active:scale-95">
             {t.showAllAmenities}
           </button>
         </div>
@@ -332,25 +338,25 @@ export function MallorcaTheme({
                   {property?.title || "Casa Estrella de San Pedro"} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
                 </p>
                 <div className="mb-8">
-                  <h4 className="font-montserrat text-[10px] tracking-widest uppercase text-gray-400 mb-4">Amenities & Services</h4>
+                  <h4 className="font-montserrat text-xs tracking-widest uppercase text-gray-500 mb-4">Amenities & Services</h4>
                   <ul className="space-y-3 font-montserrat text-sm font-light text-white/90">
                     {property?.amenities?.length ? (
                       property.amenities.map((item: any, idx: number) => (
                         <li key={idx} className="flex items-center gap-3">
-                          <Check size={16} className="text-white/60" /> 
+                          <Check size={16} className="text-white/60" strokeWidth={2} /> 
                           {item.amenity_id?.name || item}
                         </li>
                       ))
                     ) : (
                       <>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Pool & Mini Pool</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Rooftop Bar</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Outdoor Dining Table</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Security 6 PM - 7 AM</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Complimentary Daily Housekeeping, WiFi & Toiletries</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> On-Site Gourmet Food & Beverage Options (Extra)</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> On-Site Massage & Yoga Services (Extra)</li>
-                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" /> Private Airport Transfers (Extra)</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Pool & Mini Pool</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Rooftop Bar</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Outdoor Dining Table</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Security 6 PM - 7 AM</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Complimentary Daily Housekeeping, WiFi & Toiletries</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> On-Site Gourmet Food & Beverage Options (Extra)</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> On-Site Massage & Yoga Services (Extra)</li>
+                        <li className="flex items-center gap-3"><Check size={16} className="text-white/60" strokeWidth={2} /> Private Airport Transfers (Extra)</li>
                       </>
                     )}
                   </ul>
@@ -359,12 +365,12 @@ export function MallorcaTheme({
               
               <div className="border-t border-white/20 pt-6 mt-8">
                 <div className="flex justify-between items-center mb-2 font-montserrat text-sm">
-                  <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">Low Season (3 Nights Min)</span>
-                  <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                  <span className="font-light text-gray-500 uppercase tracking-widest text-xs">Low Season (3 Nights Min)</span>
+                  <span>${property?.low_season_rate || "1,050"} <span className="text-xs text-gray-500 uppercase">/ night</span></span>
                 </div>
                 <div className="flex justify-between items-center font-montserrat text-sm">
-                  <span className="font-light text-gray-400 uppercase tracking-widest text-[10px]">High Season (7 Nights Min)</span>
-                  <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-gray-400 uppercase">/ night</span></span>
+                  <span className="font-light text-gray-500 uppercase tracking-widest text-xs">High Season (7 Nights Min)</span>
+                  <span>${property?.high_season_rate || "1,995"} <span className="text-xs text-gray-500 uppercase">/ night</span></span>
                 </div>
               </div>
             </div>
@@ -393,14 +399,14 @@ export function MallorcaTheme({
               
               return (
               <div key={i} className={`relative group overflow-hidden ${i === 0 || i === 3 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
-                <img 
+                <Image 
                   src={imgSrc} 
                   alt={`${property?.title || "Casa Estrella"} Gallery ${i}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  loading="lazy"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center cursor-pointer">
-                  <span className="font-montserrat text-[10px] tracking-widest uppercase">View Image</span>
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center cursor-pointer">
+                  <span className="font-montserrat text-xs tracking-widest uppercase">View Image</span>
                 </div>
               </div>
             )})}
@@ -413,7 +419,7 @@ export function MallorcaTheme({
         <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
           {property?.title || "Casa Estrella de San Pedro"}
         </div>
-        <p className="font-montserrat text-[10px] tracking-widest text-gray-500 uppercase">
+        <p className="font-montserrat text-xs tracking-widest text-gray-600 uppercase">
           &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. All rights reserved.
         </p>
       </footer>
@@ -430,24 +436,26 @@ export function MallorcaTheme({
           >
             <div className="hidden md:flex items-center gap-10 px-8">
               <div className="flex flex-col text-left">
-                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.arrival} - {t.departure}</span>
+                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">{t.arrival} - {t.departure}</span>
                 <span className="font-cormorant text-xl text-gray-900 leading-none">{t.dates}</span>
               </div>
               <div className="w-[1px] h-8 bg-gray-300"></div>
               <div className="flex flex-col text-left">
-                <span className="font-montserrat text-[9px] text-gray-500 uppercase tracking-widest mb-0.5">{t.guests}</span>
+                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">{t.guests}</span>
                 <span className="font-cormorant text-xl text-gray-900 leading-none">{t.adults}</span>
               </div>
             </div>
             <div className="flex-1 md:hidden px-6 text-left">
               <span className="font-cormorant text-xl text-gray-900 leading-none">Casa Estrella</span>
             </div>
-            <button className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap">
+            <button className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap active:scale-95">
               {t.search}
             </button>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
     </div>
   );
 }

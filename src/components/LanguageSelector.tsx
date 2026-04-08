@@ -2,8 +2,23 @@
 
 import React from 'react';
 import { Globe } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
-export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
+export function LanguageSelector() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Extract current lang from segment like '/en' or '/es/property/slug'
+  const segments = typeof pathname === 'string' ? pathname.split('/') : [];
+  const currentLang = segments[1] || 'en';
+
+  const switchLang = (newLang: string) => {
+    if (!pathname) return;
+    const newSegments = [...segments];
+    newSegments[1] = newLang; // swap the locale prefix
+    router.push(newSegments.join('/') || '/');
+  };
+
   const languages = [
     { code: 'en', label: 'English' },
     { code: 'es', label: 'Español' },
@@ -12,7 +27,7 @@ export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l:
   ];
 
   return (
-    <div className="fixed top-28 right-6 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full border border-gray-200/50 opacity-40 hover:opacity-100 transition-all duration-[1500ms] shadow-[0_0_25px_rgba(194,168,120,0.6)]">
+    <div className="fixed top-28 right-6 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-gray-200/50 opacity-40 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-500">
       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600">
         <Globe size={16} />
       </div>
@@ -20,9 +35,9 @@ export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l:
         {languages.map((l) => (
           <button
             key={l.code}
-            onClick={() => setLang(l.code)}
+            onClick={() => switchLang(l.code)}
             className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all uppercase tracking-wider ${
-              lang === l.code 
+              currentLang === l.code 
                 ? "bg-[#C2A878] text-white shadow-md" 
                 : "bg-transparent text-gray-600 hover:bg-gray-100"
             }`}
