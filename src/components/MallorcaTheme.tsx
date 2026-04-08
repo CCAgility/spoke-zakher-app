@@ -186,7 +186,7 @@ export function MallorcaTheme({
       <header className="fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 bg-[#1A1A1A]/40 backdrop-blur-md border-b border-white/10 text-white drop-shadow-md transition-all duration-300">
         <div className="flex items-center gap-4">
           <Link href="/" className="p-3 min-h-[44px] flex items-center font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors active:scale-95">
-            {siteConfig?.site_title || "Grupo Zakher"}
+            {property?.title || siteConfig?.site_title || "Grupo Zakher"}
           </Link>
         </div>
         <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
@@ -197,8 +197,8 @@ export function MallorcaTheme({
               {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
             <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-md border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 min-w-[220px] shadow-2xl py-2">
-              <Link href={`/${lang}/property/casa-estrella`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white p-3 min-h-[44px] flex items-center">
-                {t.nav.casaEstrella}
+              <Link href={`/${lang}/property/${property?.slug || 'casa-estrella'}`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white p-3 min-h-[44px] flex items-center">
+                {property?.title || t.nav.casaEstrella}
               </Link>
             </div>
           </div>
