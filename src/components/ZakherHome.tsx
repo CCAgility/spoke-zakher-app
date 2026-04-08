@@ -70,6 +70,55 @@ const translations = {
   }
 };
 
+function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langState: string }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  const images = prop?.slug === 'casa-estrella' ? [
+    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/gallery/casa-estrella/img-01.webp',
+    '/gallery/casa-estrella/5.webp',
+    '/gallery/casa-estrella/6.webp',
+    '/gallery/casa-estrella/casa-estrella-bedroom.webp',
+    '/gallery/casa-estrella/casa-estrella-ext-dining-room.webp',
+    '/gallery/casa-estrella/casa-estrella-living-room.webp',
+    '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg'
+  ].filter(Boolean) as string[] : [
+    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/fallback-luxury.jpg'
+  ].filter(Boolean) as string[];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIdx(prev => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="group relative h-[600px] overflow-hidden">
+      {images.map((src, idx) => (
+        <Image 
+          key={src}
+          src={src}
+          alt={prop.title}
+          fill
+          className={`object-cover transition-opacity duration-[2s] ease-in-out group-hover:scale-105 ${idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+        />
+      ))}
+      <div className="absolute inset-0 z-20 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 pointer-events-none"></div>
+      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300 text-white">
+          <h3 className="font-cormorant text-5xl md:text-6xl font-light mb-8 text-center px-4 drop-shadow-lg">{prop.title}</h3>
+          <Link href={`/${langState}/property/${prop.slug}`} className="p-3">
+            <button className="border border-white px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300 active:scale-95 bg-black/20 backdrop-blur-sm">
+              {t.explore}
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ZakherHome({ 
   siteConfig, 
   properties,
@@ -219,26 +268,9 @@ export function ZakherHome({
           <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">{t.portfolio}</span>
           <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">{t.featured}</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className={`grid grid-cols-1 ${properties && properties.length > 1 ? 'md:grid-cols-2' : 'max-w-5xl mx-auto w-full'} gap-8`}>
           {properties?.map((prop, i) => (
-            <div key={i} className="group relative h-[600px] overflow-hidden">
-              <Image 
-                src={prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/img-01.webp' : '/fallback-luxury.jpg')} 
-                alt={prop.title} 
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300"></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{prop.price ? `$${prop.price} ${t.night}` : t.contactPrice}</span>
-                <h3 className="font-cormorant text-4xl font-light mb-8 text-center px-4">{prop.title}</h3>
-                <Link href={`/${langState}/property/${prop.slug}`} className="p-3">
-                  <button className="border border-white px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300 active:scale-95">
-                    {t.explore}
-                  </button>
-                </Link>
-              </div>
-            </div>
+            <PropertySlideshow key={prop.slug || i} prop={prop} t={t} langState={langState} />
           ))}
         </div>
       </section>
