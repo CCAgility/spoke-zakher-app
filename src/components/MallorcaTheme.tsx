@@ -471,11 +471,11 @@ export function MallorcaTheme({
       </section>
       
       {/* Footer */}
-      <footer className="bg-[#111] text-white py-20 px-6 text-center">
-        <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
+      <footer className="bg-white border-t border-gray-200 text-[#1A1A1A] py-20 px-6 text-center">
+        <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium mb-8">
           {getLocStr('title', t.nav.casaEstrella)}
         </div>
-        <p className="font-montserrat text-xs tracking-widest text-gray-600 uppercase">
+        <p className="font-montserrat text-xs tracking-widest text-gray-400 uppercase">
           &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. All rights reserved.
         </p>
       </footer>
