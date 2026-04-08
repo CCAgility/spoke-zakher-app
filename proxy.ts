@@ -45,6 +45,26 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // ── i18n Routing ──
+  const locales = ['en', 'es', 'fr', 'pt'];
+  const defaultLocale = 'en';
+
+  if (
+    !pathname.startsWith('/_next') &&
+    !pathname.startsWith('/api') &&
+    !pathname.startsWith('/private-admin') &&
+    !pathname.includes('.')
+  ) {
+    const pathnameHasLocale = locales.some(
+      (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    );
+
+    if (!pathnameHasLocale) {
+      request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
+      return NextResponse.redirect(request.nextUrl);
+    }
+  }
+
   return NextResponse.next({
     request: {
       headers: requestHeaders,

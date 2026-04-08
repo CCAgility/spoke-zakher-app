@@ -65,6 +65,45 @@ const translations = {
   }
 };
 
+const FeaturedImageGallery = ({ prop }: { prop: any }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const baseImage = prop?.image_url || 
+    (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || 
+    (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/1.webp' : '/fallback-luxury.jpg');
+
+  const images = prop?.slug === 'casa-estrella' ? [
+    baseImage,
+    '/gallery/casa-estrella/5.webp',
+    '/gallery/casa-estrella/6.webp',
+    '/gallery/casa-estrella/casa-estrella-living-room-2.webp',
+    '/gallery/casa-estrella/casa-estrella-living-room.webp',
+    '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
+  ] : [baseImage];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <>
+      {images.map((imgSrc, idx) => (
+        <img 
+          key={idx}
+          src={imgSrc} 
+          alt={prop.title || "Featured Property"} 
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-[2000ms] group-hover:scale-[1.03] ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          referrerPolicy="no-referrer"
+        />
+      ))}
+    </>
+  );
+};
+
 export function ZakherHome({ 
   siteConfig, 
   properties,
@@ -121,13 +160,7 @@ export function ZakherHome({
           <button className="hover:opacity-70 transition-opacity uppercase">{t.nav.contact}</button>
         </nav>
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-4 text-[10px] font-montserrat tracking-widest text-white/70">
-            <Globe size={14} />
-            <Link href="/en" className={`hover:text-white transition-colors ${langState === 'en' ? 'text-white' : ''}`}>EN</Link>
-            <Link href="/es" className={`hover:text-white transition-colors ${langState === 'es' ? 'text-white' : ''}`}>ES</Link>
-            <Link href="/pt" className={`hover:text-white transition-colors ${langState === 'pt' ? 'text-white' : ''}`}>PT</Link>
-            <Link href="/fr" className={`hover:text-white transition-colors ${langState === 'fr' ? 'text-white' : ''}`}>FR</Link>
-          </div>
+
           <button className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white">
             {t.reserve}
           </button>
@@ -215,15 +248,9 @@ export function ZakherHome({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {properties?.map((prop, i) => (
             <div key={i} className="group relative h-[600px] overflow-hidden">
-              <img 
-                src={prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || (prop?.slug === 'casa-estrella' ? '/gallery/casa-estrella/1.webp' : '/fallback-luxury.jpg')} 
-                alt={prop.title} 
-                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-700"></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <span className="font-montserrat text-xs tracking-[0.3em] uppercase mb-4">{prop.price ? `$${prop.price} ${t.night}` : t.contactPrice}</span>
+              <FeaturedImageGallery prop={prop} />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-700 z-20 pointer-events-none"></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white opacity-80 group-hover:opacity-100 transition-opacity duration-700 z-30">
                 <h3 className="font-cormorant text-4xl font-light mb-8 text-center px-4">{prop.title}</h3>
                 <Link href={`/${langState}/property/${prop.slug}`}>
                   <button className="border border-white px-8 py-3 font-montserrat text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">

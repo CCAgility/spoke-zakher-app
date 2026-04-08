@@ -12,7 +12,7 @@ export function LanguageSelector({ lang, setLang }: { lang: string, setLang: (l:
   ];
 
   return (
-    <div className="fixed top-28 right-6 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-gray-200/50">
+    <div className="fixed top-28 right-6 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full border border-gray-200/50 opacity-40 hover:opacity-100 transition-all duration-[1500ms] shadow-[0_0_25px_rgba(194,168,120,0.6)]">
       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600">
         <Globe size={16} />
       </div>
