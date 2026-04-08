@@ -25,12 +25,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   let properties = [];
 
   try {
-    properties = await directus.request(
+    const response = await directus.request(
       readItems('properties', { 
         limit: 10,
         fields: ['*', 'gallery.*', 'amenities.amenity_id.*']
       })
     );
+    properties = response || [];
+    if (properties.length === 0) throw new Error("Empty properties array from Directus.");
   } catch (e) {
     console.error("Failed to fetch properties:", e);
     // Fallback if empty
