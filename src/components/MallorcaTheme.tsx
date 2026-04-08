@@ -327,9 +327,9 @@ export function MallorcaTheme({
             <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Private Villa Layout</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Rooms List */}
-            <div className="space-y-6">
+            <div className="lg:col-span-7 xl:col-span-8 space-y-6">
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">7 Luxury Bedrooms</h3>
               
               <div className="grid grid-cols-2 gap-3">
@@ -402,7 +402,7 @@ export function MallorcaTheme({
             </div>
 
             {/* Rental Rates & Details */}
-            <div className="bg-[#1A1A1A] text-white p-10 flex flex-col justify-between h-full">
+            <div className="lg:col-span-5 xl:col-span-4 bg-[#1A1A1A] text-white p-10 md:p-12 flex flex-col justify-between h-full shadow-2xl transition-all duration-300">
               <div>
                 <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-gray-300 mb-8">
