@@ -134,6 +134,7 @@ export function ZakherHome({
 }) {
   const [showSticky, setShowSticky] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [contactLang, setContactLang] = useState("");
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
 
@@ -350,17 +351,23 @@ export function ZakherHome({
                 <input required type="email" placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-2 focus:outline-none focus:border-white transition-colors" />
                 <input required type="tel" placeholder={t.contactForm?.phone || "WhatsApp / Phone *"} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-2 focus:outline-none focus:border-white transition-colors" />
                 <div className="relative">
-                  <select defaultValue="" className="w-full bg-transparent border-b border-gray-700 text-gray-500 pb-2 focus:outline-none focus:border-white focus:text-white transition-colors appearance-none cursor-pointer">
-                    <option value="" disabled>{t.contactForm?.language || "Preferred Language (Optional)"}</option>
+                  <select value={contactLang} onChange={(e) => setContactLang(e.target.value)} className="w-full bg-transparent border-b border-gray-700 text-white pb-2 focus:outline-none focus:border-white focus:text-white transition-colors appearance-none cursor-pointer">
+                    <option value="" disabled className="text-gray-500">{t.contactForm?.language || "Preferred Language (Optional)"}</option>
                     <option value="en" className="bg-[#1A1A1A] text-white">English</option>
                     <option value="es" className="bg-[#1A1A1A] text-white">Español</option>
                     <option value="pt" className="bg-[#1A1A1A] text-white">Português</option>
                     <option value="fr" className="bg-[#1A1A1A] text-white">Français</option>
+                    <option value="other" className="bg-[#1A1A1A] text-white">Other</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pb-2">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                   </div>
                 </div>
+                {contactLang === 'other' && (
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                    <input type="text" placeholder="Please specify language" className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-2 focus:outline-none focus:border-white transition-colors" />
+                  </motion.div>
+                )}
                 <textarea required placeholder={t.contactForm?.requests || "Message/Special Requests *"} rows={3} className="w-full bg-transparent border-b border-gray-700 text-white placeholder:text-gray-500 pb-2 focus:outline-none focus:border-white transition-colors resize-none"></textarea>
                 <button type="submit" className="w-full bg-white text-black py-4 text-xs tracking-widest uppercase hover:bg-gray-200 transition-colors mt-6 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]">{t.contactForm?.send || "Send Message"}</button>
               </form>
