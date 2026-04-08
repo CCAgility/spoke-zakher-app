@@ -318,8 +318,8 @@ export function MallorcaTheme({
 
       {/* Property Layout & Rates Module */}
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-16 md:text-center text-left">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16 text-left">
             <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Floor Plan & Configuration</span>
             <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Private Villa Layout</h2>
           </div>
