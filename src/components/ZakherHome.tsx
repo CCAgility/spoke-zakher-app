@@ -161,12 +161,11 @@ export function ZakherHome({
 
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-12">
           <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
             {siteConfig?.site_title || "Grupo Zakher"}
           </Link>
-        </div>
-        <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
+          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
           <Link href={`/${langState}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
@@ -192,7 +191,8 @@ export function ZakherHome({
           </div>
 
           <button onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
-        </nav>
+          </nav>
+        </div>
         <div className="flex items-center gap-6 hidden">
           <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
             {t.reserve}
