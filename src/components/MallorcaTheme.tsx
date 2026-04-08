@@ -308,7 +308,7 @@ export function MallorcaTheme({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 mb-12">
             {t.amenitiesList.map((amenity, index) => (
               <div key={index} className="flex items-center gap-4">
-                <Check size={20} className="text-gray-400" strokeWidth={2} />
+                <Check size={20} className="text-orange-500" strokeWidth={2} />
                 <span className="font-montserrat text-gray-700 font-light text-base md:text-lg">{amenity}</span>
               </div>
             ))}
