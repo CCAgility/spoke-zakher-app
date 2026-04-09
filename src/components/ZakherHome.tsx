@@ -76,7 +76,7 @@ const translations = {
   }
 };
 
-function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langState: string }) {
+function PropertySlideshow({ prop, t, langState, networkQuality }: { prop: any, t: any, langState: string, networkQuality?: number }) {
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const images = prop?.slug === 'casa-estrella' ? [
@@ -110,6 +110,7 @@ function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langStat
           className={`object-cover transition-opacity duration-[2s] ease-in-out ${idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
           placeholder="blur"
           blurDataURL={BLUR_PIXEL}
+          quality={networkQuality || 85}
         />
       ))}
       <div className="absolute inset-0 z-20 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 pointer-events-none"></div>
@@ -137,11 +138,13 @@ function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langStat
 export function ZakherHome({ 
   siteConfig, 
   properties,
-  lang
+  lang,
+  networkQuality
 }: { 
   siteConfig: any; 
   properties: any[];
   lang?: string;
+  networkQuality?: number;
 }) {
   const [showSticky, setShowSticky] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -224,6 +227,7 @@ export function ZakherHome({
             priority
             placeholder="blur"
             blurDataURL={BLUR_PIXEL}
+            quality={networkQuality || 85}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
@@ -296,7 +300,7 @@ export function ZakherHome({
         </div>
         <div className={`grid grid-cols-1 ${properties && properties.length > 1 ? 'md:grid-cols-2' : 'max-w-5xl mx-auto w-full'} gap-8`}>
           {properties?.map((prop, i) => (
-            <PropertySlideshow key={prop.slug || i} prop={prop} t={t} langState={langState} />
+            <PropertySlideshow key={prop.slug || i} prop={prop} t={t} langState={langState} networkQuality={networkQuality} />
           ))}
         </div>
       </section>

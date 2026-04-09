@@ -2,12 +2,16 @@ import React from 'react';
 import directus from '@/lib/directus';
 import { readItems } from '@directus/sdk';
 import { ZakherHome } from '@/components/ZakherHome';
+import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   // Fetch the Sovereign Spoke content
   const { lang } = await params;
+  const headersList = await headers();
+  const saveData = headersList.get('save-data') === 'on';
+  const networkQuality = saveData ? 30 : 85;
   
   let siteConfig = null;
   let property = null;
@@ -46,6 +50,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   }
 
   return (
-    <ZakherHome siteConfig={siteConfig} properties={properties} lang={lang} />
+    <ZakherHome siteConfig={siteConfig} properties={properties} lang={lang} networkQuality={networkQuality} />
   );
 }
