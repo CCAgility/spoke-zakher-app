@@ -330,9 +330,9 @@ export function MallorcaTheme({
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">7 Luxury Bedrooms</h3>
               
               <div className="bg-white p-3 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] border border-gray-100/50">
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {/* Master Suite Bento (Spans full width) */}
-                <div className="col-span-3 group relative h-[300px] md:h-[350px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
+                <div className="col-span-1 sm:col-span-2 md:col-span-3 group relative h-[300px] md:h-[350px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
                   title: 'The Master Suite',
                   img: '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
                   gallery: ['/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-4.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-5.jpeg'],
