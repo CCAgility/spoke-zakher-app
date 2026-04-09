@@ -41,10 +41,22 @@ Following the Promax SME UI/UX Audit, the following high-yield architectures wer
 *   **Concept:** Transitioning the functional "Amenities" checklist (e.g. WiFi, Pool) into a sequential, experiential timeline (e.g. *8:00 AM Rooftop Espresso* -> *2:00 PM In-Suite Massage* -> *8:00 PM Private Chef*).
 *   **Strategic Reasoning:** Ultra-luxury conversion thrives on selling curated timelines, not individual hardware. Transitioning to chronological storytelling drastically increases emotional investment prior to booking.
 
-### 3. Homepage Global CTA Activation
-*   **Concept:** Un-hiding the globally disabled reservation hooks on the root homepage (`/en`), specifically the floating sticky footer bar and the main hero booking widget.
-*   **Strategic Reasoning:** Returning clients arriving at the root portfolio domain who are ready to book are currently forced into a navigation maze because the direct CTAs are `hidden`. Unlocking these triggers immediately captures high-intent traffic.
+### 3. Homepage Global CTA Resolution
+*   **Status:** [**RESOLVED**]
+*   **Concept:** Completely purging dead/hidden global reservation hooks on the root homepage in favor of a strict conversion funnel.
+*   **Strategic Reasoning:** A generalized booking widget on a multi-property corporate page creates decision paralysis. Forcing users down the funnel (`Corporate Home` -> `Select Property` -> `Check Availability`) or routing root inquiries to the bespoke `Concierge Drawer` massively increases targeted conversion rates without UX ambiguity.
 
 ### 4. Homepage "Editorial Pillar" Refactor
-*   **Concept:** Breaking down the monolithic "About Grupo Zakher" text block into a digestible, 3-column editorial grid (e.g., *The Portfolio*, *The Service*, *The Security*).
-*   **Strategic Reasoning:** High-net-worth internet users scan for metrics of value; they do not read block paragraphs. Editorial gridding drastically increases engagement metrics and perceived brand value.
+*   **Status:** [**IMPLEMENTED RUNTIME**]
+*   **Concept:** Breaking down the monolithic "About Grupo Zakher" text block into a digestible, 3-column "Bento" editorial grid (*The Portfolio*, *The Service*, *The Discretion*).
+*   **Strategic Reasoning:** High-net-worth internet users scan for metrics of value; they do not read monolithic paragraphs. Expanding the layout to cleanly reflect the aesthetic topography of the property pages drastically increases engagement metrics and validates brand equity.
+
+### 5. Network-Aware Delivery Protocol (SSR)
+*   **Status:** [**IMPLEMENTED RUNTIME**]
+*   **Concept:** Catching the `Save-Data` HTTP header at the Next.js server-side layer to dynamically throttle LCP image quality payloads.
+*   **Strategic Reasoning:** Loading 8MB of 4K WebP assets into a throttled `3G` mobile connection crushes SEO Core Web Vitals and causes massive layout bouncing. Throttling quality to `30%` on restricted connections guarantees the "Time to Interactive" standard without failing aesthetic constraints.
+
+### 6. The Global Concierge Drawer
+*   **Status:** [**IMPLEMENTED RUNTIME**]
+*   **Concept:** A unified, sliding 60/40 viewport modal to handle contact forms, booking inquiries, and locale states.
+*   **Strategic Reasoning:** Intersecting user inquiries without forcing a hard page navigation (`/contact`) prevents abandonment and keeps the luxury property assets firmly positioned in the user's peripheral vision while they type.
