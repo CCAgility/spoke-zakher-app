@@ -34,6 +34,12 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Ensure runtime environment variables are preserved for force-dynamic Server Components
+ARG DIRECTUS_URL
+ENV DIRECTUS_URL=$DIRECTUS_URL
+ARG DIRECTUS_STATIC_TOKEN
+ENV DIRECTUS_STATIC_TOKEN=$DIRECTUS_STATIC_TOKEN
+
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
