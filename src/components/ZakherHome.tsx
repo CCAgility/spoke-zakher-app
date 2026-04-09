@@ -15,8 +15,11 @@ const translations = {
     reserve: "Reserve",
     booking: { checkIn: "Check-in - Check-out", dates: "Select dates", guests: "Guests", adults: "2 Adults", search: "Check Availability" },
     aboutTitle: "About Grupo Zakher",
-    aboutP1: "At our company, we are dedicated to curating the finest luxury experiences in the stunning city of Cartagena. With exceptional properties at our disposal, we strive to offer our guests unforgettable stays that seamlessly blend comfort, elegance, and local charm.",
-    aboutP2: "Each property is meticulously designed to provide a unique ambiance, allowing visitors to immerse themselves in the vibrant culture and rich history of Cartagena. From personalized service to exclusive amenities, our team is committed to ensuring that every moment spent with us is extraordinary. Whether you're seeking a romantic getaway, a family vacation, or a rejuvenating retreat, we invite you to discover the ultimate in luxury hospitality through our exceptional offerings. Experience Cartagena like never before and create lasting memories in our lavish accommodations.",
+    aboutPillars: [
+      { title: "The Portfolio", desc: "Access the most exclusive residences in Cartagena. Exceptional properties meticulously designed to provide a unique ambiance, seamlessly blending comfort, elegance, and local charm." },
+      { title: "The Service", desc: "From personalized service to exclusive amenities, our team ensures every moment is extraordinary. A dedicated concierge curates your stay with private luxury bespoke offerings." },
+      { title: "The Discretion", desc: "Designed for high-net-worth guests requiring absolute privacy. Rejuvenating retreats and romantic getaways protected by rigorous, sovereign-level discretion and tranquility." }
+    ],
     portfolio: "Our Portfolio",
     nav: { home: "Home", property: "Property", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Featured Property",
@@ -31,8 +34,11 @@ const translations = {
     reserve: "Reservar",
     booking: { checkIn: "Llegada - Salida", dates: "Seleccionar fechas", guests: "Huéspedes", adults: "2 Adultos", search: "Ver Disponibilidad" },
     aboutTitle: "Acerca de Grupo Zakher",
-    aboutP1: "En nuestra empresa, nos dedicamos a curar las mejores experiencias de lujo en la impresionante ciudad de Cartagena. Con propiedades excepcionales a nuestra disposición, nos esforzamos por ofrecer a nuestros huéspedes estadías inolvidables que combinan a la perfección comodidad, elegancia y encanto local.",
-    aboutP2: "Cada propiedad está meticulosamente diseñada para proporcionar un ambiente único, permitiendo a los visitantes sumergirse en la vibrante cultura y rica historia de Cartagena. Desde un servicio personalizado hasta comodidades exclusivas, nuestro equipo se compromete a garantizar que cada momento que pase con nosotros sea extraordinario. Ya sea que busque una escapada romántica, unas vacaciones familiares o un retiro rejuvenecedor, lo invitamos a descubrir lo último en hospitalidad de lujo a través de nuestras ofertas excepcionales. Experimente Cartagena como nunca antes y cree recuerdos duraderos en nuestros espléndidos alojamientos.",
+    aboutPillars: [
+      { title: "El Portafolio", desc: "Acceda a las residencias más exclusivas de Cartagena. Propiedades meticulosamente diseñadas para proporcionar un ambiente único, combinando comodidad, elegancia y encanto local." },
+      { title: "El Servicio", desc: "Desde servicio personalizado hasta amenidades exclusivas, nuestro equipo asegura que cada momento sea extraordinario. Un conserje dedicado cura su estadía con ofertas de lujo a medida." },
+      { title: "La Discreción", desc: "Diseñado para huéspedes de alto patrimonio que requieren privacidad absoluta. Retiros rejuvenecedores protegidos por una discreción y tranquilidad de nivel soberano." }
+    ],
     portfolio: "Nuestro Portafolio",
     nav: { home: "Inicio", property: "Propiedades", casaEstrella: "Casa Estrella", contact: "Conserjería" },
     featured: "Propiedades Destacadas",
@@ -47,8 +53,11 @@ const translations = {
     reserve: "Reservar",
     booking: { checkIn: "Check-in - Check-out", dates: "Selecionar datas", guests: "Hóspedes", adults: "2 Adultos", search: "Verificar Disponibilidade" },
     aboutTitle: "Sobre o Grupo Zakher",
-    aboutP1: "Em nossa empresa, nos dedicamos a organizar as melhores experiências de luxo na deslumbrante cidade de Cartagena. Com propriedades excepcionais à nossa disposição, nos esforçamos para oferecer aos hóspedes estadias inesquecíveis que combinam conforto, elegância e charme local.",
-    aboutP2: "Cada propriedade é cuidadosamente projetada para proporcionar um ambiente único, permitindo aos visitantes mergulhar na rica história de Cartagena. Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário.",
+    aboutPillars: [
+      { title: "O Portfólio", desc: "Acesse as residências mais exclusivas de Cartagena. Propriedades cuidadosamente projetadas para proporcionar um ambiente único, combinando conforto, elegância e charme local." },
+      { title: "O Serviço", desc: "Desde serviços personalizados a comodidades exclusivas, a nossa equipa assegura que cada momento é extraordinário. Um concierge dedicado cria a sua estadia com ofertas personalizadas de luxo." },
+      { title: "A Discrição", desc: "Projetado para hóspedes de alto patrimônio que exigem privacidade absoluta. Retiros relaxantes protegidos por uma discrição e tranquilidade rigorosas e de nível soberano." }
+    ],
     portfolio: "Nosso Portfólio",
     nav: { home: "Início", property: "Propriedades", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Propriedades em Destaque",
@@ -63,8 +72,11 @@ const translations = {
     reserve: "Réserver",
     booking: { checkIn: "Arrivée - Départ", dates: "Sélectionner dates", guests: "Voyageurs", adults: "2 Adultes", search: "Vérifier la Disponibilité" },
     aboutTitle: "À propos de Grupo Zakher",
-    aboutP1: "Dans notre entreprise, nous nous engageons à offrir les meilleures expériences de luxe dans la magnifique ville de Carthagène. Avec des propriétés exceptionnelles à notre disposition, nous nous efforçons d'offrir à nos invités des séjours inoubliables où se mêlent confort, élégance et charme local.",
-    aboutP2: "Chaque propriété est méticuleusement conçue pour offrir une ambiance unique, permettant aux visiteurs de s'immerger dans la culture vibrante et la riche histoire de Carthagène. D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant passé avec nous est extraordinaire.",
+    aboutPillars: [
+      { title: "Le Portefeuille", desc: "Accédez aux résidences les plus exclusives de Carthagène. Des propriétés méticuleusement conçues pour offrir une ambiance unique, mêlant confort, élégance et charme local." },
+      { title: "Le Service", desc: "D'un service personnalisé à des installations exclusives, notre équipe s'assure que chaque instant est extraordinaire. Un concierge dédié organise votre séjour avec des offres de luxe sur mesure." },
+      { title: "La Discrétion", desc: "Conçu pour les clients fortunés exigeant une intimité absolue. Des retraites ressourçantes protégées par une discrétion et une tranquillité de très haut niveau." }
+    ],
     portfolio: "Notre Portefeuille",
     nav: { home: "Accueil", property: "Propriétés", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
     featured: "Propriétés en Vedette",
@@ -280,15 +292,22 @@ export function ZakherHome({
         </motion.div>
       </div>
 
-      {/* About Grupo Zakher */}
-      <section className="py-24 px-6 max-w-5xl mx-auto">
-        <div className="mb-16">
-          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.aboutTitle}</h2>
-          <p className="font-montserrat text-gray-600 leading-relaxed text-lg md:text-xl font-light">
-            {t.aboutP1}
-            <br /><br />
-            {t.aboutP2}
-          </p>
+      {/* About Grupo Zakher - 3 Pillar Editorial Grid */}
+      <section className="py-32 px-6 max-w-6xl mx-auto">
+        <div className="mb-20 text-center">
+          <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] font-medium tracking-wide">{t.aboutTitle}</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+          {t.aboutPillars?.map((pillar: any, idx: number) => (
+            <div key={idx} className="group flex flex-col pt-8 border-t border-[#D4AF37]/30 transition-all duration-500 hover:border-[#D4AF37]">
+              <h3 className="font-cormorant text-2xl text-[#1A1A1A] mb-4 group-hover:-translate-y-1 transition-transform duration-500">
+                {pillar.title}
+              </h3>
+              <p className="font-montserrat text-gray-500 text-sm leading-loose tracking-wide font-light">
+                {pillar.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
