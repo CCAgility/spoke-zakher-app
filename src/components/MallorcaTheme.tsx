@@ -304,7 +304,7 @@ export function MallorcaTheme({
 
           <div className="lg:col-span-5 xl:col-span-4">
             <h2 className="font-cormorant text-4xl md:text-5xl text-[#1A1A1A] mb-8 font-medium">{t.amenitiesTitle}</h2>
-            <div className="grid grid-cols-1 gap-y-4">
+            <div className="grid grid-cols-1 gap-y-2">
               {t.amenitiesList.map((amenity, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <Check size={15} className="text-orange-500 flex-shrink-0 mt-[4px]" strokeWidth={2} />
