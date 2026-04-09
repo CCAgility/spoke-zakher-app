@@ -171,31 +171,31 @@ export function ZakherHome({
       `}} />
 
       {/* Header */}
-      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b drop-shadow-md transition-all duration-300 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-lg border-white/20 text-white' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60'}`}>
+      <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center w-full">
           <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
-            <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-light text-white hover:text-gray-300 transition-colors">
+            <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
               {siteConfig?.site_title || "Grupo Zakher"}
             </Link>
           </div>
-          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase text-white">
+          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
             <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
 
           <div className="relative group focus-within:opacity-100">
             <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
               {t.nav.property} <span className="text-xs opacity-70">▼</span>
             </button>
-            <div className={`absolute top-full left-0 mt-[1px] border border-white/10 border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-[#1A1A1A]/95 backdrop-blur-xl' : 'bg-[#1A1A1A]/60 backdrop-blur-md'}`}>
+            <div className={`absolute top-full left-0 mt-[1px] border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border border-white/40 text-[#1A1A1A]' : 'bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 text-white'}`}>
               <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
                 {properties && properties.length > 0 ? (
                   properties.map((prop, idx) => (
-                    <Link key={prop.slug || idx} href={`/${langState}/property/${prop.slug}`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white min-h-[44px] flex items-center">
+                    <Link key={prop.slug || idx} href={`/${langState}/property/${prop.slug}`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
                       {prop.title}
                     </Link>
                   ))
                 ) : (
-                  <Link href={`/${langState}/property/casa-estrella`} className="block px-6 py-4 text-xs tracking-widest uppercase hover:bg-white/10 transition-colors text-white/90 hover:text-white min-h-[44px] flex items-center">
+                  <Link href={`/${langState}/property/casa-estrella`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
                     {t.nav.casaEstrella}
                   </Link>
                 )}
@@ -302,11 +302,11 @@ export function ZakherHome({
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#111] text-white py-20 px-6 text-center">
-        <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-light mb-8">
+      <footer className="bg-white border-t border-gray-200 text-[#1A1A1A] py-20 px-6 text-center">
+        <div className="font-montserrat text-sm tracking-[0.3em] uppercase mb-8">
           {siteConfig?.site_title || "Grupo Zakher"}
         </div>
-        <p className="font-montserrat text-xs tracking-widest text-gray-500 uppercase">
+        <p className="font-montserrat text-xs tracking-widest text-gray-400 uppercase">
           &copy; {new Date().getFullYear()} {siteConfig?.site_title || "Grupo Zakher"}. {t.rights}
         </p>
       </footer>
