@@ -220,8 +220,8 @@ export function MallorcaTheme({
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center justify-between w-full max-w-full">
-          <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
-            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
+          <div className="flex-1 min-w-0 md:flex-none md:w-[350px] lg:w-[420px] pr-4">
+            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors block truncate">
               {getLocStr('title', t.nav.casaEstrella)}
             </Link>
           </div>
@@ -603,23 +603,25 @@ export function MallorcaTheme({
               className="relative w-[95vw] max-w-7xl bg-[#1A1A1A] border border-white/10 shadow-2xl flex flex-col md:flex-row overflow-hidden h-[90vh] md:h-[85vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Visual Suite Gallery: Scrollable Left Pane */}
-              <div className="relative w-full flex-1 bg-black overflow-y-auto flex flex-col snap-y snap-mandatory cursor-ns-resize" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {/* Visual Suite Gallery: Scrollable Left/Top Pane */}
+              <div className="relative w-full h-[40vh] min-h-[40vh] md:h-auto md:flex-1 bg-black overflow-x-auto md:overflow-x-hidden md:overflow-y-auto flex flex-row md:flex-col snap-x md:snap-y snap-mandatory cursor-ew-resize md:cursor-ns-resize flex-shrink-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 <style dangerouslySetInnerHTML={{__html: `::-webkit-scrollbar { display: none; }`}} />
                 {(activeRoom.gallery || [activeRoom.img]).map((photo: string, i: number) => (
-                  <div key={i} className="relative w-full min-h-full snap-start">
+                  <div key={i} className="relative w-full h-full min-w-full md:min-w-0 md:min-h-full snap-start flex-shrink-0">
                     <Image src={photo} alt={`${activeRoom.title} View ${i + 1}`} fill className="object-cover" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   </div>
                 ))}
                 {activeRoom.gallery && activeRoom.gallery.length > 1 && (
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 font-montserrat text-[10px] tracking-widest uppercase text-white rounded-full flex items-center gap-2 pointer-events-none">
-                    Scroll for more <ChevronRight size={12} className="rotate-90" />
+                  <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 font-montserrat text-[10px] tracking-widest uppercase text-white rounded-full flex items-center gap-2 pointer-events-none">
+                    <span className="md:hidden">Swipe for more</span>
+                    <span className="hidden md:inline">Scroll for more</span>
+                    <ChevronRight size={12} className="md:rotate-90 ml-1" />
                   </div>
                 )}
               </div>
 
-              {/* Structured Info Box: Right Pane */}
-              <div className="w-full md:w-[420px] flex-shrink-0 p-8 md:p-10 flex flex-col justify-center bg-white relative overflow-y-auto">
+              {/* Structured Info Box: Right/Bottom Pane */}
+              <div className="w-full md:w-[420px] flex-1 md:flex-none md:flex-shrink-0 p-6 md:p-10 flex flex-col justify-start md:justify-center bg-white relative overflow-y-auto">
                 <button className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors bg-gray-50 p-2 rounded-full" onClick={() => setActiveRoom(null)}><X size={20} strokeWidth={1.5} /></button>
                 
                 <span className="font-montserrat text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 block">Casa Estrella de San Pedro</span>
