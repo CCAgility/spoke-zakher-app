@@ -7,6 +7,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
 
+const BLUR_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+h8AAqEBzX+j3WAAAAAASUVORK5CYII=";
+
 const translations = {
   en: {
     nav: { home: "Home", property: "Property", casaEstrella: "Casa Estrella de San Pedro", villa: "The Villa", accommodations: "Accommodations", gallery: "Gallery", contact: "Concierge" },
@@ -239,6 +241,8 @@ export function MallorcaTheme({
             priority
             quality={100}
             className="object-cover"
+            placeholder="blur"
+            blurDataURL={BLUR_PIXEL}
           />
           <div className="absolute inset-0 bg-[#1A1A1A]/10"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
@@ -344,7 +348,7 @@ export function MallorcaTheme({
                     { label: '2 Guests', icon: 'users' }
                   ]
                 })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt="Master Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt="Master Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-6 left-6 text-white">
                     <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">The Master Suite</h4>
@@ -365,7 +369,7 @@ export function MallorcaTheme({
                     { label: '2 Guests', icon: 'users' }
                   ]
                 })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
                     <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Junior Suite</h4>
@@ -386,7 +390,7 @@ export function MallorcaTheme({
                       { label: '2 Guests', icon: 'users' }
                     ]
                   })}>
-                    <Image src="/gallery/casa-estrella/6.webp" alt={`Double Room ${i + 1}`} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <Image src="/gallery/casa-estrella/6.webp" alt={`Double Room ${i + 1}`} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                     <div className="absolute bottom-5 left-5 text-white">
                       <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Bedroom {i + 3}</h4>
@@ -547,7 +551,7 @@ export function MallorcaTheme({
                 <style dangerouslySetInnerHTML={{__html: `::-webkit-scrollbar { display: none; }`}} />
                 {(activeRoom.gallery || [activeRoom.img]).map((photo: string, i: number) => (
                   <div key={i} className="relative w-full min-h-full snap-start">
-                    <Image src={photo} alt={`${activeRoom.title} View ${i + 1}`} fill className="object-cover" />
+                    <Image src={photo} alt={`${activeRoom.title} View ${i + 1}`} fill className="object-cover" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   </div>
                 ))}
                 {activeRoom.gallery && activeRoom.gallery.length > 1 && (
@@ -586,7 +590,7 @@ export function MallorcaTheme({
                    </div>
                 </div>
 
-                <button className="w-full bg-black text-white px-8 py-4 font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-gray-800 transition-colors active:scale-[0.98] duration-300" onClick={() => setActiveRoom(null)}>Close Gallery</button>
+                <button className="w-full bg-black text-white px-8 py-4 font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-gray-800 transition-colors active:scale-[0.98] duration-300" onClick={() => { setActiveRoom(null); setDrawerTab('reserve'); setIsDrawerOpen(true); }}>Speak with your Concierge</button>
               </div>
             </motion.div>
           </motion.div>
