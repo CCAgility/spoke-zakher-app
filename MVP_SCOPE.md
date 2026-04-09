@@ -29,3 +29,22 @@ If questioned by stakeholders regarding the omission of detailed amenities next 
 1. **High Visual Footprint (66%)**: Symmetrical layouts compress imagery equally against text. By allocating 66% (lg:col-span-8) to the Bento Grid, the ultra-luxury visual storytelling is heavily prioritized, invoking a significantly deeper emotional response.
 2. **Peak-Excitement CTA Targeting**: By removing administrative and repetitive checklist data from the black 33% sidebar, we avoid fatiguing the user. Instead, the sidebar leverages the user's "peak visual excitement" from the bento grid immediately adjacent to it, forcefully directing their eyes to a stark, high-contrast **"CHECK AVAILABILITY"** button directly beneath the baseline pricing logic.
 3. **Luxury Frictionless Pacing**: True luxury interfaces never present the user with a spreadsheet. Granular amenities are cleanly reserved for the *Global Amenities Module* and strictly contextualized inside the single-page *Suite Level* modals, keeping the main page flow clean, bespoke, and strictly conversion-oriented.
+
+## Deferred (Phase 2) High-Conversion UX Components
+Following the Promax SME UI/UX Audit, the following high-yield architectures were identified but explicitly deferred from the MVP scope pending stakeholder approval:
+
+### 1. Institutional Social Proof Module
+*   **Concept:** A dedicated trust-building sector featuring curated "pull-quotes" from high-profile guests and a "Sovereign Audited / Concierge Certified" lockup.
+*   **Strategic Reasoning:** Moving a $2,000/night asset requires eliminating all scam anxiety and establishing absolute administrative trust before the user hits the booking CTA.
+
+### 2. "A Day at Casa Estrella" Timeline Architecture
+*   **Concept:** Transitioning the functional "Amenities" checklist (e.g. WiFi, Pool) into a sequential, experiential timeline (e.g. *8:00 AM Rooftop Espresso* -> *2:00 PM In-Suite Massage* -> *8:00 PM Private Chef*).
+*   **Strategic Reasoning:** Ultra-luxury conversion thrives on selling curated timelines, not individual hardware. Transitioning to chronological storytelling drastically increases emotional investment prior to booking.
+
+### 3. Homepage Global CTA Activation
+*   **Concept:** Un-hiding the globally disabled reservation hooks on the root homepage (`/en`), specifically the floating sticky footer bar and the main hero booking widget.
+*   **Strategic Reasoning:** Returning clients arriving at the root portfolio domain who are ready to book are currently forced into a navigation maze because the direct CTAs are `hidden`. Unlocking these triggers immediately captures high-intent traffic.
+
+### 4. Homepage "Editorial Pillar" Refactor
+*   **Concept:** Breaking down the monolithic "About Grupo Zakher" text block into a digestible, 3-column editorial grid (e.g., *The Portfolio*, *The Service*, *The Security*).
+*   **Strategic Reasoning:** High-net-worth internet users scan for metrics of value; they do not read block paragraphs. Editorial gridding drastically increases engagement metrics and perceived brand value.

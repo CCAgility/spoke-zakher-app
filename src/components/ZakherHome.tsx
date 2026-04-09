@@ -300,7 +300,7 @@ export function ZakherHome({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {t.aboutPillars?.map((pillar: any, idx: number) => (
             <div key={idx} className="group flex flex-col pt-8 border-t border-[#D4AF37]/30 transition-all duration-500 hover:border-[#D4AF37]">
-              <h3 className="font-cormorant text-2xl text-[#1A1A1A] mb-4 font-medium group-hover:-translate-y-1 transition-transform duration-500">
+              <h3 className="font-cormorant text-3xl text-[#1A1A1A] mb-4 font-medium group-hover:-translate-y-1 transition-transform duration-500">
                 {pillar.title}
               </h3>
               <p className="font-montserrat text-gray-500 leading-relaxed text-[15px] font-light">
