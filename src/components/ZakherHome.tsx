@@ -7,6 +7,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
 
+const BLUR_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+h8AAqEBzX+j3WAAAAAASUVORK5CYII=";
+
 const translations = {
   en: {
     heroSubtitle: "Premium property management and luxury real estate listings.",
@@ -106,6 +108,8 @@ function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langStat
           alt={prop.title}
           fill
           className={`object-cover transition-opacity duration-[2s] ease-in-out ${idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          placeholder="blur"
+          blurDataURL={BLUR_PIXEL}
         />
       ))}
       <div className="absolute inset-0 z-20 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 pointer-events-none"></div>
@@ -113,8 +117,15 @@ function PropertySlideshow({ prop, t, langState }: { prop: any; t: any; langStat
         <div className="flex flex-col items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300 text-white">
           <h3 className="font-cormorant text-5xl md:text-6xl font-light mb-8 text-center px-4 drop-shadow-lg">{prop.title}</h3>
           <Link href={`/${langState}/property/${prop.slug}`} className="p-3">
-            <button className="border border-white px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300 active:scale-95 bg-black/20 backdrop-blur-sm animate-pulse hover:animate-none shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)]">
-              {t.explore}
+            <button className="group flex items-center gap-2 border border-white px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-500 active:scale-95 bg-black/20 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)]">
+              <span>{t.explore}</span>
+              <motion.span 
+                animate={{ x: [0, 5, 0] }} 
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }} 
+                className="inline-block opacity-80 group-hover:opacity-100"
+              >
+                <ChevronRight size={14} strokeWidth={2} />
+              </motion.span>
             </button>
           </Link>
         </div>
@@ -211,6 +222,8 @@ export function ZakherHome({
             className="object-cover"
             fill
             priority
+            placeholder="blur"
+            blurDataURL={BLUR_PIXEL}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
