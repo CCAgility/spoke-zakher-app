@@ -67,8 +67,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
       })
     );
     property = properties?.[0];
-  } catch (e) {
+  } catch (e: any) {
     console.error("Failed to fetch property:", e);
+    // If the error is an upstream 503 or 500, throw it so Next.js surfaces a Server Error, not a 404.
+    if (e?.errors?.[0]?.extensions?.code === 'SERVICE_UNAVAILABLE' || e?.response?.status >= 500) {
+      throw new Error(`Upstream CMS Error: ${e.message}`);
+    }
+    // Otherwise, let it fall through to notFound()
   }
 
   if (!property) {
