@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next';
 import { readItems } from '@directus/sdk';
 import directus from '@/lib/directus';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Sovereign Dynamic Sitemap
  * 

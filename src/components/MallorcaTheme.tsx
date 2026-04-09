@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed, Bath } from 'lucide-react';
+import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed, Bath, Menu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
@@ -178,6 +178,7 @@ export function MallorcaTheme({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
   const [activeRoom, setActiveRoom] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -186,6 +187,26 @@ export function MallorcaTheme({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveRoom(null);
+        setIsDrawerOpen(false);
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const guestBedrooms = [
+    { title: 'Bedroom 3', img: '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', gallery: ['/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-bedroom.webp', '/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/9.webp'] },
+    { title: 'Bedroom 4', img: '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', gallery: ['/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-2.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-3.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-4.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2.jpg'] },
+    { title: 'Bedroom 5', img: '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg', gallery: ['/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-2.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-3.jpg', '/gallery/casa-estrella/casa-estrella-double-room-3-4.jpg', '/gallery/casa-estrella/casa-estrella-double-room-3.jpg'] },
+    { title: 'Bedroom 6', img: '/gallery/casa-estrella/casa-estrella-double-room-4-1.jpeg', gallery: ['/gallery/casa-estrella/casa-estrella-double-room-4-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-4-2.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-4-3.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-4-4.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-4-5.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-4.jpg'] },
+    { title: 'Bedroom 7', img: '/gallery/casa-estrella/casa-estrella-double-room-5-1.jpeg', gallery: ['/gallery/casa-estrella/casa-estrella-double-room-5-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-5-2.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-5-3.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-5-4.jpeg'] }
+  ];
 
   return (
     <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
@@ -198,13 +219,13 @@ export function MallorcaTheme({
 
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
-        <div className="flex items-center w-full">
+        <div className="flex items-center justify-between w-full max-w-full">
           <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
             <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
               {getLocStr('title', t.nav.casaEstrella)}
             </Link>
           </div>
-          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
+          <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
           <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
@@ -223,13 +244,49 @@ export function MallorcaTheme({
 
           <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
           </nav>
-        </div>
-        <div className="flex items-center gap-6 hidden">
-          <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
-            {t.bookNow}
+
+          <button 
+            className="md:hidden p-2 ml-4 -mr-2 hover:opacity-70 transition-opacity text-current" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <Menu size={24} strokeWidth={1} />
           </button>
         </div>
       </header>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/90 backdrop-blur-3xl flex flex-col items-center justify-center pt-10"
+          >
+            <nav className="flex flex-col items-center gap-12 text-center text-white">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                <Link href={`/${lang}`} onClick={() => setIsMobileMenuOpen(false)} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {t.nav.home}
+                </Link>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                <Link href={`/${lang}/property/${property?.slug || 'casa-estrella'}`} onClick={() => setIsMobileMenuOpen(false)} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {property?.title || t.nav.casaEstrella}
+                </Link>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {t.nav.contact}
+                </button>
+              </motion.div>
+            </nav>
+            <button onClick={() => setIsMobileMenuOpen(false)} className="mt-24 text-gray-500 hover:text-white transition-colors duration-300">
+               <X size={32} strokeWidth={1} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
@@ -377,23 +434,23 @@ export function MallorcaTheme({
                   </div>
                 </div>
 
-                {Array.from({ length: 5 }).map((_, i) => (
+                {guestBedrooms.map((room, i) => (
                   <div key={i} className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                    title: `Double Bedroom ${i + 1}`,
-                    img: '/gallery/casa-estrella/6.webp',
-                    gallery: ['/gallery/casa-estrella/6.webp', '/gallery/casa-estrella/casa-estrella-double-room-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-2-1.jpeg', '/gallery/casa-estrella/casa-estrella-double-room-3-1.jpeg'],
+                    title: room.title,
+                    img: room.img,
+                    gallery: room.gallery,
                     desc: `A meticulous double bedroom designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts.`,
                     amenities: [
                       { label: 'Double Bed', icon: 'bed' },
-                      { label: 'Shared Bath', icon: 'bath' },
+                      { label: 'Private/Shared Bath', icon: 'bath' },
                       { label: 'Air Conditioning', icon: 'wind' },
                       { label: '2 Guests', icon: 'users' }
                     ]
                   })}>
-                    <Image src="/gallery/casa-estrella/6.webp" alt={`Double Room ${i + 1}`} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
+                    <Image src={room.img} alt={room.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                     <div className="absolute bottom-5 left-5 text-white">
-                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Bedroom {i + 3}</h4>
+                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">{room.title}</h4>
                       <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
                     </div>
                   </div>
