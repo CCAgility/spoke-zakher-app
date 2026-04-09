@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Check, X } from 'lucide-react';
+import { Calendar, Users, ChevronRight, MapPin, Check, X, Menu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
@@ -163,6 +163,7 @@ export function ZakherHome({
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
   const [inquiryType, setInquiryType] = useState('reservation');
   const [contactLang, setContactLang] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Remove isolated state since Next.js passing new `lang` prop needs to trigger re-renders natively on soft-nav
   const langState = lang || 'en';
 
@@ -172,6 +173,17 @@ export function ZakherHome({
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsDrawerOpen(false);
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const t = translations[langState as keyof typeof translations] || translations.en;
@@ -187,13 +199,13 @@ export function ZakherHome({
 
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
-        <div className="flex items-center w-full">
+        <div className="flex items-center justify-between w-full max-w-full">
           <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
             <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
               {siteConfig?.site_title || "Grupo Zakher"}
             </Link>
           </div>
-          <nav className="hidden md:flex gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
+          <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
             <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
 
           <div className="relative group focus-within:opacity-100">
@@ -220,9 +232,50 @@ export function ZakherHome({
 
           <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
           </nav>
+
+          <button 
+            className="md:hidden p-2 ml-4 -mr-2 hover:opacity-70 transition-opacity text-current" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <Menu size={24} strokeWidth={1} />
+          </button>
         </div>
 
       </header>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/90 backdrop-blur-3xl flex flex-col items-center justify-center pt-10"
+          >
+            <nav className="flex flex-col items-center gap-12 text-center text-white">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                <Link href={`/${lang}`} onClick={() => setIsMobileMenuOpen(false)} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {t.nav.home}
+                </Link>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                <Link href={`/${lang}/property/${properties?.[0]?.slug || 'casa-estrella'}`} onClick={() => setIsMobileMenuOpen(false)} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {t.nav.property}
+                </Link>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); setDrawerTab('contact'); setIsDrawerOpen(true); }} className="font-cormorant text-4xl drop-shadow-md hover:opacity-70 transition-opacity">
+                  {t.nav.contact}
+                </button>
+              </motion.div>
+            </nav>
+            <button onClick={() => setIsMobileMenuOpen(false)} className="mt-24 text-gray-500 hover:text-white transition-colors duration-300">
+               <X size={32} strokeWidth={1} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
