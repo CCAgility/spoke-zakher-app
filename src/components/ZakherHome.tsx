@@ -221,11 +221,7 @@ export function ZakherHome({
           <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
           </nav>
         </div>
-        <div className="flex items-center gap-6 hidden">
-          <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="border border-white/60 hover:bg-white hover:text-black px-8 py-3 font-montserrat text-xs tracking-[0.2em] uppercase transition-all duration-300 text-white active:scale-95">
-            {t.reserve}
-          </button>
-        </div>
+
       </header>
 
       {/* Hero Section */}
@@ -264,33 +260,6 @@ export function ZakherHome({
         </div>
       </section>
 
-      {/* Booking Widget */}
-      <div className="relative z-20 -mt-16 max-w-6xl mx-auto px-6 hidden">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="bg-white shadow-2xl p-2 flex flex-col md:flex-row items-center"
-        >
-          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
-            <div className="flex flex-col text-left">
-              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.booking.checkIn}</span>
-              <span className="font-cormorant text-xl text-gray-800">{t.booking.dates}</span>
-            </div>
-          </div>
-          <div className="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-gray-100 w-full">
-            <div className="flex flex-col text-left">
-              <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-1">{t.booking.guests}</span>
-              <span className="font-cormorant text-xl text-gray-800">{t.booking.adults}</span>
-            </div>
-          </div>
-          <div className="px-4 py-4 w-full md:w-auto">
-            <button className="w-full bg-[#1A1A1A] text-white px-10 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors active:scale-95">
-              {t.booking.search}
-            </button>
-          </div>
-        </motion.div>
-      </div>
 
       {/* About Grupo Zakher - 3 Pillar Editorial Grid */}
       <section className="py-32 px-6 max-w-6xl mx-auto">
@@ -334,36 +303,6 @@ export function ZakherHome({
         </p>
       </footer>
 
-      {/* Sticky Floating Booking Bar */}
-      <AnimatePresence>
-        {false && showSticky && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-full border border-white/60 p-2 items-center justify-between"
-          >
-            <div className="hidden md:flex items-center gap-10 px-8">
-              <div className="flex flex-col text-left">
-                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">Check-in - Check-out</span>
-                <span className="font-cormorant text-xl text-gray-900 leading-none">Select dates</span>
-              </div>
-              <div className="w-[1px] h-8 bg-gray-300"></div>
-              <div className="flex flex-col text-left">
-                <span className="font-montserrat text-xs text-gray-500 uppercase tracking-widest mb-0.5">Guests</span>
-                <span className="font-cormorant text-xl text-gray-900 leading-none">2 Adults</span>
-              </div>
-            </div>
-            <div className="flex-1 md:hidden px-6 text-left">
-              <span className="font-cormorant text-xl text-gray-900 leading-none">{siteConfig?.site_title || "Grupo Zakher"}</span>
-            </div>
-            <button onClick={() => { setDrawerTab('reserve'); setIsDrawerOpen(true); }} className="bg-[#1A1A1A] text-white px-8 py-4 rounded-full font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-[#333] transition-colors whitespace-nowrap active:scale-95">
-              Check Availability
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Contact Drawer - 60/40 Split */}
       <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
