@@ -1,0 +1,78 @@
+steps:
+  # 1. Build the Next.js Production Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build'
+    args: 
+      - 'build'
+      - '-t'
+      - '$_IMAGE_NAME:$COMMIT_SHA'
+      - '--build-arg'
+      - 'DIRECTUS_URL=$_DIRECTUS_URL'
+      - '--build-arg'
+      - 'DIRECTUS_STATIC_TOKEN=$_DIRECTUS_STATIC_TOKEN'
+      - '.'
+
+  # 2. Spin up the container directly inside the CI/CD environment
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'run-test-container'
+    args:
+      - 'run'
+      - '-d'
+      - '--network=cloudbuild'
+      - '--name=spoke-test-app'
+      - '$_IMAGE_NAME:$COMMIT_SHA'
+
+  # 3. Wait for Next.js to initialize (Standby)
+  - name: 'ubuntu'
+    id: 'wait-for-startup'
+    args: ['sleep', '10']
+
+  # 4. Promax Validation (Zero-Admin Smoke Test)
+  - name: 'curlimages/curl'
+    id: 'validate-health'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        echo "Executing Headless CMS Validation against Sandbox Container..."
+        STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://spoke-test-app:3000/api/health)
+        
+        echo "HTTP Response: $$STATUS_CODE"
+        if [ "$$STATUS_CODE" -ne 200 ]; then
+          echo "[CRITICAL] Infrastructure Validation Failed! The CMS is unreachable or the credentials are invalid."
+          echo "Expected 200 OK, got $$STATUS_CODE."
+          echo "HALTING DEPLOYMENT TO PREVENT LIVE CORRUPTION."
+          exit 1
+        fi
+        
+        echo "[SUCCESS] Zero-Admin Health Check passed. Proceeding to Edge."
+
+  # 5. Push Validated Image to Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image'
+    args: ['push', '$_IMAGE_NAME:$COMMIT_SHA']
+
+  # 6. Deploy to Cloud Run Edge
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-to-run'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '$_SERVICE_NAME'
+      - '--image'
+      - '$_IMAGE_NAME:$COMMIT_SHA'
+      - '--region'
+      - '$_REGION'
+      - '--update-env-vars'
+      - 'DIRECTUS_URL=$_DIRECTUS_URL,DIRECTUS_STATIC_TOKEN=$_DIRECTUS_STATIC_TOKEN'
+
+substitutions:
+  _IMAGE_NAME: 'us-central1-docker.pkg.dev/$PROJECT_ID/agility-spoke-images/spoke-zakher-app'
+  _SERVICE_NAME: 'spoke-zakher-app'
+  _REGION: 'us-central1'
+  _DIRECTUS_URL: 'https://directus-cms.example.com'      # Placeholder to be overriden by Build Trigger
+  _DIRECTUS_STATIC_TOKEN: 'token'                        # Placeholder to be overriden by Build Trigger
+
+images:
+  - '$_IMAGE_NAME:$COMMIT_SHA'
