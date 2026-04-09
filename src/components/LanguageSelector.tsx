@@ -1,10 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Globe } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 export function LanguageSelector() {
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    // Phase 1: Initial 10s auto-hide
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Top of page overrides everything
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+      } 
+      // Scrolling up reveals it
+      else if (currentScrollY < lastScrollY.current - 5) {
+        setIsVisible(true);
+      } 
+      // Scrolling down hides it
+      else if (currentScrollY > lastScrollY.current + 5) {
+        setIsVisible(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -27,7 +62,7 @@ export function LanguageSelector() {
   ];
 
   return (
-    <div className="fixed top-20 right-4 md:top-28 md:right-6 scale-[0.85] md:scale-100 origin-top-right z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-gray-200/50 opacity-40 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-500">
+    <div className={`fixed top-20 right-4 md:top-28 md:right-6 scale-[0.85] md:scale-100 origin-top-right z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-gray-200/50 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-40 hover:opacity-100 translate-x-0 focus-within:opacity-100' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600">
         <Globe size={16} />
       </div>

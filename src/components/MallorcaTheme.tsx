@@ -399,7 +399,7 @@ export function MallorcaTheme({
             </div>
 
             {/* Rental Rates & Details */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col h-full">
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col h-fit lg:sticky lg:top-32 z-10">
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-transparent mb-8 border-b border-transparent pb-4 select-none pointer-events-none hidden lg:block" aria-hidden="true">-</h3>
               <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transition-all duration-700">
               <div>
