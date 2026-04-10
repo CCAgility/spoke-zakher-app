@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Gitleaks-Lite: Pre-commit credential guard
+# Blocks commits containing files matching dangerous patterns.
+# Reference: LESSONS_LEARNED.md Item #12
+#
+
+BLOCKED_PATTERNS="\.pem$|\.key$|\.secret$|\.env\.local$|\.env\.prod|token\.txt|pass\.txt|password\.txt|credentials\.|service.account.*\.json"
+
+# Check staged files against blocked patterns
+MATCHES=$(git diff --cached --name-only | grep -iE "$BLOCKED_PATTERNS" || true)
+
+if [ -n "$MATCHES" ]; then
+  echo ""
+  echo "╔══════════════════════════════════════════════════════════╗"
+  echo "║  ⛔ CREDENTIAL GUARD — COMMIT BLOCKED                   ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  The following staged files match credential patterns:   ║"
+  echo "╚══════════════════════════════════════════════════════════╝"
+  echo ""
+  echo "$MATCHES"
+  echo ""
+  echo "If these files are intentional (e.g. docs), bypass with:"
+  echo "  git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+# Check staged file CONTENTS for high-entropy secrets (base64 tokens, API keys)
+CONTENT_MATCHES=$(git diff --cached -U0 | grep -iE "^\+" | grep -iE "(PRIVATE KEY|AIza[0-9A-Za-z_-]{35}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{36}|ya29\.[a-zA-Z0-9_-]+)" || true)
+
+if [ -n "$CONTENT_MATCHES" ]; then
+  echo ""
+  echo "╔══════════════════════════════════════════════════════════╗"
+  echo "║  ⛔ SECRET CONTENT DETECTED — COMMIT BLOCKED            ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  Staged diffs contain patterns matching API keys or     ║"
+  echo "║  private keys. Review and remove before committing.     ║"
+  echo "╚══════════════════════════════════════════════════════════╝"
+  echo ""
+  exit 1
+fi
+
+exit 0
