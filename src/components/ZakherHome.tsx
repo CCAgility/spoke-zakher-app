@@ -206,15 +206,15 @@ export function ZakherHome({
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center justify-between w-full max-w-full">
           <div className="flex flex-1 items-center gap-8 lg:gap-12">
-            <div className="w-auto flex-shrink-0 break-words">
-              <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
+            <div className="w-auto flex-shrink-0 break-words pr-4">
+              <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors block truncate">
                 {siteConfig?.site_title || "Grupo Zakher"}
               </Link>
             </div>
             <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
               <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
               <div className="relative group focus-within:opacity-100">
-                <button className="p-3 hover:opacity-70 transition-opacity flex items-center gap-2 uppercase active:scale-95">
+                <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
                   {t.nav.property} <span className="text-xs opacity-70">▼</span>
                 </button>
                 <div className={`absolute top-full left-0 mt-[1px] border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border border-white/40 text-[#1A1A1A]' : 'bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 text-white'}`}>
@@ -234,7 +234,7 @@ export function ZakherHome({
                   </div>
                 </div>
               </div>
-              <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+              <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
             </nav>
           </div>
 

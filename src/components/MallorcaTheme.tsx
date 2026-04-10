@@ -114,7 +114,7 @@ const translations = {
     adults: "2 Adultos",
     search: "Verificar Disponibilidade",
     welcomeTitle: "Bem-vindo à Casa Estrella de San Pedro",
-    welcomeText: "Escondida no coração do bairro histórico de Cartagena, a Casa Estrella de San Pedro é um santuário de elegância colonial atemporal. Esta propriedade cuidadosamente restaurada de classe mundial oferece privacidade inigualável, vida de luxo luxuosa e as mais deslumbrantes vistas da cobertura no Caribe.",
+    welcomeText: "Descubra um santuário onde a história e o luxo se entrelaçam. A Casa Estrella oferece sete quartos requintados, piscinas privativas e pátios exuberantes, proporcionando um refúgio inigualável em Cartagena. Cada detalhe foi cuidadosamente selecionado para garantir que a sua estadia seja nada menos que extraordinária.",
     aboutTitle: "Sobre a casa",
     amenitiesTitle: "Comodidades",
     amenitiesList: [
@@ -159,7 +159,7 @@ const translations = {
     adults: "2 Adultes",
     search: "Vérifier la Disponibilité",
     welcomeTitle: "Bienvenue à Casa Estrella de San Pedro",
-    welcomeText: "Nichée au cœur du quartier historique de Carthagène, la Casa Estrella de San Pedro est un sanctuaire d'élégance coloniale intemporelle. Ce domaine de classe mondiale méticuleusement restauré offre une intimité inégalée, une vie de luxe somptueuse et les vues sur les toits les plus époustouflantes des Caraïbes.",
+    welcomeText: "Découvrez un sanctuaire où l'histoire et le luxe s'entrelacent. Casa Estrella offre sept chambres exquises, des piscines privées et des cours luxuriantes, offrant une retraite sans pareille à Carthagène. Chaque détail a été soigneusement sélectionné pour garantir que votre séjour soit tout simplement extraordinaire.",
     aboutTitle: "À propos de la maison",
     amenitiesTitle: "Commodités",
     amenitiesList: [
