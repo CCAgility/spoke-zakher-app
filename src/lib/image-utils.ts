@@ -2,15 +2,13 @@
  * Centralized Directus Asset URL Resolver
  * 
  * Eliminates hardcoded CMS URLs scattered across components.
- * Resolves images from the DIRECTUS_URL env var at runtime, 
- * falling back to the production Cloud Run address if unset.
+ * Sources the canonical CMS base URL from the directus.ts
+ * singleton — the single source of truth for CMS connectivity.
  * 
  * @module image-utils
  */
 
-const CMS_BASE_URL = process.env.DIRECTUS_URL 
-  || process.env.CMS_URL 
-  || 'https://directus-cms-159885988938.us-central1.run.app';
+import { DIRECTUS_URL } from './directus';
 
 /**
  * Build a full Directus asset URL from a file UUID.
@@ -20,7 +18,7 @@ export function directusAssetUrl(fileId: string | null | undefined): string | nu
   if (!fileId) return null;
   // If it's already a full URL, return as-is
   if (fileId.startsWith('http://') || fileId.startsWith('https://')) return fileId;
-  return `${CMS_BASE_URL}/assets/${fileId}`;
+  return `${DIRECTUS_URL}/assets/${fileId}`;
 }
 
 /**
