@@ -53,7 +53,8 @@ const translations = {
     },
     discover: "Explore",
     galleryTitle: "The Villa",
-    drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" }
+    drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" },
+    villaRentalInfo: { title: "Villa Rental Information", description: "is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of", guests: "guests", standardRate: "Standard Rate", holidayPremium: "Holiday Premium", perNight: "/ night", button: "SPEAK WITH YOUR CONCIERGE", footnote: "Private itineraries and bespoke scheduling." }
   },
   es: {
     nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Conserjería" },
@@ -97,7 +98,8 @@ const translations = {
     },
     discover: "Explorar",
     galleryTitle: "La Villa",
-    drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" }
+    drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" },
+    villaRentalInfo: { title: "Información de Alquiler", description: "se ofrece exclusivamente como un alquiler de villa completamente privado. Este santuario histórico tiene capacidad para un máximo de", guests: "huéspedes", standardRate: "Tarifa Estándar", holidayPremium: "Tarifa Vacacional", perNight: "/ noche", button: "HABLE CON SU CONSERJE", footnote: "Itinerarios privados y reservas a medida." }
   },
   pt: {
     nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Concierge" },
@@ -141,7 +143,8 @@ const translations = {
     },
     discover: "Explorar",
     galleryTitle: "A Villa",
-    drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" }
+    drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" },
+    villaRentalInfo: { title: "Informações de Aluguel", description: "é oferecida exclusivamente como um aluguel de villa completamente privado. Este santuário histórico acomoda um máximo de", guests: "hóspedes", standardRate: "Tarifa Padrão", holidayPremium: "Tarifa Feriados", perNight: "/ noite", button: "FALE COM SEU CONCIERGE", footnote: "Itinerários privados e agendamento sob medida." }
   },
   fr: {
     nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Conciergerie" },
@@ -185,7 +188,8 @@ const translations = {
     },
     discover: "Explorer",
     galleryTitle: "La Villa",
-    drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" }
+    drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" },
+    villaRentalInfo: { title: "Informations de Location", description: "est proposée exclusivement comme une location de villa entièrement privée. Ce sanctuaire historique peut accueillir un maximum de", guests: "personnes", standardRate: "Tarif Standard", holidayPremium: "Tarif Premium", perNight: "/ nuit", button: "CONTACTEZ VOTRE CONCIERGERIE", footnote: "Itinéraires privés et organisation sur mesure." }
   }
 };
 
@@ -504,21 +508,21 @@ export function MallorcaTheme({
               <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-transparent mb-8 border-b border-transparent pb-4 select-none pointer-events-none hidden lg:block" aria-hidden="true">-</h3>
               <div className="bg-[#243F4D] text-white p-10 md:p-12 flex flex-col justify-between flex-1 shadow-[0_20px_50px_-10px_rgba(36,63,77,0.5)] hover:shadow-[0_30px_60px_-12px_rgba(36,63,77,0.7)] border border-white/5 relative transition-all duration-700">
               <div>
-                <h3 className="font-cormorant text-3xl font-light mb-6">Villa Rental Information</h3>
+                <h3 className="font-cormorant text-3xl font-light mb-6">{t.villaRentalInfo.title}</h3>
                 <p className="font-montserrat text-sm font-light leading-relaxed text-white/80 mb-8">
-                  {getLocStr('title', t.nav.casaEstrella)} is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of <strong className="text-white font-medium">{property?.max_guests || 16} guests</strong>.
+                  {getLocStr('title', t.nav.casaEstrella)} {t.villaRentalInfo.description} <strong className="text-white font-medium">{property?.max_guests || 16} {t.villaRentalInfo.guests}</strong>.
                 </p>
               </div>
               
               <div className="flex flex-col gap-6 mt-6 md:mt-10">
                 <div className="border border-white/20 p-6 flex flex-col gap-4">
                    <div className="flex justify-between items-center font-montserrat text-sm">
-                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">Standard Rate</span>
-                     <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-white/50 uppercase tracking-widest">/ night</span></span>
+                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">{t.villaRentalInfo.standardRate}</span>
+                     <span>${property?.low_season_rate || "1,050"} <span className="text-[10px] text-white/50 uppercase tracking-widest">{t.villaRentalInfo.perNight}</span></span>
                    </div>
                    <div className="flex justify-between items-center font-montserrat text-sm">
-                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">Holiday Premium</span>
-                     <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-white/50 uppercase tracking-widest">/ night</span></span>
+                     <span className="font-light text-white/70 uppercase tracking-widest text-xs">{t.villaRentalInfo.holidayPremium}</span>
+                     <span>${property?.high_season_rate || "1,995"} <span className="text-[10px] text-white/50 uppercase tracking-widest">{t.villaRentalInfo.perNight}</span></span>
                    </div>
                 </div>
                 <style dangerouslySetInnerHTML={{__html: `
@@ -536,10 +540,10 @@ export function MallorcaTheme({
                 <button 
                   onClick={() => { setDrawerTab('contact'); setIsDrawerOpen(true); }}
                   className="group w-full py-4 font-montserrat text-sm tracking-[0.2em] uppercase transition-all duration-700 ease-out font-medium active:scale-[0.98] relative overflow-hidden animate-luxury-breath">
-                  <span className="relative z-10">SPEAK WITH YOUR CONCIERGE</span>
+                  <span className="relative z-10">{t.villaRentalInfo.button}</span>
                   <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />
                 </button>
-                <p className="text-center font-montserrat text-xs text-white/50 font-light mt-4">Private itineraries and bespoke scheduling.</p>
+                <p className="text-center font-montserrat text-xs text-white/50 font-light mt-4">{t.villaRentalInfo.footnote}</p>
               </div>
               </div>
             </div>

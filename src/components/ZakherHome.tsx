@@ -212,31 +212,29 @@ export function ZakherHome({
               </Link>
             </div>
             <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
-            <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
-
-          <div className="relative group focus-within:opacity-100">
-            <button className="p-3 min-h-[44px] min-w-[44px] hover:opacity-70 transition-opacity flex items-center justify-center gap-2 uppercase active:scale-95">
-              {t.nav.property} <span className="text-xs opacity-70">▼</span>
-            </button>
-            <div className={`absolute top-full left-0 mt-[1px] border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border border-white/40 text-[#1A1A1A]' : 'bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 text-white'}`}>
-              <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
-                {properties && properties.length > 0 ? (
-                  properties.map((prop, idx) => (
-                    <Link key={prop.slug || idx} href={`/${langState}/property/${prop.slug}`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
-                      {prop.title}
-                    </Link>
-                  ))
-                ) : (
-                  <Link href={`/${langState}/property/casa-estrella`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
-                    {t.nav.casaEstrella}
-                  </Link>
-                )}
+              <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
+              <div className="relative group focus-within:opacity-100">
+                <button className="p-3 hover:opacity-70 transition-opacity flex items-center gap-2 uppercase active:scale-95">
+                  {t.nav.property} <span className="text-xs opacity-70">▼</span>
+                </button>
+                <div className={`absolute top-full left-0 mt-[1px] border-t-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 transform origin-top scale-y-0 group-hover:scale-y-100 min-w-[220px] shadow-2xl py-2 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border border-white/40 text-[#1A1A1A]' : 'bg-[#1A1A1A]/60 backdrop-blur-md border border-white/10 text-white'}`}>
+                  <div className="absolute top-0 left-0 h-[2px] bg-[#D4AF37] w-0 group-hover:w-full transition-all duration-500 ease-in-out" />
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                    {properties && properties.length > 0 ? (
+                      properties.map((prop, idx) => (
+                        <Link key={prop.slug || idx} href={`/${langState}/property/${prop.slug}`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
+                          {prop.title}
+                        </Link>
+                      ))
+                    ) : (
+                      <Link href={`/${langState}/property/casa-estrella`} className={`block px-6 py-4 text-xs tracking-widest uppercase transition-colors min-h-[44px] flex items-center ${showSticky ? 'hover:bg-gray-100 opacity-80 hover:opacity-100' : 'hover:bg-white/10 opacity-90 hover:opacity-100'}`}>
+                        {t.nav.casaEstrella}
+                      </Link>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-            <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+              <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
             </nav>
           </div>
 
@@ -365,7 +363,7 @@ export function ZakherHome({
 
 
       {/* Contact Drawer - 60/40 Split */}
-      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} />
+      <ConciergeDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} initialTab={drawerTab} t={t} drawerImage={siteConfig?.hero_image || "/parent-hero.jpg"} />
 
       {/* Location Map Modal (Option B: Promax Glassmorphic) */}
       <AnimatePresence>
