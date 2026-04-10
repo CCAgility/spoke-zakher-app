@@ -92,7 +92,7 @@ function PropertySlideshow({ prop, t, langState, networkQuality }: { prop: any, 
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const images = prop?.slug === 'casa-estrella' ? [
-    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/gallery/casa-estrella/img-01.webp',
+    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/gallery/casa-estrella/1.webp',
     '/gallery/casa-estrella/5.webp',
     '/gallery/casa-estrella/6.webp',
     '/gallery/casa-estrella/casa-estrella-bedroom.webp',
