@@ -265,7 +265,7 @@ export function MallorcaTheme({
           <div className="flex flex-1 items-center gap-8 lg:gap-12">
             <div className="w-auto flex-shrink-0 break-words pr-4">
               <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors block truncate">
-                {getLocStr('title', t.nav.casaEstrella)}
+                {siteConfig?.site_title || "Grupo Zakher"}
               </Link>
             </div>
             <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">

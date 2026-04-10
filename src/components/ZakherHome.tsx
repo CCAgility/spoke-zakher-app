@@ -42,7 +42,7 @@ const translations = {
       { title: "La Discreción", desc: "Diseñado para huéspedes de alto patrimonio que requieren privacidad absoluta. Retiros rejuvenecedores protegidos por una discreción y tranquilidad de nivel soberano." }
     ],
     portfolio: "Nuestro Portafolio",
-    nav: { home: "Inicio", property: "Propiedades", casaEstrella: "Casa Estrella", contact: "Conserjería" },
+    nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella", contact: "Conserjería" },
     featured: "Propiedades Destacadas",
     explore: "Explorar",
     contactPrice: "Contactar para Precio",
@@ -62,7 +62,7 @@ const translations = {
       { title: "A Discrição", desc: "Projetado para hóspedes de alto patrimônio que exigem privacidade absoluta. Retiros relaxantes protegidos por uma discrição e tranquilidade rigorosas e de nível soberano." }
     ],
     portfolio: "Nosso Portfólio",
-    nav: { home: "Início", property: "Propriedades", casaEstrella: "Casa Estrella", contact: "Concierge" },
+    nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella", contact: "Concierge" },
     featured: "Propriedades em Destaque",
     explore: "Explorar",
     contactPrice: "Consultar Preço",
@@ -82,7 +82,7 @@ const translations = {
       { title: "La Discrétion", desc: "Conçu pour les clients fortunés exigeant une intimité absolue. Des retraites ressourçantes protégées par une discrétion et une tranquillité de très haut niveau." }
     ],
     portfolio: "Notre Portefeuille",
-    nav: { home: "Accueil", property: "Propriétés", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
+    nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella", contact: "Conciergerie" },
     featured: "Propriétés en Vedette",
     explore: "Explorer",
     contactPrice: "Contactez pour le Prix",
