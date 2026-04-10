@@ -27,7 +27,8 @@ if [ -n "$MATCHES" ]; then
 fi
 
 # Check staged file CONTENTS for high-entropy secrets (base64 tokens, API keys)
-CONTENT_MATCHES=$(git diff --cached -U0 | grep -iE "^\+" | grep -iE "(PRIVATE KEY|AIza[0-9A-Za-z_-]{35}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{36}|ya29\.[a-zA-Z0-9_-]+)" || true)
+# Exclude .githooks/ files from content scanning (they contain regex patterns that match)
+CONTENT_MATCHES=$(git diff --cached -U0 -- ':!.githooks' | grep -iE "^\+" | grep -iE "(PRIVATE KEY|AIza[0-9A-Za-z_-]{35}|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{36}|ya29\.[a-zA-Z0-9_-]+)" || true)
 
 if [ -n "$CONTENT_MATCHES" ]; then
   echo ""
