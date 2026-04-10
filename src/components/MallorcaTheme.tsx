@@ -212,6 +212,7 @@ export function MallorcaTheme({
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>('reserve');
   const [activeRoom, setActiveRoom] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -346,10 +347,10 @@ export function MallorcaTheme({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, type: "spring", bounce: 0.1 }}
           >
-            <div className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80">
-              <MapPin size={14} />
-              <span>{property?.location || "Cartagena, Colombia"}</span>
-            </div>
+            <button onClick={() => setIsMapOpen(true)} className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors group cursor-pointer">
+              <MapPin size={14} className="group-hover:scale-110 transition-transform" />
+              <span className="border-b border-transparent group-hover:border-white/50 transition-colors pb-1">{property?.location || "Cartagena, Colombia"}</span>
+            </button>
             <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
               {getLocStr('title', t.nav.casaEstrella)}
             </h1>
@@ -688,6 +689,46 @@ export function MallorcaTheme({
 
                 <button className="w-full bg-black text-white px-8 py-4 font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-gray-800 transition-colors active:scale-[0.98] duration-300" onClick={() => { setActiveRoom(null); setDrawerTab('reserve'); setIsDrawerOpen(true); }}>Speak with your Concierge</button>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Location Map Modal (Option B: Promax Glassmorphic) */}
+      <AnimatePresence>
+        {isMapOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-xl p-4 md:p-10"
+            onClick={() => setIsMapOpen(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative w-full max-w-6xl aspect-video md:h-[80vh] bg-[#1A1A1A] border border-white/10 shadow-2xl overflow-hidden rounded-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="absolute top-6 right-6 z-10 text-white hover:text-gray-300 transition-colors bg-black/50 backdrop-blur-md p-3 rounded-full" onClick={() => setIsMapOpen(false)}>
+                <X size={20} strokeWidth={1.5} />
+              </button>
+              
+              <div className="absolute top-6 left-6 z-10 px-6 py-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg text-white pointer-events-none">
+                <span className="block font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-1">Location</span>
+                <span className="font-cormorant text-2xl md:text-3xl font-light">{property?.location || "Cartagena, Colombia"}</span>
+              </div>
+
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15694.026857147746!2d-75.55627!3d10.42253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef625e1a12002cd%3A0xe6ea31baf9708272!2sCartagena%2C%20Bol%C3%ADvar%2C%20Colombia!5e0!3m2!1sen!2sus!4v1683407238217!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "invert(100%) hue-rotate(180deg) brightness(85%) contrast(110%)" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </motion.div>
           </motion.div>
         )}
