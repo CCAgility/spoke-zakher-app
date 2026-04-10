@@ -393,8 +393,7 @@ export function ZakherHome({
 
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15694.026857147746!2d-75.55627!3d10.42253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef625e1a12002cd%3A0xe6ea31baf9708272!2sCartagena%2C%20Bol%C3%ADvar%2C%20Colombia!5e0!3m2!1sen!2sus!4v1683407238217!5m2!1sen!2sus"
-                width="100%"
-                height="100%"
+                className="absolute top-[-100px] left-[-100px] w-[calc(100%+200px)] h-[calc(100%+200px)] pointer-events-auto"
                 style={{ border: 0, filter: "invert(100%) hue-rotate(180deg) brightness(85%) contrast(110%)" }}
                 allowFullScreen
                 loading="lazy"
