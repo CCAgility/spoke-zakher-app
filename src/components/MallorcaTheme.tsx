@@ -54,7 +54,8 @@ const translations = {
     discover: "Explore",
     galleryTitle: "The Villa",
     drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" },
-    villaRentalInfo: { title: "Villa Rental Information", description: "is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of", guests: "guests", standardRate: "Standard Rate", holidayPremium: "Holiday Premium", perNight: "/ night", button: "SPEAK WITH YOUR CONCIERGE", footnote: "Private itineraries and bespoke scheduling." }
+    villaRentalInfo: { title: "Villa Rental Information", description: "is offered exclusively as a completely private villa rental. This historic sanctuary accommodates a maximum of", guests: "guests", standardRate: "Standard Rate", holidayPremium: "Holiday Premium", perNight: "/ night", button: "SPEAK WITH YOUR CONCIERGE", footnote: "Private itineraries and bespoke scheduling." },
+    propertyLayout: { subtitle: "Floor Plan & Configuration", title: "Private Villa Layout", bedrooms: "7 Luxury Bedrooms" }
   },
   es: {
     nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Conserjería" },
@@ -99,7 +100,8 @@ const translations = {
     discover: "Explorar",
     galleryTitle: "La Villa",
     drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" },
-    villaRentalInfo: { title: "Información de Alquiler", description: "se ofrece exclusivamente como un alquiler de villa completamente privado. Este santuario histórico tiene capacidad para un máximo de", guests: "huéspedes", standardRate: "Tarifa Estándar", holidayPremium: "Tarifa Vacacional", perNight: "/ noche", button: "HABLE CON SU CONSERJE", footnote: "Itinerarios privados y reservas a medida." }
+    villaRentalInfo: { title: "Información de Alquiler", description: "se ofrece exclusivamente como un alquiler de villa completamente privado. Este santuario histórico tiene capacidad para un máximo de", guests: "huéspedes", standardRate: "Tarifa Estándar", holidayPremium: "Tarifa Vacacional", perNight: "/ noche", button: "HABLE CON SU CONSERJE", footnote: "Itinerarios privados y reservas a medida." },
+    propertyLayout: { subtitle: "Plano y Configuración", title: "Distribución de la Villa Privada", bedrooms: "7 Habitaciones de Lujo" }
   },
   pt: {
     nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Concierge" },
@@ -144,7 +146,8 @@ const translations = {
     discover: "Explorar",
     galleryTitle: "A Villa",
     drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" },
-    villaRentalInfo: { title: "Informações de Aluguel", description: "é oferecida exclusivamente como um aluguel de villa completamente privado. Este santuário histórico acomoda um máximo de", guests: "hóspedes", standardRate: "Tarifa Padrão", holidayPremium: "Tarifa Feriados", perNight: "/ noite", button: "FALE COM SEU CONCIERGE", footnote: "Itinerários privados e agendamento sob medida." }
+    villaRentalInfo: { title: "Informações de Aluguel", description: "é oferecida exclusivamente como um aluguel de villa completamente privado. Este santuário histórico acomoda um máximo de", guests: "hóspedes", standardRate: "Tarifa Padrão", holidayPremium: "Tarifa Feriados", perNight: "/ noite", button: "FALE COM SEU CONCIERGE", footnote: "Itinerários privados e agendamento sob medida." },
+    propertyLayout: { subtitle: "Planta e Configuração", title: "Layout da Villa Privativa", bedrooms: "7 Quartos de Luxo" }
   },
   fr: {
     nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Conciergerie" },
@@ -189,7 +192,8 @@ const translations = {
     discover: "Explorer",
     galleryTitle: "La Villa",
     drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" },
-    villaRentalInfo: { title: "Informations de Location", description: "est proposée exclusivement comme une location de villa entièrement privée. Ce sanctuaire historique peut accueillir un maximum de", guests: "personnes", standardRate: "Tarif Standard", holidayPremium: "Tarif Premium", perNight: "/ nuit", button: "CONTACTEZ VOTRE CONCIERGERIE", footnote: "Itinéraires privés et organisation sur mesure." }
+    villaRentalInfo: { title: "Informations de Location", description: "est proposée exclusivement comme une location de villa entièrement privée. Ce sanctuaire historique peut accueillir un maximum de", guests: "personnes", standardRate: "Tarif Standard", holidayPremium: "Tarif Premium", perNight: "/ nuit", button: "CONTACTEZ VOTRE CONCIERGERIE", footnote: "Itinéraires privés et organisation sur mesure." },
+    propertyLayout: { subtitle: "Plan et Configuration", title: "Aménagement de la Villa Privée", bedrooms: "7 Chambres de Luxe" }
   }
 };
 
@@ -421,14 +425,14 @@ export function MallorcaTheme({
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="mb-16 text-left">
-            <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">Floor Plan & Configuration</span>
-            <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">Private Villa Layout</h2>
+            <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-500 mb-4 block">{t.propertyLayout.subtitle}</span>
+            <h2 className="font-cormorant text-4xl md:text-5xl font-light text-black">{t.propertyLayout.title}</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Rooms List */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-              <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">7 Luxury Bedrooms</h3>
+              <h3 className="font-montserrat text-xs tracking-[0.2em] uppercase text-black mb-8 border-b pb-4">{t.propertyLayout.bedrooms}</h3>
               
               <div className="bg-white p-3 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] border border-gray-100/50">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
