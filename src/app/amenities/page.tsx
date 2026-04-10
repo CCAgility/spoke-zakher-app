@@ -22,7 +22,7 @@ export default function Amenities() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { icon: <Waves size={32} />, title: "Private Pools", desc: "A stunning main pool and an intimate mini pool for ultimate relaxation." },
-            { icon: <Shield size={32} />, title: "24/7 Security", desc: "Dedicated security personnel from 6 PM to 7 AM for your peace of mind." },
+            { icon: <Shield size={32} />, title: "24/7 Security", desc: "Dedicated security personnel from 9 PM to 7 AM for your peace of mind." },
             { icon: <Coffee size={32} />, title: "Daily Housekeeping", desc: "Complimentary daily cleaning and turndown service." },
             { icon: <Wifi size={32} />, title: "High-Speed WiFi", desc: "Seamless connectivity throughout the entire estate." }
           ].map((item, i) => (
