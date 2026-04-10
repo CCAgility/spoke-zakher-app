@@ -6,6 +6,7 @@ import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
+import { resolveHeroImage, resolveGalleryImage } from '@/lib/image-utils';
 
 const BLUR_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+h8AAqEBzX+j3WAAAAAASUVORK5CYII=";
 
@@ -292,7 +293,7 @@ export function MallorcaTheme({
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image 
-            src={property?.image_url || (property?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${property.hero_image}` : null) || '/gallery/casa-estrella/1.webp'} 
+            src={resolveHeroImage(property)} 
             alt={getLocStr('title', t.nav.casaEstrella) + " Aerial View"}
             fill
             priority
@@ -522,9 +523,7 @@ export function MallorcaTheme({
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {(property?.gallery?.length ? property.gallery : [1, 2, 3, 4, 5, 6, 7, 8]).map((item: any, i: number) => {
-              const imgSrc = item?.directus_files_id 
-                ? `https://directus-cms-159885988938.us-central1.run.app/assets/${item.directus_files_id}` 
-                : `/gallery/casa-estrella/img-${String(i+1).padStart(2, '0')}.webp`;
+              const imgSrc = resolveGalleryImage(item, i);
               
               return (
               <div key={i} className={`relative group overflow-hidden ${i === 0 || i === 3 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>

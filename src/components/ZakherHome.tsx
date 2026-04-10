@@ -6,6 +6,7 @@ import { Calendar, Users, ChevronRight, MapPin, Check, X, Menu } from 'lucide-re
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
+import { resolveHeroImage } from '@/lib/image-utils';
 
 const BLUR_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+h8AAqEBzX+j3WAAAAAASUVORK5CYII=";
 
@@ -92,7 +93,7 @@ function PropertySlideshow({ prop, t, langState, networkQuality }: { prop: any, 
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const images = prop?.slug === 'casa-estrella' ? [
-    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/gallery/casa-estrella/1.webp',
+    resolveHeroImage(prop),
     '/gallery/casa-estrella/5.webp',
     '/gallery/casa-estrella/6.webp',
     '/gallery/casa-estrella/casa-estrella-bedroom.webp',
@@ -100,7 +101,7 @@ function PropertySlideshow({ prop, t, langState, networkQuality }: { prop: any, 
     '/gallery/casa-estrella/casa-estrella-living-room.webp',
     '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg'
   ].filter(Boolean) as string[] : [
-    prop?.image_url || (prop?.hero_image ? `https://directus-cms-159885988938.us-central1.run.app/assets/${prop.hero_image}` : null) || '/fallback-luxury.jpg'
+    resolveHeroImage(prop, '/fallback-luxury.jpg')
   ].filter(Boolean) as string[];
 
   useEffect(() => {
