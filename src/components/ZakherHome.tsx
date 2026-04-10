@@ -28,7 +28,8 @@ const translations = {
     contactPrice: "Contact for Price",
     contactForm: { title: "Contact Concierge", subtitle: "How can we assist with your stay?", name: "Full Name *", email: "Email Address *", phone: "WhatsApp / Phone *", language: "Preferred Language (Optional)", requests: "Message/Special Requests *", send: "Send Message", success: "Thanks for your inquiry. A concierge will be in touch shortly.", specifyLanguage: "Please specify language", mandatory: "Indicates a mandatory field" },
     night: "/ Night",
-    rights: "All rights reserved."
+    rights: "All rights reserved.",
+    drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" }
   },
   es: {
     heroSubtitle: "Gestión inmobiliaria premium y listados de bienes raíces de lujo.",
@@ -47,7 +48,8 @@ const translations = {
     contactPrice: "Contactar para Precio",
     contactForm: { title: "Contactar Conserjería", subtitle: "¿Cómo podemos asistirle con su estadía?", name: "Nombre Completo *", email: "Correo Electrónico *", phone: "WhatsApp / Teléfono *", language: "Idioma Preferido (Opcional)", requests: "Mensaje/Solicitudes Especiales *", send: "Enviar Mensaje", success: "Gracias por su consulta. Un conserje se pondrá en contacto pronto.", specifyLanguage: "Por favor especifique el idioma", mandatory: "Indica un campo obligatorio" },
     night: "/ Noche",
-    rights: "Todos los derechos reservados."
+    rights: "Todos los derechos reservados.",
+    drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" }
   },
   pt: {
     heroSubtitle: "Gestão imobiliária premium e listagens de imóveis de luxo.",
@@ -66,7 +68,8 @@ const translations = {
     contactPrice: "Consultar Preço",
     contactForm: { title: "Contatar Concierge", subtitle: "Como podemos ajudar com sua estadia?", name: "Nome Completo *", email: "Endereço de E-mail *", phone: "WhatsApp / Telefone *", language: "Idioma Preferido (Opcional)", requests: "Mensagem/Pedidos Especiais *", send: "Enviar Mensagem", success: "Obrigado por sua consulta. Um concierge entrará em contato em breve.", specifyLanguage: "Por favor especifique o idioma", mandatory: "Indica um campo obrigatório" },
     night: "/ Noite",
-    rights: "Todos os direitos reservados."
+    rights: "Todos os direitos reservados.",
+    drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" }
   },
   fr: {
     heroSubtitle: "Gestion immobilière haut de gamme et annonces immobilières de luxe.",
@@ -85,7 +88,8 @@ const translations = {
     contactPrice: "Contactez pour le Prix",
     contactForm: { title: "Contacter le Concierge", subtitle: "Comment pouvons-nous vous aider avec votre séjour ?", name: "Nom Complet *", email: "Adresse E-mail *", phone: "WhatsApp / Téléphone *", language: "Langue Préférée (Optionnel)", requests: "Message/Demandes Spéciales *", send: "Envoyer le Message", success: "Merci pour votre demande. Un concierge vous contactera sous peu.", specifyLanguage: "Veuillez préciser la langue", mandatory: "Indique un champ obligatoire" },
     night: "/ Nuit",
-    rights: "Tous droits réservés."
+    rights: "Tous droits réservés.",
+    drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" }
   }
 };
 
@@ -201,12 +205,13 @@ export function ZakherHome({
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center justify-between w-full max-w-full">
-          <div className="w-auto md:w-[350px] lg:w-[420px] flex-shrink-0 break-words">
-            <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
-              {siteConfig?.site_title || "Grupo Zakher"}
-            </Link>
-          </div>
-          <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
+          <div className="flex flex-1 items-center gap-8 lg:gap-12">
+            <div className="w-auto flex-shrink-0 break-words">
+              <Link href={`/${langState}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors">
+                {siteConfig?.site_title || "Grupo Zakher"}
+              </Link>
+            </div>
+            <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
             <div className="p-3 min-h-[44px] flex items-center uppercase invisible pointer-events-none select-none" aria-hidden="true">{t.nav.home}</div>
 
           <div className="relative group focus-within:opacity-100">
@@ -231,8 +236,9 @@ export function ZakherHome({
             </div>
           </div>
 
-          <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
-          </nav>
+            <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+            </nav>
+          </div>
 
           <button 
             className="md:hidden p-2 ml-4 -mr-2 hover:opacity-70 transition-opacity text-current" 

@@ -44,8 +44,16 @@ const translations = {
       { name: "The Oasis", desc: "Private pools & courtyards" },
       { name: "The Dining", desc: "Culinary excellence" }
     ],
+    roomDetails: {
+      masterSuite: { title: "The Master Suite", desc: "A sanctuary of colonial elegance featuring soaring ceilings, a private en-suite bathroom, and exclusive terrace access. Restored with impeccable historical detail.", viewLayout: "View Layout" },
+      juniorSuite: { title: "Junior Suite", desc: "Refined botanical comfort. This spacious suite offers an intimate retreat with curated artisanal furnishings and a lush, tranquil atmosphere.", explore: "Explore" },
+      bedroomDefault: { desc: "A meticulous double bedroom designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts." },
+      bedroomPrefix: "Bedroom",
+      amenities: { kingBed: "King Bed", doubleBed: "Double Bed", privateBath: "Private Bath", sharedBath: "Private/Shared Bath", ac: "Filtered A/C", airCon: "Air Conditioning", guests: "2 Guests" }
+    },
     discover: "Explore",
-    galleryTitle: "The Villa"
+    galleryTitle: "The Villa",
+    drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" }
   },
   es: {
     nav: { home: "Inicio", property: "Propiedad", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Alojamiento", gallery: "Galería", contact: "Conserjería" },
@@ -80,8 +88,16 @@ const translations = {
       { name: "El Oasis", desc: "Piscinas y patios privados" },
       { name: "El Comedor", desc: "Excelencia culinaria" }
     ],
+    roomDetails: {
+      masterSuite: { title: "La Suite Principal", desc: "Un santuario de elegancia colonial con techos altos, baño privado en suite y acceso exclusivo a la terraza. Restaurado con impecable detalle histórico.", viewLayout: "Ver Plano" },
+      juniorSuite: { title: "Suite Junior", desc: "Confort botánico refinado. Esta espaciosa suite ofrece un refugio íntimo con muebles artesanales seleccionados y un ambiente exuberante y tranquilo.", explore: "Explorar" },
+      bedroomDefault: { desc: "Un meticuloso dormitorio doble diseñado pensando en el lujo compartido. Perfecto para familias, combinando una estética auténtica con las comodidades modernas." },
+      bedroomPrefix: "Habitación",
+      amenities: { kingBed: "Cama King", doubleBed: "Cama Doble", privateBath: "Baño Privado", sharedBath: "Baño Privado/Compartido", ac: "Aire Acondicionado", airCon: "Aire Acondicionado", guests: "2 Huéspedes" }
+    },
     discover: "Explorar",
-    galleryTitle: "La Villa"
+    galleryTitle: "La Villa",
+    drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" }
   },
   pt: {
     nav: { home: "Início", property: "Propriedade", casaEstrella: "Casa Estrella de San Pedro", villa: "A Villa", accommodations: "Acomodações", gallery: "Galeria", contact: "Concierge" },
@@ -116,8 +132,16 @@ const translations = {
       { name: "O Oásis", desc: "Piscinas e pátios privativos" },
       { name: "O Jantar", desc: "Excelência culinária" }
     ],
+    roomDetails: {
+      masterSuite: { title: "A Suíte Master", desc: "Um santuário de elegância colonial com tetos altos, banheiro privativo e acesso exclusivo ao terraço. Restaurado com detalhes históricos impecáveis.", viewLayout: "Ver Layout" },
+      juniorSuite: { title: "Suíte Júnior", desc: "Conforto botânico refinado. Esta suíte espaçosa oferece um retiro íntimo com móveis artesanais selecionados e uma atmosfera exuberante e tranquila.", explore: "Explorar" },
+      bedroomDefault: { desc: "Um quarto duplo meticuloso projetado com luxo compartilhado em mente. Perfeito para famílias, combinando uma estética autêntica com conveniências modernas." },
+      bedroomPrefix: "Quarto",
+      amenities: { kingBed: "Cama King", doubleBed: "Cama de Casal", privateBath: "Banheiro Privado", sharedBath: "Banheiro Privado/Compartilhado", ac: "Ar Condicionado", airCon: "Ar Condicionado", guests: "2 Hóspedes" }
+    },
     discover: "Explorar",
-    galleryTitle: "A Villa"
+    galleryTitle: "A Villa",
+    drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" }
   },
   fr: {
     nav: { home: "Accueil", property: "Propriété", casaEstrella: "Casa Estrella de San Pedro", villa: "La Villa", accommodations: "Hébergement", gallery: "Galerie", contact: "Conciergerie" },
@@ -152,8 +176,16 @@ const translations = {
       { name: "L'Oasis", desc: "Piscines et patios privés" },
       { name: "La Salle à Manger", desc: "Excellence culinaire" }
     ],
+    roomDetails: {
+      masterSuite: { title: "La Suite Master", desc: "Un sanctuaire d'élégance coloniale avec de hauts plafonds, une salle de bain privée et un accès exclusif à la terrasse. Restauré avec un détail historique impeccable.", viewLayout: "Voir Plan" },
+      juniorSuite: { title: "Suite Junior", desc: "Confort botanique raffiné. Cette suite spacieuse offre une retraite intime avec des meubles artisanaux sélectionnés et une atmosphère luxuriante et tranquille.", explore: "Découvrir" },
+      bedroomDefault: { desc: "Une chambre double méticuleuse conçue pour un luxe partagé. Parfaite pour les familles, alliant une esthétique authentique aux conforts modernes." },
+      bedroomPrefix: "Chambre",
+      amenities: { kingBed: "Lit King", doubleBed: "Lit Double", privateBath: "Salle de Bain Privée", sharedBath: "Salle de Bain Privée/Partagée", ac: "Climatisation", airCon: "Climatisation", guests: "2 Invités" }
+    },
     discover: "Explorer",
-    galleryTitle: "La Villa"
+    galleryTitle: "La Villa",
+    drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" }
   }
 };
 
@@ -221,12 +253,13 @@ export function MallorcaTheme({
       {/* Header */}
       <header className={`fixed top-0 w-full px-6 py-6 flex justify-between items-center z-50 border-b transition-all duration-500 ${showSticky ? 'bg-white/60 backdrop-blur-2xl border-white/40 text-[#1A1A1A] shadow-sm' : 'bg-[#1A1A1A]/40 backdrop-blur-md border-white/10 text-white hover:bg-[#1A1A1A]/60 drop-shadow-md'}`}>
         <div className="flex items-center justify-between w-full max-w-full">
-          <div className="flex-1 min-w-0 md:flex-none md:w-[350px] lg:w-[420px] pr-4">
-            <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors block truncate">
-              {getLocStr('title', t.nav.casaEstrella)}
-            </Link>
-          </div>
-          <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
+          <div className="flex flex-1 items-center gap-8 lg:gap-12">
+            <div className="w-auto flex-shrink-0 break-words pr-4">
+              <Link href={`/${lang}`} className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium hover:opacity-70 transition-colors block truncate">
+                {getLocStr('title', t.nav.casaEstrella)}
+              </Link>
+            </div>
+            <nav className="hidden md:flex gap-4 lg:gap-10 font-montserrat text-xs tracking-[0.2em] uppercase font-medium">
           <Link href={`/${lang}`} className="p-3 min-h-[44px] flex items-center hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.home}</Link>
           
           <div className="relative group focus-within:opacity-100">
@@ -243,8 +276,9 @@ export function MallorcaTheme({
             </div>
           </div>
 
-          <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
-          </nav>
+            <button onClick={(e) => { e.preventDefault(); if (isDrawerOpen && drawerTab === 'contact') setIsDrawerOpen(false); else { setDrawerTab('contact'); setIsDrawerOpen(true); } }} className="p-3 min-h-[44px] hover:opacity-70 transition-opacity uppercase active:scale-95">{t.nav.contact}</button>
+            </nav>
+          </div>
 
           <button 
             className="md:hidden p-2 ml-4 -mr-2 hover:opacity-70 transition-opacity text-current" 
@@ -395,67 +429,71 @@ export function MallorcaTheme({
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {/* Master Suite Bento (Spans full width) */}
                 <div className="col-span-1 sm:col-span-2 md:col-span-3 group relative h-[300px] md:h-[350px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                  title: 'The Master Suite',
+                  title: t.roomDetails.masterSuite.title,
                   img: '/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg',
                   gallery: ['/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-4.jpeg', '/gallery/casa-estrella/casa-estrella-master-suite-5.jpeg'],
-                  desc: 'A sanctuary of colonial elegance featuring soaring ceilings, a private en-suite bathroom, and exclusive terrace access. Restored with impeccable historical detail.',
+                  desc: t.roomDetails.masterSuite.desc,
                   amenities: [
-                    { label: 'King Bed', icon: 'bed' },
-                    { label: 'Private Bath', icon: 'bath' },
-                    { label: 'Filtered A/C', icon: 'wind' },
-                    { label: '2 Guests', icon: 'users' }
+                    { label: t.roomDetails.amenities.kingBed, icon: 'bed' },
+                    { label: t.roomDetails.amenities.privateBath, icon: 'bath' },
+                    { label: t.roomDetails.amenities.ac, icon: 'wind' },
+                    { label: t.roomDetails.amenities.guests, icon: 'users' }
                   ]
                 })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt="Master Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
+                  <Image src="/gallery/casa-estrella/casa-estrella-master-suite-1.jpeg" alt={t.roomDetails.masterSuite.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-6 left-6 text-white">
-                    <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">The Master Suite</h4>
-                    <span className="font-montserrat text-xs tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">View Layout <ChevronRight size={14} /></span>
+                    <h4 className="font-cormorant text-3xl mb-1 drop-shadow-md">{t.roomDetails.masterSuite.title}</h4>
+                    <span className="font-montserrat text-xs tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">{t.roomDetails.masterSuite.viewLayout} <ChevronRight size={14} /></span>
                   </div>
                 </div>
                 
                 {/* Junior Suite Bento */}
                 <div className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                  title: 'Junior Suite',
+                  title: t.roomDetails.juniorSuite.title,
                   img: '/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg',
                   gallery: ['/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-1.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-2.jpeg', '/gallery/casa-estrella/casa-estrella-junior-suite-4.jpg'],
-                  desc: 'Refined botanical comfort. This spacious suite offers an intimate retreat with curated artisanal furnishings and a lush, tranquil atmosphere.',
+                  desc: t.roomDetails.juniorSuite.desc,
                   amenities: [
-                    { label: 'King Bed', icon: 'bed' },
-                    { label: 'Private Bath', icon: 'bath' },
-                    { label: 'Filtered A/C', icon: 'wind' },
-                    { label: '2 Guests', icon: 'users' }
+                    { label: t.roomDetails.amenities.kingBed, icon: 'bed' },
+                    { label: t.roomDetails.amenities.privateBath, icon: 'bath' },
+                    { label: t.roomDetails.amenities.ac, icon: 'wind' },
+                    { label: t.roomDetails.amenities.guests, icon: 'users' }
                   ]
                 })}>
-                  <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt="Junior Suite" fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
+                  <Image src="/gallery/casa-estrella/casa-estrella-junior-suite-3.jpeg" alt={t.roomDetails.juniorSuite.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500" />
                   <div className="absolute bottom-5 left-5 text-white">
-                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">Junior Suite</h4>
-                    <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
+                    <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">{t.roomDetails.juniorSuite.title}</h4>
+                    <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">{t.roomDetails.juniorSuite.explore}</span>
                   </div>
                 </div>
 
-                {guestBedrooms.map((room, i) => (
+                {guestBedrooms.map((room, i) => {
+                  const roomNumber = parseInt(room.title.replace('Bedroom ', ''), 10);
+                  const translatedRoomTitle = `${t.roomDetails.bedroomPrefix} ${roomNumber}`;
+                  
+                  return (
                   <div key={i} className="col-span-1 group relative h-[220px] overflow-hidden cursor-pointer" onClick={() => setActiveRoom({
-                    title: room.title,
+                    title: translatedRoomTitle,
                     img: room.img,
                     gallery: room.gallery,
-                    desc: `A meticulous double bedroom designed with shared luxury in mind. Perfect for families, blending authentic aesthetics with modern comforts.`,
+                    desc: t.roomDetails.bedroomDefault.desc,
                     amenities: [
-                      { label: 'Double Bed', icon: 'bed' },
-                      { label: 'Private/Shared Bath', icon: 'bath' },
-                      { label: 'Air Conditioning', icon: 'wind' },
-                      { label: '2 Guests', icon: 'users' }
+                      { label: t.roomDetails.amenities.doubleBed, icon: 'bed' },
+                      { label: t.roomDetails.amenities.sharedBath, icon: 'bath' },
+                      { label: t.roomDetails.amenities.airCon, icon: 'wind' },
+                      { label: t.roomDetails.amenities.guests, icon: 'users' }
                     ]
                   })}>
-                    <Image src={room.img} alt={room.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
+                    <Image src={room.img} alt={translatedRoomTitle} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" blurDataURL={BLUR_PIXEL} />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-colors duration-500" />
                     <div className="absolute bottom-5 left-5 text-white">
-                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">{room.title}</h4>
-                      <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">Explore</span>
+                      <h4 className="font-cormorant text-lg md:text-xl mb-1 drop-shadow-md leading-tight">{translatedRoomTitle}</h4>
+                      <span className="font-montserrat text-[10px] tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">{t.roomDetails.juniorSuite.explore}</span>
                     </div>
                   </div>
-                ))}
+                )})}
                 </div>
               </div>
             </div>

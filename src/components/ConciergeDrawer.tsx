@@ -61,31 +61,31 @@ export function ConciergeDrawer({
             </div>
 
             <h2 className="text-4xl font-cormorant font-light mb-2 tracking-wide">
-              {drawerTab === 'reserve' ? "Book Your Stay" : (t.contactForm?.title || "Contact Concierge")}
+              {drawerTab === 'reserve' ? (t.drawer?.bookYourStay || "Book Your Stay") : (t.contactForm?.title || "Contact Concierge")}
             </h2>
             <p className="text-gray-400 font-montserrat text-xs tracking-wide mb-12">
-              {drawerTab === 'reserve' ? "Select your dates to check availability." : (t.contactForm?.subtitle || "How can we assist with your stay?")}
+              {drawerTab === 'reserve' ? (t.drawer?.selectDates || "Select your dates to check availability.") : (t.contactForm?.subtitle || "How can we assist with your stay?")}
             </p>
 
             {/* Reserve Tab Content */}
             {drawerTab === 'reserve' && (
               <div className="space-y-8 font-montserrat animate-in fade-in slide-in-from-right-4 duration-500">
                 <div className="border border-white/10 rounded-2xl p-6 bg-white/5">
-                  <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">Dates</p>
-                  <input type="text" placeholder="Check In - Check Out" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors" />
+                  <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">{t.drawer?.dates || "Dates"}</p>
+                  <input type="text" placeholder={t.drawer?.checkInCheckOut || "Check In - Check Out"} className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors" />
                 </div>
                 <div className="border border-white/10 rounded-2xl p-6 bg-white/5">
-                  <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">Guests</p>
-                  <select defaultValue="2 Guests" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors appearance-none cursor-pointer">
-                    <option className="bg-[#1A1A1A]">1 Guest</option>
-                    <option className="bg-[#1A1A1A]" value="2 Guests">2 Guests</option>
-                    <option className="bg-[#1A1A1A]">3 Guests</option>
-                    <option className="bg-[#1A1A1A]">4+ Guests</option>
+                  <p className="text-xs tracking-widest text-gray-500 uppercase mb-4">{t.drawer?.guests || "Guests"}</p>
+                  <select defaultValue={t.drawer?.twoGuests || "2 Guests"} className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-white transition-colors appearance-none cursor-pointer">
+                    <option className="bg-[#1A1A1A]" value={t.drawer?.oneGuest || "1 Guest"}>{t.drawer?.oneGuest || "1 Guest"}</option>
+                    <option className="bg-[#1A1A1A]" value={t.drawer?.twoGuests || "2 Guests"}>{t.drawer?.twoGuests || "2 Guests"}</option>
+                    <option className="bg-[#1A1A1A]" value={t.drawer?.threeGuests || "3 Guests"}>{t.drawer?.threeGuests || "3 Guests"}</option>
+                    <option className="bg-[#1A1A1A]" value={t.drawer?.fourPlusGuests || "4+ Guests"}>{t.drawer?.fourPlusGuests || "4+ Guests"}</option>
                   </select>
                 </div>
                 <div className="pt-4">
                   <button className="w-full bg-white text-black py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-transparent hover:text-white border border-white transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] relative overflow-hidden group">
-                    <span className="relative z-10 group-hover:tracking-[0.4em] transition-all duration-500">Check Availability</span>
+                    <span className="relative z-10 group-hover:tracking-[0.4em] transition-all duration-500">{t.drawer?.checkAvailability || "Check Availability"}</span>
                   </button>
                 </div>
               </div>
@@ -102,12 +102,12 @@ export function ConciergeDrawer({
                   <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
                     <input type="radio" name="inquiryType" value="reservation" checked={inquiryType === 'reservation'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
                     <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
-                    <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Reservation</span>
+                    <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">{t.drawer?.reservation || "Reservation"}</span>
                   </label>
                   <label className="flex flex-1 items-center gap-3 cursor-pointer group border border-white/10 rounded-xl p-4 bg-white/5 hover:bg-white/10 transition-colors">
                     <input type="radio" name="inquiryType" value="questions" checked={inquiryType === 'questions'} onChange={(e) => setInquiryType(e.target.value)} className="peer sr-only" />
                     <div className="w-3 h-3 rounded-full border border-gray-500 peer-checked:border-white peer-checked:bg-white transition-all"></div>
-                    <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">Questions</span>
+                    <span className="text-gray-400 text-[9px] md:text-[10px] tracking-[0.2em] uppercase peer-checked:text-white transition-colors">{t.drawer?.questions || "Questions"}</span>
                   </label>
                 </div>
 
@@ -115,21 +115,21 @@ export function ConciergeDrawer({
                   <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2">
                     <div className="flex gap-6">
                       <div className="flex-1 relative">
-                        <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check In</span>
+                        <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">{t.drawer?.checkIn || "Check In"}</span>
                         <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
                       </div>
                       <div className="flex-1 relative">
-                        <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">Check Out</span>
+                        <span className="absolute -top-4 left-0 text-[9px] uppercase tracking-widest text-gray-500">{t.drawer?.checkOut || "Check Out"}</span>
                         <input type="date" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
                       </div>
                     </div>
                     <div className="relative">
                       <select defaultValue="" className="w-full bg-transparent border-b border-gray-700 text-white pb-3 focus:outline-none focus:border-gray-400 focus:shadow-[0_1px_0_rgba(156,163,175,0.4)] transition-all duration-300 appearance-none cursor-pointer">
-                        <option value="" disabled className="text-gray-500">Number of Guests</option>
-                        <option value="1" className="bg-[#1A1A1A] text-white">1 Guest</option>
-                        <option value="2" className="bg-[#1A1A1A] text-white">2 Guests</option>
-                        <option value="3" className="bg-[#1A1A1A] text-white">3+ Guests</option>
-                        <option value="villa" className="bg-[#1A1A1A] text-white">Entire Villa (Buyout)</option>
+                        <option value="" disabled className="text-gray-500">{t.drawer?.numberOfGuests || "Number of Guests"}</option>
+                        <option value="1" className="bg-[#1A1A1A] text-white">1 {t.drawer?.guests?.replace(/s$/i, '') || "Guest"}</option>
+                        <option value="2" className="bg-[#1A1A1A] text-white">2 {t.drawer?.guests || "Guests"}</option>
+                        <option value="3" className="bg-[#1A1A1A] text-white">{t.drawer?.threePlusGuests || "3+ Guests"}</option>
+                        <option value="villa" className="bg-[#1A1A1A] text-white">{t.drawer?.entireVilla || "Entire Villa (Buyout)"}</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pb-2">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
