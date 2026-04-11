@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed, Bath, Menu } from 'lucide-react';
+import { Calendar, Users, ChevronRight, ChevronLeft, MapPin, Anchor, Wind, Sun, Check, X, Bed, Bath, Menu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
@@ -651,10 +651,15 @@ export function MallorcaTheme({
                   </div>
                 ))}
                 {activeRoom.gallery && activeRoom.gallery.length > 1 && (
-                  <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 font-montserrat text-[10px] tracking-widest uppercase text-white rounded-full flex items-center gap-2 pointer-events-none">
-                    <span className="md:hidden">{t.roomDetails.swipeMore}</span>
-                    <span className="hidden md:inline">{t.roomDetails.scrollMore}</span>
-                    <ChevronRight size={12} className="md:rotate-90 ml-1" />
+                  <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 font-montserrat text-[10px] tracking-widest uppercase text-white rounded-full flex items-center pointer-events-none">
+                    <span className="md:hidden flex items-center gap-1.5">
+                      <ChevronLeft size={14} strokeWidth={2.5} />
+                      {t.roomDetails.swipeMore}
+                    </span>
+                    <span className="hidden md:flex items-center gap-1.5">
+                      {t.roomDetails.scrollMore}
+                      <ChevronRight size={14} strokeWidth={2.5} className="rotate-90" />
+                    </span>
                   </div>
                 )}
               </div>
