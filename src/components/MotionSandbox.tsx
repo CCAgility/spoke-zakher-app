@@ -18,9 +18,9 @@ export function MotionSandbox() {
     // 1. Cinematic Hero Array (Load Sequence)
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-    // Subtle background scale-in (zoom out effect)
+    // Subtle background scale-in (zoom out effect) initialized with bright daytime color palette
     tl.fromTo('.hero-bg', 
-      { scale: 1.05 }, 
+      { scale: 1.05, filter: 'brightness(110%) saturate(90%) hue-rotate(0deg) contrast(100%)' }, 
       { scale: 1, duration: 6 }
     );
 
@@ -37,6 +37,13 @@ export function MotionSandbox() {
       { opacity: 1, y: 0, duration: 1 },
       "-=4.0"
     );
+
+    // Single-Image Day-to-Night CSS Filter Fade!
+    tl.to('.hero-bg', {
+      filter: 'brightness(50%) saturate(120%) hue-rotate(15deg) contrast(110%)',
+      duration: 3,
+      ease: "power1.inOut"
+    }, "-=2.5"); // Starts fading before the 6s scale timeline completes
 
     // ... (ScrollTrigger section remains unchanged from here)
     

@@ -7,6 +7,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
 import { resolveHeroImage, resolveGalleryImage } from '@/lib/image-utils';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(useGSAP);
+}
 
 const BLUR_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+h8AAqEBzX+j3WAAAAAASUVORK5CYII=";
 
@@ -222,6 +228,15 @@ export function MallorcaTheme({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
 
+  const container = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    tl.fromTo('.hero-bg', { scale: 1.05 }, { scale: 1, duration: 6 });
+    tl.fromTo('.split-word', { y: 100, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 }, "-=5.0");
+    tl.fromTo('.hero-nav', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1 }, "-=4.0");
+  }, { scope: container });
+
   useEffect(() => {
     const handleScroll = () => {
       setShowSticky(window.scrollY > 150);
@@ -251,7 +266,7 @@ export function MallorcaTheme({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
+    <div ref={container} className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] font-sans selection:bg-[#8BA3A0] selection:text-white">
       {/* Custom Fonts */}
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
@@ -334,38 +349,30 @@ export function MallorcaTheme({
 
       {/* Hero Section */}
       <section className="relative h-[100vh] w-full overflow-hidden flex flex-col justify-end pb-32 px-8 md:px-16">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <Image 
-            src={resolveHeroImage(property)} 
-            alt={getLocStr('title', t.nav.casaEstrella) + " Aerial View"}
-            fill
-            priority
-            quality={100}
-            className="object-cover"
-            placeholder="blur"
-            blurDataURL={BLUR_PIXEL}
-          />
+        <div className="absolute inset-0 z-0 pointer-events-none hero-bg origin-center bg-cover" style={{ backgroundImage: `url(${resolveHeroImage(property)})`, backgroundPosition: 'center center' }}>
           <div className="absolute inset-0 bg-[#1A1A1A]/10"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
 
         <div className="relative z-10 text-white max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, type: "spring", bounce: 0.1 }}
-          >
-            <button onClick={() => setIsMapOpen(true)} className="flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors group cursor-pointer">
+          <div>
+            <button onClick={() => setIsMapOpen(true)} className="hero-nav flex items-center gap-3 mb-6 font-montserrat text-xs tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors group cursor-pointer">
               <MapPin size={14} className="group-hover:scale-110 transition-transform" />
               <span className="border-b border-transparent group-hover:border-white/50 transition-colors pb-1">{property?.location || "Cartagena, Colombia"}</span>
             </button>
             <h1 className="font-cormorant text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-6 drop-shadow-lg">
-              {getLocStr('title', t.nav.casaEstrella)}
+              {getLocStr('title', t.nav.casaEstrella).split(' ').map((word: string, i: number) => (
+                <span key={i} className="inline-block overflow-hidden mr-4 last:mr-0 align-bottom">
+                  <span className="split-word block transform-gpu leading-none">
+                    {word}
+                  </span>
+                </span>
+              ))}
             </h1>
-            <p className="font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
+            <p className="hero-nav font-montserrat text-sm md:text-base font-light max-w-xl leading-relaxed text-white/90">
               {getLocStr('description', t.heroSubtitle)}
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
