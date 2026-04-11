@@ -32,7 +32,7 @@ const translations = {
     featured: "Featured Property",
     explore: "Explore",
     contactPrice: "Contact for Price",
-    contactForm: { title: "Contact Concierge", subtitle: "How can we assist with your stay?", name: "Full Name *", email: "Email Address *", phone: "WhatsApp / Phone *", language: "Preferred Language (Optional)", requests: "Message/Special Requests *", send: "Send Message", success: "Thanks for your inquiry. A concierge will be in touch shortly.", specifyLanguage: "Please specify language", mandatory: "Indicates a mandatory field" },
+    contactForm: { title: "Contact Concierge", subtitle: "How can we assist with your stay?", name: "Full Name *", email: "Email Address *", phone: "WhatsApp / Phone *", language: "Preferred Language (Optional)", requests: "Message/Special Requests *", send: "Send Message", success: "Thanks for your inquiry. A concierge will be in touch shortly.", specifyLanguage: "Please specify language", mandatory: "Indicates a mandatory field", otherLanguage: "Other" },
     night: "/ Night",
     rights: "All rights reserved.",
     drawer: { bookYourStay: "Book Your Stay", selectDates: "Select your dates to check availability.", dates: "Dates", checkInCheckOut: "Check In - Check Out", guests: "Guests", oneGuest: "1 Guest", twoGuests: "2 Guests", threeGuests: "3 Guests", fourPlusGuests: "4+ Guests", checkAvailability: "Check Availability", reservation: "Reservation", questions: "Questions", checkIn: "Check In", checkOut: "Check Out", numberOfGuests: "Number of Guests", entireVilla: "Entire Villa (Buyout)", threePlusGuests: "3+ Guests" }
@@ -52,7 +52,7 @@ const translations = {
     featured: "Propiedades Destacadas",
     explore: "Explorar",
     contactPrice: "Contactar para Precio",
-    contactForm: { title: "Contactar Conserjería", subtitle: "¿Cómo podemos asistirle con su estadía?", name: "Nombre Completo *", email: "Correo Electrónico *", phone: "WhatsApp / Teléfono *", language: "Idioma Preferido (Opcional)", requests: "Mensaje/Solicitudes Especiales *", send: "Enviar Mensaje", success: "Gracias por su consulta. Un conserje se pondrá en contacto pronto.", specifyLanguage: "Por favor especifique el idioma", mandatory: "Indica un campo obligatorio" },
+    contactForm: { title: "Contactar Conserjería", subtitle: "¿Cómo podemos asistirle con su estadía?", name: "Nombre Completo *", email: "Correo Electrónico *", phone: "WhatsApp / Teléfono *", language: "Idioma Preferido (Opcional)", requests: "Mensaje/Solicitudes Especiales *", send: "Enviar Mensaje", success: "Gracias por su consulta. Un conserje se pondrá en contacto pronto.", specifyLanguage: "Por favor especifique el idioma", mandatory: "Indica un campo obligatorio", otherLanguage: "Otro" },
     night: "/ Noche",
     rights: "Todos los derechos reservados.",
     drawer: { bookYourStay: "Reserve su Estancia", selectDates: "Seleccione sus fechas para ver disponibilidad.", dates: "Fechas", checkInCheckOut: "Llegada - Salida", guests: "Huéspedes", oneGuest: "1 Huésped", twoGuests: "2 Huéspedes", threeGuests: "3 Huéspedes", fourPlusGuests: "4+ Huéspedes", checkAvailability: "Ver Disponibilidad", reservation: "Reserva", questions: "Preguntas", checkIn: "Llegada", checkOut: "Salida", numberOfGuests: "Número de Huéspedes", entireVilla: "Villa Entera", threePlusGuests: "3+ Huéspedes" }
@@ -72,7 +72,7 @@ const translations = {
     featured: "Propriedades em Destaque",
     explore: "Explorar",
     contactPrice: "Consultar Preço",
-    contactForm: { title: "Contatar Concierge", subtitle: "Como podemos ajudar com sua estadia?", name: "Nome Completo *", email: "Endereço de E-mail *", phone: "WhatsApp / Telefone *", language: "Idioma Preferido (Opcional)", requests: "Mensagem/Pedidos Especiais *", send: "Enviar Mensagem", success: "Obrigado por sua consulta. Um concierge entrará em contato em breve.", specifyLanguage: "Por favor especifique o idioma", mandatory: "Indica um campo obrigatório" },
+    contactForm: { title: "Contatar Concierge", subtitle: "Como podemos ajudar com sua estadia?", name: "Nome Completo *", email: "Endereço de E-mail *", phone: "WhatsApp / Telefone *", language: "Idioma Preferido (Opcional)", requests: "Mensagem/Pedidos Especiais *", send: "Enviar Mensagem", success: "Obrigado por sua consulta. Um concierge entrará em contato em breve.", specifyLanguage: "Por favor especifique o idioma", mandatory: "Indica um campo obrigatório", otherLanguage: "Outro" },
     night: "/ Noite",
     rights: "Todos os direitos reservados.",
     drawer: { bookYourStay: "Reserve sua Estadia", selectDates: "Selecione suas datas para verificar disponibilidade.", dates: "Datas", checkInCheckOut: "Check-in - Check-out", guests: "Hóspedes", oneGuest: "1 Hóspede", twoGuests: "2 Hóspedes", threeGuests: "3 Hóspedes", fourPlusGuests: "4+ Hóspedes", checkAvailability: "Verificar Disponibilidade", reservation: "Reserva", questions: "Perguntas", checkIn: "Check-in", checkOut: "Check-out", numberOfGuests: "Número de Hóspedes", entireVilla: "Villa Inteira", threePlusGuests: "3+ Hóspedes" }
@@ -92,7 +92,7 @@ const translations = {
     featured: "Propriétés en Vedette",
     explore: "Explorer",
     contactPrice: "Contactez pour le Prix",
-    contactForm: { title: "Contacter le Concierge", subtitle: "Comment pouvons-nous vous aider avec votre séjour ?", name: "Nom Complet *", email: "Adresse E-mail *", phone: "WhatsApp / Téléphone *", language: "Langue Préférée (Optionnel)", requests: "Message/Demandes Spéciales *", send: "Envoyer le Message", success: "Merci pour votre demande. Un concierge vous contactera sous peu.", specifyLanguage: "Veuillez préciser la langue", mandatory: "Indique un champ obligatoire" },
+    contactForm: { title: "Contacter le Concierge", subtitle: "Comment pouvons-nous vous aider avec votre séjour ?", name: "Nom Complet *", email: "Adresse E-mail *", phone: "WhatsApp / Téléphone *", language: "Langue Préférée (Optionnel)", requests: "Message/Demandes Spéciales *", send: "Envoyer le Message", success: "Merci pour votre demande. Un concierge vous contactera sous peu.", specifyLanguage: "Veuillez préciser la langue", mandatory: "Indique un champ obligatoire", otherLanguage: "Autre" },
     night: "/ Nuit",
     rights: "Tous droits réservés.",
     drawer: { bookYourStay: "Réserver votre Séjour", selectDates: "Sélectionnez vos dates pour vérifier la disponibilité.", dates: "Dates", checkInCheckOut: "Arrivée - Départ", guests: "Voyageurs", oneGuest: "1 Voyageur", twoGuests: "2 Voyageurs", threeGuests: "3 Voyageurs", fourPlusGuests: "4+ Voyageurs", checkAvailability: "Vérifier la Disponibilité", reservation: "Réservation", questions: "Questions", checkIn: "Arrivée", checkOut: "Départ", numberOfGuests: "Nombre de Voyageurs", entireVilla: "Villa Entière", threePlusGuests: "3+ Voyageurs" }

@@ -6,7 +6,7 @@ import { Calendar, Users, ChevronRight, MapPin, Anchor, Wind, Sun, Check, X, Bed
 import Link from 'next/link';
 import Image from 'next/image';
 import { ConciergeDrawer } from './ConciergeDrawer';
-import { resolveHeroImage, resolveGalleryImage } from '@/lib/image-utils';
+import { resolveHeroImage } from '@/lib/image-utils';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -582,40 +582,6 @@ export function MallorcaTheme({
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="hidden py-32 bg-[#1A1A1A] text-white">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-            <div>
-              <span className="font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-4 block">Immerse Yourself</span>
-              <h2 className="font-cormorant text-4xl md:text-5xl font-light">{t.galleryTitle}</h2>
-            </div>
-            <button className="mt-8 md:mt-0 font-montserrat text-xs tracking-[0.2em] uppercase flex items-center gap-2 hover:text-gray-400 transition-colors">
-              View Full Gallery <ChevronRight size={14} />
-            </button>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {(property?.gallery?.length ? property.gallery : [1, 2, 3, 4, 5, 6, 7, 8]).map((item: any, i: number) => {
-              const imgSrc = resolveGalleryImage(item, i);
-              
-              return (
-              <div key={i} className={`relative group overflow-hidden ${i === 0 || i === 3 ? 'col-span-2 row-span-2 h-[400px]' : 'h-[192px]'}`}>
-                <Image 
-                  src={imgSrc} 
-                  alt={`${getLocStr('title', t.nav.casaEstrella)} Gallery ${i}`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center cursor-pointer">
-                  <span className="font-montserrat text-xs tracking-widest uppercase">View Image</span>
-                </div>
-              </div>
-            )})}
-          </div>
-        </div>
-      </section>
-      
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 text-[#1A1A1A] py-20 px-6 text-center">
         <div className="font-montserrat text-sm tracking-[0.3em] uppercase font-medium mb-8">
