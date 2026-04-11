@@ -721,16 +721,28 @@ export function MallorcaTheme({
                 <X size={20} strokeWidth={1.5} />
               </button>
               
-              <div className="absolute top-6 left-6 z-10 px-6 py-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg text-white pointer-events-none">
-                <span className="block font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-1">Location</span>
-                <span className="font-cormorant text-2xl md:text-3xl font-light">{property?.location || "Cartagena, Colombia"}</span>
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 bg-black/40 pointer-events-none">
+                <div className="text-center mb-8">
+                  <span className="block font-montserrat text-sm tracking-[0.3em] uppercase text-gray-300 mb-2 drop-shadow-md">Location</span>
+                  <span className="font-cormorant text-4xl md:text-5xl font-light text-white drop-shadow-xl">{property?.location || "Cartagena, Colombia"}</span>
+                </div>
+                
+                <a 
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(property?.location || "Cartagena, Colombia")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 font-montserrat text-xs tracking-[0.2em] uppercase hover:bg-gray-200 transition-all duration-300 font-medium pointer-events-auto hover:scale-105 ease-out shadow-2xl"
+                >
+                  Open in Google Maps <ChevronRight size={14} />
+                </a>
               </div>
 
               <iframe
+                title="Google Maps Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15694.026857147746!2d-75.55627!3d10.42253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef625e1a12002cd%3A0xe6ea31baf9708272!2sCartagena%2C%20Bol%C3%ADvar%2C%20Colombia!5e0!3m2!1sen!2sus!4v1683407238217!5m2!1sen!2sus"
                 width="100%"
                 height="100%"
-                style={{ border: 0, filter: "invert(100%) hue-rotate(180deg) brightness(85%) contrast(110%)" }}
+                style={{ border: 0, pointerEvents: "none", filter: "invert(100%) hue-rotate(180deg) brightness(85%) contrast(110%)" }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
