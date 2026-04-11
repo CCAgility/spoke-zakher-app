@@ -389,23 +389,36 @@ export function ZakherHome({
               className="relative w-full max-w-6xl aspect-video md:h-[80vh] bg-[#1A1A1A] border border-white/10 shadow-2xl overflow-hidden rounded-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="absolute top-6 right-6 z-10 text-white hover:text-gray-300 transition-colors bg-black/50 backdrop-blur-md p-3 rounded-full" onClick={() => setIsMapOpen(false)}>
+              <button className="absolute top-4 right-4 md:top-6 md:right-6 z-20 text-white hover:text-black hover:bg-white transition-colors bg-black/60 backdrop-blur-md p-3 rounded-full shadow-lg" onClick={() => setIsMapOpen(false)}>
                 <X size={20} strokeWidth={1.5} />
               </button>
-              
-              <div className="absolute top-6 left-6 z-10 px-6 py-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg text-white pointer-events-none">
-                <span className="block font-montserrat text-xs tracking-[0.3em] uppercase text-gray-400 mb-1">Location</span>
-                <span className="font-cormorant text-2xl md:text-3xl font-light">Cartagena, Colombia</span>
-              </div>
 
               <iframe
+                title="Google Maps Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15694.026857147746!2d-75.55627!3d10.42253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef625e1a12002cd%3A0xe6ea31baf9708272!2sCartagena%2C%20Bol%C3%ADvar%2C%20Colombia!5e0!3m2!1sen!2sus!4v1683407238217!5m2!1sen!2sus"
-                className="absolute top-[-100px] left-[-100px] w-[calc(100%+200px)] h-[calc(100%+200px)] pointer-events-auto"
-                style={{ border: 0, filter: "invert(100%) hue-rotate(180deg) brightness(85%) contrast(110%)" }}
+                className="absolute inset-0 w-full h-full border-0 pointer-events-auto"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
+              
+              {/* Sleek Floating Info Card (Bottom drawer on Mobile, Bottom-Left float on Desktop) */}
+              <div className="absolute bottom-0 left-0 w-full md:w-auto md:max-w-sm md:bottom-6 md:left-6 z-10 p-6 md:p-8 bg-white md:rounded-xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] md:shadow-2xl flex flex-col gap-4 pointer-events-auto">
+                <div>
+                  <span className="block font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-1">Property Location</span>
+                  <span className="font-cormorant text-2xl md:text-3xl font-medium text-black">{siteConfig?.site_title || "Cartagena, Colombia"}</span>
+                </div>
+                <div className="h-[1px] w-full bg-gray-100"></div>
+                <a 
+                  href={`https://www.google.com/maps/search/?api=1&query=Cartagena,+Colombia`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between w-full bg-black text-white px-6 py-4 font-montserrat text-xs tracking-[0.1em] uppercase hover:bg-gray-800 transition-colors duration-300 rounded-lg group"
+                >
+                  <span className="group-hover:translate-x-1 transition-transform">Get Directions</span> 
+                  <MapPin size={16} className="text-white/70" />
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         )}
