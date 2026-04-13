@@ -700,24 +700,28 @@ export function MallorcaTheme({
         )}
       </AnimatePresence>
 
-      {/* Location Map Modal (Option B: Promax Glassmorphic) */}
+      {/* Location Map Modal (Option 2: Native App Sheet on Mobile) */}
       <AnimatePresence>
         {isMapOpen && (
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-xl p-4 md:p-10"
+            className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/80 backdrop-blur-xl md:p-10"
             onClick={() => setIsMapOpen(false)}
           >
             <motion.div 
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative w-full max-w-6xl aspect-video md:h-[80vh] bg-[#1A1A1A] border border-white/10 shadow-2xl overflow-hidden rounded-xl"
+              initial={{ y: 100, opacity: 0, scale: 0.98 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 100, opacity: 0, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="relative w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#1A1A1A] border-t md:border border-white/10 shadow-[0_-20px_50px_rgba(0,0,0,0.5)] md:shadow-2xl overflow-hidden rounded-t-[2rem] rounded-b-none md:rounded-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="absolute top-4 right-4 md:top-6 md:right-6 z-20 text-white hover:text-black hover:bg-white transition-colors bg-black/60 backdrop-blur-md p-3 rounded-full shadow-lg" onClick={() => setIsMapOpen(false)}>
+              {/* Optional slick drag indicator for mobile */}
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-white/30 rounded-full md:hidden z-20" />
+              
+              <button className="absolute top-5 right-5 md:top-6 md:right-6 z-20 text-white hover:text-black hover:bg-white transition-colors bg-black/60 backdrop-blur-md p-3 rounded-full shadow-lg" onClick={() => setIsMapOpen(false)}>
                 <X size={20} strokeWidth={1.5} />
               </button>
 
@@ -732,7 +736,7 @@ export function MallorcaTheme({
               />
               
               {/* Sleek Floating Info Card (Bottom drawer on Mobile, Bottom-Left float on Desktop) */}
-              <div className="absolute bottom-0 left-0 w-full md:w-auto md:max-w-sm md:bottom-6 md:left-6 z-10 p-6 md:p-8 bg-white md:rounded-xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] md:shadow-2xl flex flex-col gap-4 pointer-events-auto">
+              <div className="absolute bottom-0 left-0 w-full md:w-auto md:max-w-sm md:bottom-6 md:left-6 z-10 p-6 pb-8 md:p-8 bg-white md:rounded-xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] md:shadow-2xl flex flex-col gap-4 pointer-events-auto">
                 <div>
                   <span className="block font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-1">Property Location</span>
                   <span className="font-cormorant text-2xl md:text-3xl font-medium text-black">{property?.location || "Cartagena, Colombia"}</span>
