@@ -20,6 +20,64 @@ export function ConciergeDrawer({
   const [drawerTab, setDrawerTab] = useState<'contact'|'reserve'>(initialTab);
   const [inquiryType, setInquiryType] = useState('reservation');
   const [contactLang, setContactLang] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '', email: '', phone: '', message: '', checkIn: '', checkOut: '', guests: '', otherLanguage: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const dates = (formData.checkIn && formData.checkOut) ? `${formData.checkIn} to ${formData.checkOut}` : '';
+      const finalLang = contactLang === 'other' ? formData.otherLanguage : contactLang;
+      
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        type: inquiryType,
+        property: 'Casa Estrella',
+        dates,
+        guests: formData.guests,
+        language: finalLang
+      };
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
+      
+      // GTM Conversion Telemetry — fire lead event for Google Ads ROAS tracking
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'concierge_lead_submit',
+          lead_type: inquiryType,
+          property: 'Casa Estrella',
+          contact_language: contactLang || 'not_specified',
+        });
+      }
+
+      alert(t.contactForm?.success || "Thanks for your inquiry. A concierge will be in touch shortly.");
+      
+      setFormData({ name: '', email: '', phone: '', message: '', checkIn: '', checkOut: '', guests: '', otherLanguage: '' });
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("There was a system error. Please email Reservas@grupozakher.com directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Sync initialTab when drawer opens
   useEffect(() => {
@@ -119,7 +177,7 @@ export function ConciergeDrawer({
             {/* Contact Tab Content */}
             {drawerTab === 'contact' && (
               <form 
-                onSubmit={(e) => { e.preventDefault(); alert(t.contactForm?.success || "Thanks for your inquiry. A concierge will be in touch shortly."); onClose(); }} 
+                onSubmit={handleSubmit} 
                 className="space-y-8 font-montserrat animate-in fade-in slide-in-from-left-4 duration-500"
               >
                 {/* Inquiry Type Radios */}
@@ -141,15 +199,15 @@ export function ConciergeDrawer({
                     <div className="flex gap-4">
                       <div className="flex-1 relative">
                         <span className="absolute -top-3 left-3 bg-[#0A0A0A] px-1 text-[9px] uppercase tracking-widest text-gray-400 z-10">{t.drawer?.checkIn || "Check In"}</span>
-                        <input type="date" className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
+                        <input type="date" name="checkIn" value={formData.checkIn} onChange={handleInputChange} className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
                       </div>
                       <div className="flex-1 relative">
                         <span className="absolute -top-3 left-3 bg-[#0A0A0A] px-1 text-[9px] uppercase tracking-widest text-gray-400 z-10">{t.drawer?.checkOut || "Check Out"}</span>
-                        <input type="date" className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
+                        <input type="date" name="checkOut" value={formData.checkOut} onChange={handleInputChange} className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 [color-scheme:dark] cursor-pointer" />
                       </div>
                     </div>
                     <div className="relative">
-                      <select defaultValue="" className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 appearance-none cursor-pointer">
+                      <select name="guests" value={formData.guests} onChange={handleInputChange} className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 appearance-none cursor-pointer">
                         <option value="" disabled className="text-gray-500">{t.drawer?.numberOfGuests || "Number of Guests"}</option>
                         <option value="1" className="bg-[#1A1A1A] text-white">1 {t.drawer?.guests?.replace(/s$/i, '') || "Guest"}</option>
                         <option value="2" className="bg-[#1A1A1A] text-white">2 {t.drawer?.guests || "Guests"}</option>
@@ -163,9 +221,9 @@ export function ConciergeDrawer({
                   </motion.div>
                 )}
 
-                <input required type="text" placeholder={t.contactForm?.name || "Full Name *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
-                <input required type="email" placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
-                <input required type="tel" placeholder={t.contactForm?.phone || "WhatsApp / Phone *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
+                <input required type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder={t.contactForm?.name || "Full Name *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
+                <input required type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder={t.contactForm?.email || "Email Address *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
+                <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder={t.contactForm?.phone || "WhatsApp / Phone *"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
                 
                 <div className="relative">
                   <select value={contactLang} onChange={(e) => setContactLang(e.target.value)} className="w-full bg-white/5 border border-white/20 rounded-md text-white px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 appearance-none cursor-pointer">
@@ -183,11 +241,11 @@ export function ConciergeDrawer({
 
                 {contactLang === 'other' && (
                   <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                    <input type="text" placeholder={t.contactForm?.specifyLanguage || "Please specify language"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
+                    <input type="text" name="otherLanguage" value={formData.otherLanguage} onChange={handleInputChange} placeholder={t.contactForm?.specifyLanguage || "Please specify language"} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300" />
                   </motion.div>
                 )}
                 
-                <textarea required placeholder={t.contactForm?.requests || "Message/Special Requests *"} rows={3} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 resize-none"></textarea>
+                <textarea required name="message" value={formData.message} onChange={handleInputChange} placeholder={t.contactForm?.requests || "Message/Special Requests *"} rows={3} className="w-full bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-500 px-4 py-3 focus:outline-none focus:border-[#D4AF37] focus:shadow-[0_0_10px_rgba(212,175,55,0.1)] transition-all duration-300 resize-none"></textarea>
                 
                 <div className="pt-6">
                   <style dangerouslySetInnerHTML={{__html: `
@@ -206,9 +264,9 @@ export function ConciergeDrawer({
                       box-shadow: 0 10px 30px rgba(212,175,55,0.5);
                     }
                   `}} />
-                  <button type="submit" className="group w-full py-4 font-montserrat text-[10px] md:text-xs tracking-[0.3em] uppercase transition-all duration-700 ease-out font-medium active:scale-[0.98] relative overflow-hidden border animate-drawer-breath">
-                    <span className="relative z-10">{t.contactForm?.send || "Send Message"}</span>
-                    <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />
+                  <button type="submit" disabled={isSubmitting} className="group w-full py-4 font-montserrat text-[10px] md:text-xs tracking-[0.3em] uppercase transition-all duration-700 ease-out font-medium active:scale-[0.98] relative overflow-hidden border disabled:opacity-50 disabled:cursor-not-allowed animate-drawer-breath">
+                    <span className="relative z-10">{isSubmitting ? "Sending..." : (t.contactForm?.send || "Send Message")}</span>
+                    {!isSubmitting && <div className="absolute top-0 bottom-0 left-[-100%] w-[50%] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out z-0" />}
                   </button>
                   <p className="mt-6 text-center text-[9px] font-montserrat text-gray-500/70 tracking-widest uppercase">
                     * {t.contactForm?.mandatory || "Indicates a mandatory field"}

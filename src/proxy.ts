@@ -63,6 +63,12 @@ export async function proxy(request: NextRequest) {
       request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
       return NextResponse.redirect(request.nextUrl);
     }
+
+    // Inject detected locale as x-lang header for dynamic <html lang="…"> in root layout
+    const detectedLocale = locales.find(
+      (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    ) || defaultLocale;
+    requestHeaders.set('x-lang', detectedLocale);
   }
 
   return NextResponse.next({

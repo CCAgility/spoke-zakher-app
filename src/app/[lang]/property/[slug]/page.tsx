@@ -30,9 +30,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = resolveDescription(property.seo_description, property.description);
   const ogImage = resolveOgImage(null, siteConfig?.global_og_image, process.env.DIRECTUS_URL);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupozakher.com';
+
   return {
     title,
     description,
+    alternates: {
+      languages: {
+        'en': `${siteUrl}/en/property/${slug}`,
+        'es': `${siteUrl}/es/property/${slug}`,
+      },
+    },
     openGraph: {
       title,
       description,
@@ -77,8 +85,42 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupozakher.com';
+  const directusUrl = process.env.DIRECTUS_URL || '';
+
+  // Build JSON-LD VacationRental schema for Google Rich Results
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VacationRental',
+    name: property.title || 'Casa Estrella de San Pedro',
+    description: property.description || '',
+    url: `${siteUrl}/${lang}/property/${slug}`,
+    ...(property.image_url && {
+      image: property.image_url.startsWith('http')
+        ? property.image_url
+        : `${directusUrl}/assets/${property.image_url}`,
+    }),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Cartagena de Indias',
+      addressRegion: 'Bolívar',
+      addressCountry: 'CO',
+    },
+    ...(property.price && {
+      priceRange: `From $${property.price} USD/night`,
+    }),
+    ...(property.bedrooms && { numberOfBedrooms: property.bedrooms }),
+    ...(property.max_guests && { occupancy: { '@type': 'QuantitativeValue', maxValue: property.max_guests } }),
+  };
+
   // Inject current property into the child theme component
   return (
-    <MallorcaTheme property={property} siteConfig={siteConfig} lang={lang} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <MallorcaTheme property={property} siteConfig={siteConfig} lang={lang} />
+    </>
   );
 }
