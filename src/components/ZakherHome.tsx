@@ -409,7 +409,7 @@ export function ZakherHome({
               {/* Sleek Floating Info Card (Bottom drawer on Mobile, Bottom-Left float on Desktop) */}
               <div className="absolute bottom-0 left-0 w-full md:w-auto md:max-w-sm md:bottom-6 md:left-6 z-10 p-6 pb-8 md:p-8 bg-white md:rounded-xl shadow-[0_-20px_40px_rgba(0,0,0,0.1)] md:shadow-2xl flex flex-col gap-4 pointer-events-auto">
                 <div>
-                  <span className="block font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-1">Property Location</span>
+                  <span className="block font-montserrat text-[10px] tracking-[0.2em] uppercase text-gray-400 mb-1">Property Vicinity</span>
                   <span className="font-cormorant text-2xl md:text-3xl font-medium text-black">Plaza de Bolívar</span>
                 </div>
                 <div className="h-[1px] w-full bg-gray-100"></div>
@@ -422,6 +422,12 @@ export function ZakherHome({
                   <span className="group-hover:translate-x-1 transition-transform">Get Directions</span> 
                   <MapPin size={16} className="text-white/70" />
                 </a>
+                <p className="text-[9px] text-gray-400 font-montserrat font-light leading-relaxed text-center px-2 mt-1 hidden md:block">
+                  Exact property coordinates are provided by your concierge upon booking confirmation for the privacy of our guests.
+                </p>
+                <p className="text-[9px] text-gray-400 font-montserrat font-light leading-relaxed text-center px-2 mt-1 md:hidden">
+                  Exact coordinates provided upon booking confirmation.
+                </p>
               </div>
             </motion.div>
           </motion.div>
