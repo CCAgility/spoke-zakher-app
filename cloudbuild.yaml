@@ -72,7 +72,7 @@ substitutions:
   _SERVICE_NAME: "spoke-zakher-app"
   _REGION: "us-central1"
   _DIRECTUS_URL: "https://directus-cms-159885988938.us-central1.run.app"
-  _DIRECTUS_STATIC_TOKEN: "q5KlYjzctH1wkDi82vb7A4FsQL6ZTWgd"
+  _DIRECTUS_STATIC_TOKEN: "" # Injected via Cloud Build Trigger substitution variable (GCP Console)
   _COMMIT_SHA: "latest"
 
 images:
