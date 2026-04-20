@@ -6,6 +6,16 @@ import { GlobalUI } from '../components/GlobalUI';
 export const metadata: Metadata = {
   title: 'Grupo Zakher — Casa Estrella de San Pedro',
   description: 'A seven-bedroom colonial sanctuary in the heart of Cartagena de Indias, Colombia.',
+  openGraph: {
+    title: 'Grupo Zakher — Casa Estrella de San Pedro',
+    description: 'A seven-bedroom colonial sanctuary in the heart of Cartagena de Indias, Colombia.',
+    images: ['/parent-hero.jpg'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/parent-hero.jpg'],
+  }
 };
 
 export default async function RootLayout({

@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 const apiKey = process.env.RESEND_API_KEY;
 const isMockMode = !apiKey || apiKey.toLowerCase() === 'mock';
 const resend = isMockMode ? null : new Resend(apiKey);
-const recipient = process.env.CONTACT_EMAIL_RECIPIENT || 'concierge@grupozakher.com';
+const recipient = process.env.CONTACT_EMAIL_RECIPIENT || 'Reservas@grupozakher.com';
 
 export async function POST(request: Request) {
   try {
