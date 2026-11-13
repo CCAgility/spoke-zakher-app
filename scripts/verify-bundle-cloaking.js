@@ -20,7 +20,8 @@ const CANDIDATE_DIRS = [
 
 const OUT_DIR = CANDIDATE_DIRS.find((d) => fs.existsSync(d));
 
-function loadPublicFirebaseApiKey() {
+function loadPublicClientKeys() {
+  const keys = [];
   const candidates = [
     path.resolve(process.cwd(), 'src', 'lib', 'firebase.ts'),
     path.resolve(process.cwd(), 'src', 'lib', 'firebase.js'),
@@ -31,13 +32,28 @@ function loadPublicFirebaseApiKey() {
       if (!fs.existsSync(cfg)) continue;
       const src = fs.readFileSync(cfg, 'utf8');
       const m = src.match(/apiKey:\s*["'](AIza[0-9A-Za-z_-]{35})["']/);
-      if (m) return m[1];
+      if (m) keys.push(m[1]);
     } catch (_) {}
   }
-  return null;
+  const PUBLIC_ENV_NAMES = new Set([
+    'NEXT_PUBLIC_FIREBASE_API_KEY',
+    'VITE_FIREBASE_API_KEY',
+    'NEXT_PUBLIC_GOOGLE_MAPS_API_KEY',
+  ]);
+  for (const envFile of ['.env', '.env.local', '.env.production']) {
+    try {
+      const p = path.resolve(process.cwd(), envFile);
+      if (!fs.existsSync(p)) continue;
+      for (const line of fs.readFileSync(p, 'utf8').split(/\r?\n/)) {
+        const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*["']?(AIza[0-9A-Za-z_-]{35})["']?/);
+        if (m && PUBLIC_ENV_NAMES.has(m[1])) keys.push(m[2]);
+      }
+    } catch (_) {}
+  }
+  return Array.from(new Set(keys));
 }
 
-const ALLOWLIST = [loadPublicFirebaseApiKey()].filter(Boolean);
+const ALLOWLIST = loadPublicClientKeys();
 
 const FORBIDDEN_PATTERNS = [
   {
